@@ -26,7 +26,7 @@
   background-color: #2b2e35;
   border-radius: 4px;
 
-  height: 34px;
+  height: 23px;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -47,20 +47,26 @@
   height: 50px;
   width: 50px;
 }
+.proyectionContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 .proyectionScroll {
   display: flex;
   flex-direction: row;
   align-items: center;
   align-content: center;
+
   justify-content: center;
   flex-wrap: nowrap;
+  margin-top: 3em;
 }
 
 .itemScroll {
-  margin-top: 3em;
-
   position: relative;
-  width: 100%;
+  width: 30em;
   overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;
@@ -73,16 +79,18 @@
 .item {
   display: inline-block;
   background: rgb(255, 255, 255);
-  height: 40px;
-  width: 130px;
+  height: 30px;
+  width: 102px;
   margin-right: 1em;
   border-radius: 6px;
 }
 .itemContent {
-  position: absolute;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
 }
 .scrollButton {
   border-radius: 100%;
@@ -99,4 +107,8 @@
 .scrollButton:hover {
   background-color: rgb(190, 190, 190);
   cursor: pointer;
+}
+.hLine {
+  border-bottom: white solid 3px;
+  width: 100%;
 }

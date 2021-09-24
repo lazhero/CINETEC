@@ -1,41 +1,79 @@
 <div class="mainView">
     <div class="viewContainer">
-        <div class="text" style="color: white; font-size: 37px;">El semestre feliz</div>
+        <div class="text" style="color: white; font-size: 30px;">El semestre feliz</div>
 
         <div class="infoDisp">
-            <div class="infoCard" style="width: 136px;">
-                <div class="text" style="color: white; font-size: 15px;">Duración: 90 m
-                </div>
-            </div>
-            <div class="infoCard" style="width: 176px;">
-                <div class="text" style="color: white; font-size: 15px;">Director: Mark Sains
+            <div class="infoCard" style="width: 106px;">
+                <div class="text" style="color: white; font-size: 10px;">Duración: 90 m
                 </div>
             </div>
             <div class="infoCard" style="width: 136px;">
-                <div class="text" style="color: white; font-size: 15px;">Puntuación: 1
+                <div class="text" style="color: white; font-size: 10px;">Director: Mark Sains
+                </div>
+            </div>
+            <div class="infoCard" style="width: 106px;">
+                <div class="text" style="color: white; font-size: 10px;">Puntuación: 1
                 </div>
             </div>
         </div>
 
         <div class="proyectionsDisp">
-            <div class="text" style="color: white; font-size: 37px;">Proyecciones</div>
-
-            <div class="proyectionScroll">
-                <div class="scrollButton" (click)="moveLeft()">
-                    <mat-icon style="color: #333333;">arrow_back</mat-icon>
-                </div>
-                <div #panel class="itemScroll">
-                    <div class="item item1">
-                        <div class="itemContent">
-                            <div class="text" style="color: #333333; font-size: 16px; width: 100%; position: absolute;">16:00</div>
-                        </div>
+            <div class="text" style="color: white; font-size: 30px; margin:1em 0em 0em 0em">Proyecciones</div>
+            <div class="text" style="color: white; font-size: 19px;  margin:1em 0em 0em 1em ;">seleccione una proyección</div>
+            <div class="proyectionContainer">
+                <div class="proyectionScroll">
+                    <div class="scrollButton" (click)="moveLeft()">
+                        <mat-icon style="color: #333333;">arrow_back</mat-icon>
                     </div>
-        
-                </div>
-                <div class="scrollButton" (click)="moveRight()">
-                    <mat-icon style="color: #333333;">arrow_forward</mat-icon>
+                    <div #panel class="itemScroll">
+                        <div class="item item1">
+                            <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
+                                16:00 S1
+                            </div>
+                        </div>
+                        <div class="item item1">
+                            <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
+                                16:00 S1
+                            </div>
+                        </div>
+                        <div class="item item1">
+                            <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
+                                16:00 S1
+                            </div>
+                        </div>
+                        <div class="item item1">
+                            <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
+                                16:00 S1
+                            </div>
+                        </div>
+                        <div class="item item1">
+                            <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
+                                16:00 S1
+                            </div>
+                        </div>
+                        <div class="item item1">
+                            <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
+                                16:00 S1
+                            </div>
+                        </div>
+                        <div class="item item1">
+                            <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
+                                16:00 S1
+                            </div>
+                        </div>
+            
+                    </div>
+                    <div class="scrollButton" (click)="moveRight()">
+                        <mat-icon style="color: #333333;">arrow_forward</mat-icon>
+                    </div>
                 </div>
             </div>
+
+
+            <div class="hLine" style="margin-top: 2em;"></div>
+            <div class="text" style="color: white; font-size: 30px ;margin:1em 0em 0em 0em ">Asientos</div>
+            <div class="text" style="color: white; font-size: 19px;  margin:1em 0em 0em 1em ;">seleccione su asiento</div>
+
         </div>
 
     </div>
