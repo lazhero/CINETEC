@@ -1,0 +1,28 @@
+<div class="mainView">
+  <div class="login-block">
+      
+        <h1 class="Bank-Name">
+          CineTec
+        </h1>
+        <div class='login-form' [formGroup]="form">
+                <div class="formContainer">
+                    <div class="field">
+                        <div class="text" style="color: white; font-size: 16px;">Correo</div>
+                        <input class="fieldInput"   formControlName="Address" placeholder="Inserte su correo"   />
+                    </div>
+                    <div class="field">
+                        <div class="text" style="color: white; font-size: 16px;">Constraseña</div>
+                        <input class="fieldInput"   formControlName="Password" placeholder="Inserte su contraseña"   />
+                    </div>
+            </div>
+            <button  class="login-button">                        
+                <div class="text" style="color: white; font-size: 16px;" (click)="login()">Entrar</div>
+            </button>
+            
+        </div>
+            
+        
+        
+        
+    </div>
+</div>
