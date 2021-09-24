@@ -1,0 +1,102 @@
+.mainView {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+}
+.viewContainer {
+  width: 80%;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+}
+.infoDisp {
+  display: flex;
+  flex-direction: row;
+}
+.infoCard {
+  margin-top: 23px;
+  margin-right: 10px;
+  background-color: #2b2e35;
+  border-radius: 4px;
+
+  height: 34px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.proyectionsDisp {
+  margin-top: 26px;
+}
+.drag-scroll {
+  height: 50px;
+  width: 100px;
+}
+
+.img {
+  height: 50px;
+  width: 50px;
+}
+.proyectionScroll {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+
+.itemScroll {
+  margin-top: 3em;
+
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  transition: all 0.2s;
+  transform: scale(0.98);
+  will-change: transform;
+  user-select: none;
+  cursor: pointer;
+}
+.item {
+  display: inline-block;
+  background: rgb(255, 255, 255);
+  height: 40px;
+  width: 130px;
+  margin-right: 1em;
+  border-radius: 6px;
+}
+.itemContent {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.scrollButton {
+  border-radius: 100%;
+  background-color: white;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.scrollButton:hover {
+  background-color: rgb(190, 190, 190);
+  cursor: pointer;
+}

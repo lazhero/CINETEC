@@ -4,27 +4,18 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { PagesComponent } from './pages/pages.component';
-import { LoadingComponent } from './pages/loading/loading.component';
-import { MovieTheatersBoardComponent } from './pages/movie-theaters-board/movie-theaters-board.component';
-import { BillboardComponent } from './pages/billboard/billboard.component';
-import { MovieMenuComponent } from './pages/movie-menu/movie-menu.component';
+import { DragScrollModule } from 'ngx-drag-scroll';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PagesComponent,
-    LoadingComponent,
-    MovieTheatersBoardComponent,
-    BillboardComponent,
-    MovieMenuComponent
-  ],
+  declarations: [AppComponent],
   imports: [
+    DragScrollModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
+  exports: [DragScrollModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

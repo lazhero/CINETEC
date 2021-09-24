@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --darkBackgroundColor: #1b1e26;
+}
+html {
+  background-color: var(--darkBackgroundColor);
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@font-face {
+  font-family: "Poppins";
+  src: local("Poppins"), url(./assets/Poppins.ttf) format("truetype");
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.text {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+}

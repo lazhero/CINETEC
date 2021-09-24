@@ -1,0 +1,105 @@
+.mainView {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: center;
+}
+.login-block {
+  position: absolute;
+  width: 29rem;
+  height: 30rem;
+  background: #1f2127;
+  border-radius: 2%;
+  margin-top: 9rem;
+  border: 1px solid #ffffff;
+}
+
+.login-button:hover {
+  background: #7e7e7e;
+}
+.Bank-Name {
+  position: absolute;
+  left: 10%;
+  top: 10%;
+
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 8vh;
+
+  color: #ffffff;
+}
+.login-form {
+  position: absolute;
+  top: 34%;
+  left: 10%;
+  width: 90%;
+  height: 50%;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px white;
+}
+.fieldInput {
+  background: none;
+  width: 12rem;
+  height: 25px;
+  line-height: 25px;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  color: white;
+  border: none;
+}
+::placeholder {
+  color: rgb(177, 177, 177);
+  opacity: 1; /* Firefox */
+}
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  align-items: stretch;
+  align-content: center;
+  width: 22rem;
+  height: 14rem;
+  margin-bottom: 1rem;
+}
+.login-button {
+  position: relative;
+  width: 85%;
+  height: 20%;
+  border: 1px solid #ffffff;
+  background-color: #1f2127;
+  border-radius: 6px;
+}
+.input-label {
+  position: relative;
+  padding-bottom: 1vh;
+  display: block;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.02em;
+
+  color: #3e3e3e;
+}
+
+.slide {
+  position: absolute;
+  font-family: Poppins;
+  font-size: 9vh;
+  font-style: normal;
+  font-weight: bold;
+  color: white;
+  left: 2.8%;
+  top: 8.04%;
+}
