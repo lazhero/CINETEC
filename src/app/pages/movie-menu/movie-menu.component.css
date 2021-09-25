@@ -47,7 +47,7 @@
   height: 50px;
   width: 50px;
 }
-.proyectionContainer {
+.centerDisp {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -76,13 +76,18 @@
   user-select: none;
   cursor: pointer;
 }
-.item {
+
+.itemContainer {
   display: inline-block;
-  background: rgb(255, 255, 255);
+}
+.item {
   height: 30px;
   width: 102px;
   margin-right: 1em;
   border-radius: 6px;
+}
+.item:hover {
+  background: #cccccc;
 }
 .itemContent {
   display: flex;
@@ -102,6 +107,13 @@
   align-content: center;
   justify-content: center;
   align-items: center;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 .scrollButton:hover {
@@ -111,4 +123,64 @@
 .hLine {
   border-bottom: white solid 3px;
   width: 100%;
+}
+.chairsDisplayerContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+}
+.chairsDisplayer {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 70em;
+}
+.chairContainer {
+}
+.chair {
+  position: relative;
+  text-align: center;
+}
+.chairIcon {
+  size: 30px;
+  margin: 0 0.5em 1em 0.5em;
+}
+.chair:hover {
+  filter: invert(0.3);
+  cursor: pointer;
+}
+.chairText {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+  user-select: none;
+}
+.screenIcon {
+  width: 100%;
+}
+.payButton {
+  width: 16em;
+  border-bottom: solid white 2px;
+}
+.payButton:hover {
+  background-color: #ffffff0a;
+  border: solid white 2px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.payButtonContainer {
+  display: flex;
+  flex-direction: row;
 }
