@@ -21,7 +21,7 @@ export class BillboardComponent implements OnInit {
 
   }
   movieSelected(movieName: any): void {
-    console.log("Seleccioné la película "+movieName);
+    console.log("Seleccioné la película "+ movieName);
     
   }
 }

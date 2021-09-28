@@ -1,0 +1,51 @@
+
+.mainView{
+    display: flex;
+    margin-top: 20%;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.mainTitle{
+    font-size: 300%;
+}
+
+.mainDivision{
+    display: flex;
+    flex-direction: column;
+}
+
+.questionText{
+    font-size: 250%;
+    margin-bottom: 10%;
+}
+
+.theaters{
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: flex-start;
+	align-items: center;
+	align-content: stretch;
+}
+
+.theaters:hover{
+    background-color: #2B2E35;
+
+}
+
+.citiesList{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+    width: 100%;
+}
+
+.citiesName{
+    font-size: 200%;
+    margin-left: 10px;
+    text-decoration: underline;
+}
