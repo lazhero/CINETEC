@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace REST_API_SERVER
+namespace REST_API_SERVER.Database_Models
 {
     public partial class ProjectionRoom
     {

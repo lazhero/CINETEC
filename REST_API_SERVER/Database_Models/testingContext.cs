@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace REST_API_SERVER
+namespace REST_API_SERVER.Database_Models
 {
     public partial class testingContext : DbContext
     {
@@ -38,7 +38,6 @@ namespace REST_API_SERVER
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseNpgsql("Host=localhost;Port=6200;Database=testing;Username=admin;Password=1234");
             }
         }
@@ -117,14 +116,16 @@ namespace REST_API_SERVER
 
             modelBuilder.Entity<Client>(entity =>
             {
-                entity.HasKey(e => e.IdCard)
+                entity.HasKey(e => new { e.IdCard, e.Username })
                     .HasName("client_pkey");
 
                 entity.ToTable("client");
 
-                entity.Property(e => e.IdCard)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id_card");
+                entity.Property(e => e.IdCard).HasColumnName("id_card");
+
+                entity.Property(e => e.Username)
+                    .HasMaxLength(15)
+                    .HasColumnName("username");
 
                 entity.Property(e => e.Birthdate)
                     .HasColumnType("date")
@@ -142,6 +143,10 @@ namespace REST_API_SERVER
                     .HasMaxLength(15)
                     .HasColumnName("middle_name");
 
+                entity.Property(e => e.Password)
+                    .HasMaxLength(15)
+                    .HasColumnName("password");
+
                 entity.Property(e => e.PhoneNum).HasColumnName("phone_num");
 
                 entity.Property(e => e.SecondLastName)
@@ -151,7 +156,7 @@ namespace REST_API_SERVER
 
             modelBuilder.Entity<ClientInvoice>(entity =>
             {
-                entity.HasKey(e => new { e.ClientId, e.InvoiceId })
+                entity.HasKey(e => new { e.ClientId, e.InvoiceId, e.ClientUsername })
                     .HasName("client_invoice_pkey");
 
                 entity.ToTable("client_invoice");
@@ -160,17 +165,21 @@ namespace REST_API_SERVER
 
                 entity.Property(e => e.InvoiceId).HasColumnName("invoice_id");
 
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ClientInvoices)
-                    .HasForeignKey(d => d.ClientId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("ci_client");
+                entity.Property(e => e.ClientUsername)
+                    .HasMaxLength(15)
+                    .HasColumnName("client_username");
 
                 entity.HasOne(d => d.Invoice)
                     .WithMany(p => p.ClientInvoices)
                     .HasForeignKey(d => d.InvoiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("ci_invoice");
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.ClientInvoices)
+                    .HasForeignKey(d => new { d.ClientId, d.ClientUsername })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("ci_client");
             });
 
             modelBuilder.Entity<Director>(entity =>
@@ -369,7 +378,7 @@ namespace REST_API_SERVER
 
             modelBuilder.Entity<ProjectionClient>(entity =>
             {
-                entity.HasKey(e => new { e.ProjectionId, e.ClientIdCard })
+                entity.HasKey(e => new { e.ProjectionId, e.ClientIdCard, e.ClientUsername })
                     .HasName("projection_client_pkey");
 
                 entity.ToTable("projection_client");
@@ -378,17 +387,21 @@ namespace REST_API_SERVER
 
                 entity.Property(e => e.ClientIdCard).HasColumnName("client_id_card");
 
-                entity.HasOne(d => d.ClientIdCardNavigation)
-                    .WithMany(p => p.ProjectionClients)
-                    .HasForeignKey(d => d.ClientIdCard)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pc_client");
+                entity.Property(e => e.ClientUsername)
+                    .HasMaxLength(15)
+                    .HasColumnName("client_username");
 
                 entity.HasOne(d => d.Projection)
                     .WithMany(p => p.ProjectionClients)
                     .HasForeignKey(d => d.ProjectionId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("pc_projection");
+
+                entity.HasOne(d => d.Client)
+                    .WithMany(p => p.ProjectionClients)
+                    .HasForeignKey(d => new { d.ClientIdCard, d.ClientUsername })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("pc_client");
             });
 
             modelBuilder.Entity<ProjectionInvoice>(entity =>
