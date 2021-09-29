@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CINETEC">
         <activity
+            android:name=".ScreenApp.Movie_selection"
+            android:exported="true" />
+        <activity
             android:name=".ScreenApp.Cinema_select"
             android:exported="true" />
         <activity

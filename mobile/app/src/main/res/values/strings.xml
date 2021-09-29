@@ -7,4 +7,5 @@
     <string name="login_button_text">Ingresar</string>
     <string name="movies_button_text">Horarios</string>
     <string name="cinema_selection_label">Seleccion de Cine</string>
+    <string name="movie_selection_label">Seleccion de Pelicula</string>
 </resources>

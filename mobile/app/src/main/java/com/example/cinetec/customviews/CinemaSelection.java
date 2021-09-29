@@ -42,7 +42,7 @@ public class CinemaSelection extends LinearLayout {
     public void build(Context context){
         View view= LayoutInflater.from(context).inflate(R.layout.view_cinema_selection,this);
         Cinema_text=(TextView) view.findViewById(R.id.branch_text);
-
     }
+
 
 }
