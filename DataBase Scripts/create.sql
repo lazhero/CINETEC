@@ -19,26 +19,26 @@ CREATE TABLE EMPLOYEE(
   Id_card int,
   Phone_num int,
   Birthdate date,
-  UserName varchar(15),
+  Username varchar(15),
   Password varchar(15),
   First_name varchar(15),
   Middle_name varchar(15),
   Last_name varchar(15),
   Second_last_name varchar(15),
   First_date_working date,
-  Cinema_name varchar(25),
+  Cinema_name varchar(32),
   Role_id int,
-  PRIMARY KEY(Id_card,UserName)
+  PRIMARY KEY(Id_card,Username)
 );
 
 CREATE TABLE CINEMA(
-    Name varchar(15),
+    Name varchar(32),
     Location varchar(31),
     Number_of_rooms smallint,
     PRIMARY KEY (Name)
 );
 CREATE TABLE ROOM(
-    Cinema_name varchar(15),
+    Cinema_name varchar(32),
     Rows smallint,
     Columns smallint,
     Number smallint,
@@ -107,7 +107,7 @@ CREATE TABLE CLIENT_INVOICE(
 );
 CREATE TABLE PROJECTION_ROOM(
     Projection_id int,
-    Cinema_name varchar(15),
+    Cinema_name varchar(32),
     Room_id smallint,
     PRIMARY KEY (Projection_id,Cinema_name,Room_id)
 );

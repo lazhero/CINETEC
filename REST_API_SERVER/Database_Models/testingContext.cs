@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace REST_API_SERVER.Database_Models
 {
-    public partial class testingContext : DbContext
+    public partial class TestingContext : DbContext
     {
-        public testingContext()
+        public TestingContext()
         {
         }
 
-        public testingContext(DbContextOptions<testingContext> options)
+        public TestingContext(DbContextOptions<TestingContext> options)
             : base(options)
         {
         }

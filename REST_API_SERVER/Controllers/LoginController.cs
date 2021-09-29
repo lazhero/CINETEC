@@ -12,12 +12,12 @@ namespace REST_API_SERVER.Controllers
     [Route("Login")]
     public class LoginController : Controller
     {
-        testingContext db = new testingContext();
+        private TestingContext Db = new TestingContext();
 
         [HttpPost]
         public string Post([FromBody]string[] user_data)
         {
-            var clients = db.Clients.ToList();
+            var clients = Db.Clients.ToList();
             foreach(Client c in clients)
             {
                 if(c.Username == user_data[0] && c.Password == user_data[1])
