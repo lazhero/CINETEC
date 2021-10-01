@@ -17,7 +17,7 @@
 }
 
 .login-button:hover {
-  background: #7e7e7e;
+  background: var(--hoverColor);
 }
 .Bank-Name {
   position: absolute;

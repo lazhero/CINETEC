@@ -120,10 +120,7 @@
   background-color: rgb(190, 190, 190);
   cursor: pointer;
 }
-.hLine {
-  border-bottom: white solid 3px;
-  width: 100%;
-}
+
 .chairsDisplayerContainer {
   display: flex;
   flex-direction: row;
