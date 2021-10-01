@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragScrollModule } from 'ngx-drag-scroll';
-
+import { SwalService } from '../app/services/swalService';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -15,7 +15,7 @@ import { DragScrollModule } from 'ngx-drag-scroll';
     BrowserAnimationsModule,
   ],
   exports: [DragScrollModule],
-  providers: [],
+  providers: [SwalService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

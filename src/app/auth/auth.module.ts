@@ -10,8 +10,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ClientRegisterComponent } from '../auth/client-register/client-register.component';
+
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, ClientRegisterComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

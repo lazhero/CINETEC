@@ -1,0 +1,46 @@
+.title {
+  position: absolute;
+  font-size: 250%;
+  margin-left: 2%;
+  margin-top: 1%;
+  padding-bottom: 3%;
+}
+.subTitle {
+  position: absolute;
+  font-size: 200%;
+  margin-top: 8%;
+  padding-left: 2%;
+  padding-bottom: 2%;
+}
+.movieDisplay {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.selectMovie {
+  margin-left: 5%;
+  width: 133px;
+  margin-right: 5%;
+}
+
+.movieRectangle {
+  height: 140%;
+  width: 120%;
+  margin-top: 150%;
+  border-radius: 18px;
+}
+.imageSrc {
+  width: 100%;
+  height: 170%;
+}
+.hourText {
+  text-align: center;
+}
+
+.bottomTitle {
+  position: absolute;
+  font-size: 175%;
+  margin-top: 65%;
+  margin-left: 45%;
+}

@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovieTheatersBoardsComponent implements OnInit {
 
+  cities: any[] = [];
+  
   constructor() { }
 
   ngOnInit(): void {
+
+    this.cities.push({name:'CityMall'});
+    this.cities.push({name:'Paseo Metropoli'});
+    this.cities.push({name:'Playground Oxigeno'});
+
+
   }
 
 }
