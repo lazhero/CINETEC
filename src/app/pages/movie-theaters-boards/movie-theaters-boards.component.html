@@ -14,12 +14,16 @@
                 ¿Cuál cine quieres visitar?
             </div>
             
-            <div class="theaters" *ngFor="let city of cities">
-                <img  class="cityIcon" src="../../../assets/CityIcon.svg" alt="">
-                <div class="citiesName" style="color: white;">
-                    {{city.name}}
+            <div  *ngFor="let theater of theaters" (click)="openTheatherBillBoard(theater)">
+                <div class="theaters">
+                    <img  class="cityIcon" src="../../../assets/CityIcon.svg" alt="">
+                    <div class="citiesName" style="color: white;">
+                        {{theater.name}}
+                    </div>
                 </div>
+                <div class="hLine" style="border-bottom: white solid 1px;"></div>
             </div>
+
         </div>
 
     </div>

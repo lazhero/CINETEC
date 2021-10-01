@@ -1,51 +1,59 @@
-
-.mainView{
-    display: flex;
-    margin-top: 20%;
-    flex-direction: row;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
+.mainView {
+  display: flex;
+  /* margin-top: 20%; */
+  flex-direction: row;
+  align-content: center;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  position: fixed;
+  justify-content: center;
 }
-.mainTitle{
-    font-size: 300%;
-}
-
-.mainDivision{
-    display: flex;
-    flex-direction: column;
+.mainTitle {
+  font-size: 15vh;
 }
 
-.questionText{
-    font-size: 250%;
-    margin-bottom: 10%;
+.mainDivision {
+  display: flex;
+  flex-direction: column;
 }
 
-.theaters{
-    display: flex;
-    width: 100%;
-    margin-bottom: 10px;
-	flex-direction: row;
-	flex-wrap: nowrap;
-	justify-content: flex-start;
-	align-items: center;
-	align-content: stretch;
+.questionText {
+  font-size: 50px;
+  margin-bottom: 10%;
 }
 
-.theaters:hover{
-    background-color: #2B2E35;
-
+.theaters {
+  display: flex;
+  width: 100%;
+  height: 9vh;
+  margin-bottom: 10px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  align-content: stretch;
+  transition: 0.5s;
+}
+.cityIcon {
+  margin-left: 1vh;
+}
+.theaters:hover {
+  transition: 0.5s;
+  margin-left: 2vh;
+  background-color: #2b2e35;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.citiesList{
-    display: flex;
-    flex-direction: column;
-    margin-left: 20%;
-    width: 100%;
+.citiesList {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20%;
+  width: 100%;
 }
 
-.citiesName{
-    font-size: 200%;
-    margin-left: 10px;
-    text-decoration: underline;
+.citiesName {
+  font-size: 200%;
+  margin-left: 10px;
 }

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import Swal, { SweetAlertInput } from 'sweetalert2';
 @Injectable()
 export class SwalService {
