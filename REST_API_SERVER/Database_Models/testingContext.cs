@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Linq;
 
 #nullable disable
 
@@ -15,6 +16,7 @@ namespace REST_API_SERVER.Database_Models
         public TestingContext(DbContextOptions<TestingContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<Actor> Actors { get; set; }
@@ -82,12 +84,12 @@ namespace REST_API_SERVER.Database_Models
             modelBuilder.Entity<Cinema>(entity =>
             {
                 entity.HasKey(e => e.Name)
-                    .HasName("cinema_pkey");
+                      .HasName("cinema_pkey");
 
                 entity.ToTable("cinema");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(15)
+                    .HasMaxLength(32)
                     .HasColumnName("name");
 
                 entity.Property(e => e.Location)
@@ -233,7 +235,7 @@ namespace REST_API_SERVER.Database_Models
                     .HasColumnName("birthdate");
 
                 entity.Property(e => e.CinemaName)
-                    .HasMaxLength(25)
+                    .HasMaxLength(32)
                     .HasColumnName("cinema_name");
 
                 entity.Property(e => e.FirstDateWorking)
@@ -438,7 +440,7 @@ namespace REST_API_SERVER.Database_Models
                 entity.Property(e => e.ProjectionId).HasColumnName("projection_id");
 
                 entity.Property(e => e.CinemaName)
-                    .HasMaxLength(15)
+                    .HasMaxLength(32)
                     .HasColumnName("cinema_name");
 
                 entity.Property(e => e.RoomId).HasColumnName("room_id");
@@ -477,7 +479,7 @@ namespace REST_API_SERVER.Database_Models
                 entity.ToTable("room");
 
                 entity.Property(e => e.CinemaName)
-                    .HasMaxLength(15)
+                    .HasMaxLength(32)
                     .HasColumnName("cinema_name");
 
                 entity.Property(e => e.Number).HasColumnName("number");

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -16,7 +17,6 @@ namespace REST_API_SERVER.Database_Models
         public string Name { get; set; }
         public string Location { get; set; }
         public short? NumberOfRooms { get; set; }
-
         public virtual ICollection<Employee> Employees { get; set; }
         public virtual ICollection<Room> Rooms { get; set; }
     }

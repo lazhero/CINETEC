@@ -3,21 +3,29 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Threading.Tasks;
 using REST_API_SERVER.Database_Models;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
+using Npgsql;
+using NpgsqlTypes;
+using Npgsql.Util;
+using Npgsql.Logging;
+using Npgsql.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace REST_API_SERVER.Controllers
 {
     [ApiController]
-    [Route("Admin/sucursales")]
+    [Route("Admin/Sucursales")]
     public class Admin_sucursales : Controller
     {
         TestingContext Db = new TestingContext();
         [HttpGet]
         public List<Cinema> Get()
         {
-            List<Cinema> cinema_example = Db.Cinemas.ToList();
-            return cinema_example;
+            var cinemas = Db.Cinemas.Include(c => c.Rooms).Include(c => c.Employees).ToList();
+            return cinemas;
         }
 
         [HttpPost]
@@ -34,6 +42,23 @@ namespace REST_API_SERVER.Controllers
             cinema.Location = new_data.Location;
             cinema.NumberOfRooms = new_data.NumberOfRooms;
             Db.SaveChanges();
+        }
+        
+        [HttpDelete]
+        public string Delete([FromBody] Cinema new_data)
+        {
+            try
+            {
+                //Db.Cinemas.FromSqlRaw("");
+                var cinema = Db.Cinemas.Where(suc => suc.Name == new_data.Name).Single();
+                Db.Remove(cinema);
+                Db.SaveChanges();
+                return "Se elimino con exito";
+            }
+            catch (Exception e)
+            {
+                return "404 object not found";
+            }
         }
     }
 }

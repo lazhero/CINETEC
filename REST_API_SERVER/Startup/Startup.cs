@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace REST_API_SERVER
 {
     public class Startup
     {
+        public readonly string _myCors = "MyCors";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -27,11 +29,20 @@ namespace REST_API_SERVER
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ); 
+            services.AddControllersWithViews();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "REST_API_SERVER", Version = "v1" });
             });
+            services.AddCors(options => 
+                options.AddPolicy(name:_myCors, builder => { 
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                })
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +60,8 @@ namespace REST_API_SERVER
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(_myCors);
 
             app.UseEndpoints(endpoints =>
             {
