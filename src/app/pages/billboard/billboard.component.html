@@ -1,27 +1,30 @@
 <div class="mainView">
-    <div class="title" style="color: white;">
-        Cartelera
-    </div>
-    <div class="subTitle" style="color: white;">
-        Estrenos
-    </div>
-    <div class="movieDisplay">
-        
-        <div class="selectMovie" *ngFor="let movie of movies">
-            <div class="movieRectangle" style="background-color:#292929;" (click)="movieSelected(movie.name)">
-                <div class="movieImage" >
-                    <img class="imageSrc" src="{{movie.image}}" alt="">
-                </div>
-                <div class="hourText" style="color:white">
-                    Horarios
+    
+    <div class="movies-background" style="background-color:#171a21;">
+        <div class="title" style="color: white;">
+            Cartelera
+        </div>
+
+        <div class="subTitle" style="color: white;">
+            ESTRENOS
+        </div>
+        <div class="movieDisplay">
+            
+            <div class="selectMovie" *ngFor="let movie of movies">
+                <div class="movieRectangle" style="background-color:#292929;" (click)="movieSelected(movie.name)">
+                    <div class="movieImage" >
+                        <img class="imageSrc" src="{{movie.image}}" alt="">
+                    </div>
+                    <div class="hourText" style="color:white">
+                        Horarios
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="bottomTitle" style="color: white">
-        CineTEC
+        <div class="bottomTitle" style="color: white">
+            CineTEC
+        </div>
     </div>
-
 
 </div>
