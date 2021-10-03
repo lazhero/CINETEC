@@ -1,15 +1,23 @@
 .title {
   position: absolute;
-  font-size: 250%;
-  margin-left: 2%;
-  margin-top: 1%;
+  font-size: 300%;
+  margin-left: 5%;
+  margin-top: 2%;
   padding-bottom: 3%;
+
+}
+
+.movies-background{
+  position: absolute;
+  margin-left: 5%;
+  width: 90%;
 }
 .subTitle {
   position: absolute;
-  font-size: 200%;
+  font-size: 270%;
+  text-shadow: 4px 4px #6e6e6e;
   margin-top: 8%;
-  padding-left: 2%;
+  padding-left: 45%;
   padding-bottom: 2%;
 }
 .movieDisplay {
@@ -17,13 +25,18 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
+  margin-left: 7%;
 }
 .selectMovie {
   margin-left: 5%;
-  width: 133px;
+  width: 12%;
   margin-right: 5%;
 }
-
+.selectMovie:hover{
+  transition: s;
+  height: 13%;
+  width: 13%;
+}
 .movieRectangle {
   height: 140%;
   width: 120%;
