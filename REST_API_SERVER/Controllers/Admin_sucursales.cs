@@ -13,6 +13,7 @@ using Npgsql.Util;
 using Npgsql.Logging;
 using Npgsql.Schema;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 
 namespace REST_API_SERVER.Controllers
 {
@@ -31,21 +32,35 @@ namespace REST_API_SERVER.Controllers
         [HttpPost]
         public void Add([FromBody] Cinema new_cinema)
         {
-            Db.Add(new_cinema);
-            Db.SaveChanges();
+            try
+            {
+                Db.Add(new_cinema);
+                Db.SaveChanges();
+            }catch(Exception e)
+            {
+                throw new ArgumentException(e.ToString());
+            }
+            
         }
 
         [HttpPut]
         public void Modify([FromBody] Cinema new_data)
         {
-            var cinema = Db.Cinemas.Find(new_data.Name);
-            cinema.Location = new_data.Location;
-            cinema.NumberOfRooms = new_data.NumberOfRooms;
-            Db.SaveChanges();
+            try
+            {
+                var cinema = Db.Cinemas.Find(new_data.Name);
+                cinema.Location = new_data.Location;
+                cinema.NumberOfRooms = new_data.NumberOfRooms;
+                Db.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                throw new ArgumentException(e.ToString());
+            }
         }
         
         [HttpDelete]
-        public string Delete([FromBody] Cinema new_data)
+        public void Delete([FromBody] Cinema new_data)
         {
             try
             {
@@ -60,11 +75,10 @@ namespace REST_API_SERVER.Controllers
                 }
                 Db.Remove(cinema);
                 Db.SaveChanges();
-                return "Se elimino con exito";
             }
             catch (Exception e)
             {
-                return "404 object not found";
+                throw new ArgumentException(e.ToString());
             }
         }
     }
