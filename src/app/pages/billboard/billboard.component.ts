@@ -1,4 +1,6 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-billboard',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class BillboardComponent implements OnInit {
   movies: any[] = [];
 
-  constructor() {}
+  constructor(public router: Router) {}
 
   ngOnInit(): void {
     this.movies.push({
@@ -63,6 +65,6 @@ export class BillboardComponent implements OnInit {
     });
   }
   movieSelected(movieName: any): void {
-    console.log('Seleccioné la película ' + movieName);
+    this.router.navigateByUrl('pages/movieMenu');
   }
 }

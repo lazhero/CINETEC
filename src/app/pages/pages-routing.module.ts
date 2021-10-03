@@ -22,6 +22,14 @@ const routes: Routes = [
     path: 'movieTheatreSelection',
     component: MovieTheatersBoardsComponent,
   },
+  {
+    path: '**',
+    redirectTo: 'movieTheatreSelection',
+  },
+  {
+    path: '',
+    redirectTo: 'movieTheatreSelection',
+  },
 ];
 
 @NgModule({
