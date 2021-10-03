@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
 
@@ -14,19 +15,38 @@ import com.example.cinetec.customviews.MovieView;
 public class Movie_selection extends AppCompatActivity {
 
     private int width;
+    private int horizontal_margin;
     Matrix_layout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_selection);
-        width=(int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                getResources().getDimension(R.dimen.movie_size),
-                getResources().getDisplayMetrics()
-        );
-        layout=findViewById(R.id.movies_matrix_layout);
-        add_movies_example();
+        layout=(Matrix_layout) findViewById(R.id.movies_matrix_layout);
+        layout.post(new Runnable()
+        {
+
+            @Override
+            public void run()
+            {
+                width=layout.getWidth();
+                horizontal_margin=(int)(0.025*width);
+                width=(width/2)-2*horizontal_margin;
+
+                add_movies_example();
+
+            }
+        });
+
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        width=layout.getMeasuredWidth();
+
     }
 
     public void add_movies_example(){
@@ -35,7 +55,7 @@ public class Movie_selection extends AppCompatActivity {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
         );
-        params.setMargins(dp_px(2), 0, dp_px(2), dp_px(2));
+        params.setMargins(horizontal_margin, 0, horizontal_margin, dp_px(2));
 
         for(int i=0;i<15;i++){
             MovieView movie=new MovieView(this);
@@ -45,15 +65,17 @@ public class Movie_selection extends AppCompatActivity {
         }
 
     }
+
     private int dp_px(int measure){
         Resources r = this.getResources();
         int px = (int) TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP,
-                15,
+                measure,
                 r.getDisplayMetrics()
         );
         return px;
     }
+
 
 
 }
