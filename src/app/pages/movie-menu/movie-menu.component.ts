@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { movieService } from 'src/app/services/movieService';
 import { SwalService } from 'src/app/services/swalService';
 
 @Component({
@@ -8,13 +9,19 @@ import { SwalService } from 'src/app/services/swalService';
   styleUrls: ['./movie-menu.component.css'],
 })
 export class MovieMenuComponent implements OnInit {
-  constructor(public snackmat: MatSnackBar, private swal: SwalService) {}
+  constructor(
+    public snackmat: MatSnackBar,
+    private swal: SwalService,
+    private movieService: movieService
+  ) {}
   chairs: any[] = [];
   projections: any[] = [];
   scrollableItemSize = 100;
 
   currentProjection: any;
   currentChair: any;
+
+  movie: any;
 
   @ViewChild('panel', { read: ElementRef }) public panel: any;
   randomIntFromInterval(min: number, max: number) {
@@ -28,6 +35,8 @@ export class MovieMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.movie = this.movieService.getCurrentMovie();
+
     for (let i = 0; i < 50; i++) {
       const newChair = {
         state: this.getRandomBool(),

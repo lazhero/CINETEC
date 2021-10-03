@@ -16,9 +16,21 @@
   align-items: stretch;
   align-content: stretch;
 }
+.infoContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 .infoDisp {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+}
+.infoTxt {
+  color: white;
+  font-size: 12px;
+  margin: 5px 5px 5px 5px;
 }
 .infoCard {
   margin-top: 23px;
@@ -26,7 +38,7 @@
   background-color: #2b2e35;
   border-radius: 4px;
 
-  height: 23px;
+  width: auto;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -34,7 +46,10 @@
   justify-content: center;
   align-items: center;
 }
-
+.imageSrc {
+  width: 220px;
+  height: 270px;
+}
 .proyectionsDisp {
   margin-top: 26px;
 }

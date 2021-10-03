@@ -1,20 +1,34 @@
 <div class="mainView">
-    <div class="viewContainer">
-        <div class="text" style="color: white; font-size: 30px;">El semestre feliz</div>
 
-        <div class="infoDisp">
-            <div class="infoCard" style="width: 106px;">
-                <div class="text" style="color: white; font-size: 12px;">Duración: 90 m
+    <div class="viewContainer">
+        <div class="text" style="color: white; font-size: 30px;">{{movie.name}}</div>
+        <div class="infoContainer">
+
+            <div class="infoDisp">
+                <div class="infoCard" >
+                    <div class="text infoTxt">Duración: {{movie.duration}} m
+                    </div>
+                </div>
+                <div class="infoCard" >
+                    <div class="text infoTxt" >Precio niños: {{movie.kidPrice}}
+                    </div>
+                </div>
+                <div class="infoCard" >
+                    <div class="text infoTxt" >Precio adultos: {{movie.adultPrice}}
+                    </div>
+                </div>
+
+                <div class="infoCard">
+                    <div class="text infoTxt">Precio adulto mayor: {{movie.elderPrice}}
+                    </div>
+                </div>
+                <div class="infoCard" >
+                    <div class="text infoTxt">Nombre original: {{movie.originalName}}
+                    </div>
                 </div>
             </div>
-            <div class="infoCard" style="width: 136px;">
-                <div class="text" style="color: white; font-size: 12px;">Director: Mark Sains
-                </div>
-            </div>
-            <div class="infoCard" style="width: 106px;">
-                <div class="text" style="color: white; font-size: 12px;">Puntuación: 1
-                </div>
-            </div>
+
+            <img class="imageSrc" src="{{movie.image}}" alt="">
         </div>
 
         <div class="proyectionsDisp">
@@ -50,42 +64,40 @@
 
             <div class="hLine" style="margin-top: 2em;"></div>
 
-            <div class="text" style="color: white; font-size: 30px ;margin:1em 0em 0em 0em ">Asientos</div>
-            <div class="text" style="color: white; font-size: 19px;  margin:1em 0em 0em 1em ;">seleccione su asiento</div>
-            <div class="chairsDisplayerContainer">
-                <div class="chairsDisplayer">
-                    <div class="chair" *ngFor="let chair of chairs">
+            <div *ngIf="currentProjection!=undefined">
+                <div class="text" style="color: white; font-size: 30px ;margin:1em 0em 0em 0em ">Asientos</div>
+                <div class="text" style="color: white; font-size: 19px;  margin:1em 0em 0em 1em ;">seleccione su asiento</div>
+                <div  class="chairsDisplayerContainer">
+                    <div class="chairsDisplayer">
+                        <div class="chair" *ngFor="let chair of chairs">
 
-                        <div *ngIf="chair.state &&!chair.selected" (click)="selectChair(chair)">
-                            <img  class="chairIcon" src="../../../assets/chair.svg" alt="">
-                            <div class="chairText" style="color: #333333;" >{{chair.number}}</div>
+                            <div *ngIf="chair.state &&!chair.selected" (click)="selectChair(chair)">
+                                <img  class="chairIcon" src="../../../assets/chair.svg" alt="">
+                                <div class="chairText" style="color: #333333;" >{{chair.number}}</div>
+                            </div>
+
+                            <div *ngIf="chair.state &&chair.selected" (click)="unselectAllChairs()">
+                                <img  class="chairIcon" src="../../../assets/chairSelected.svg" alt="">
+                                <div class="chairText" style="color: #333333;" >{{chair.number}}</div>
+                            </div>
+
+                            <div *ngIf="!chair.state" (click)="this.snackmat.open('Este asiento ya esta ocupado, por favor selecciona otro','Entendido')">
+                                <img  class="chairIcon" src="../../../assets/chairDisabled.svg" alt="">
+                                <div class="chairText" style="color: w;" >{{chair.number}}</div>
+                            </div>
                         </div>
-
-                        <div *ngIf="chair.state &&chair.selected" (click)="unselectAllChairs()">
-                            <img  class="chairIcon" src="../../../assets/chairSelected.svg" alt="">
-                            <div class="chairText" style="color: #333333;" >{{chair.number}}</div>
-                        </div>
-
-                        <div *ngIf="!chair.state" (click)="this.snackmat.open('Este asiento ya esta ocupado, por favor selecciona otro','Entendido')">
-                            <img  class="chairIcon" src="../../../assets/chairDisabled.svg" alt="">
-                            <div class="chairText" style="color: w;" >{{chair.number}}</div>
-                        </div>
-
-
+        
+                        <img class="screenIcon" src="../../../assets/ScreenIcon.svg" alt="">
                     </div>
-    
-                    <img class="screenIcon" src="../../../assets/ScreenIcon.svg" alt="">
-                  
-                    
                 </div>
-            </div>
-            <div class="centerDisp" style="margin-bottom: 5em;">
-                <div class="payButton" (click)="buyTicket()" style="margin: 2em 0 1em 0;">
-                    <div class="payButtonContainer">
-                        <div class="text" style="font-size: 16px; color: white; margin: .3em 0 0 .1em;">
-                            Comprar tiquete
+                <div  class="centerDisp" style="margin-bottom: 5em;">
+                    <div class="payButton" (click)="buyTicket()" style="margin: 2em 0 1em 0;">
+                        <div class="payButtonContainer">
+                            <div class="text" style="font-size: 16px; color: white; margin: .3em 0 0 .1em;">
+                                Comprar tiquete
+                            </div>
+                            <mat-icon style="color: white; font-size: 35px; margin: 0 0 .5em 1em;">credit_card</mat-icon>
                         </div>
-                        <mat-icon style="color: white; font-size: 35px; margin: 0 0 .5em 1em;">credit_card</mat-icon>
                     </div>
                 </div>
             </div>

@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SwalService } from '../app/services/swalService';
 import { BackendService } from './services/backend-service.service';
+import { movieService } from './services/movieService';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -19,7 +20,7 @@ import { BackendService } from './services/backend-service.service';
     BrowserAnimationsModule,
   ],
   exports: [DragScrollModule],
-  providers: [SwalService, BackendService],
+  providers: [SwalService, BackendService, movieService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

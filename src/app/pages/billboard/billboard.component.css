@@ -1,22 +1,21 @@
+.mainView {
+  display: flex;
+  flex-direction: column;
+}
 .title {
-  position: absolute;
   font-size: 300%;
   margin-left: 5%;
   margin-top: 2%;
   padding-bottom: 3%;
-
 }
 
-.movies-background{
-  position: absolute;
+.movies-background {
   margin-left: 5%;
   width: 90%;
 }
 .subTitle {
-  position: absolute;
   font-size: 270%;
   text-shadow: 4px 4px #6e6e6e;
-  margin-top: 8%;
   padding-left: 45%;
   padding-bottom: 2%;
 }
@@ -28,19 +27,19 @@
   margin-left: 7%;
 }
 .selectMovie {
+  transition: 0.3s;
   margin-left: 5%;
   width: 12%;
   margin-right: 5%;
 }
-.selectMovie:hover{
-  transition: s;
+.selectMovie:hover {
+  transition: 0.3s;
   height: 13%;
   width: 13%;
 }
 .movieRectangle {
   height: 140%;
   width: 120%;
-  margin-top: 150%;
   border-radius: 18px;
 }
 .imageSrc {
