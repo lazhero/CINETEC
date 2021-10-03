@@ -11,7 +11,7 @@
         <div class="movieDisplay">
             
             <div class="selectMovie" *ngFor="let movie of movies">
-                <div class="movieRectangle" style="background-color:#292929;" (click)="movieSelected(movie.name)">
+                <div class="movieRectangle" style="background-color:#292929;" (click)="movieSelected(movie)">
                     <div class="movieImage" >
                         <img class="imageSrc" src="{{movie.image}}" alt="">
                     </div>
@@ -25,4 +25,9 @@
 
     </div>
 
+</div>
+<div class="bottomBar">
+    <div class="text" style="font-size: 20px; color: white">
+        CineTEC
+    </div>
 </div>
