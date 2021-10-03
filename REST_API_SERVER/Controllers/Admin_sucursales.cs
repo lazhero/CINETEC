@@ -49,8 +49,16 @@ namespace REST_API_SERVER.Controllers
         {
             try
             {
-                //Db.Cinemas.FromSqlRaw("");
-                var cinema = Db.Cinemas.Where(suc => suc.Name == new_data.Name).Single();
+                var cinema = Db.Cinemas.Where(suc => suc.Name == new_data.Name).Include(c => c.Employees).Include(c => c.Rooms).Single();
+                
+                foreach(Employee emp in cinema.Employees)
+                {
+                    Db.Remove(emp);
+                }
+                foreach (Room room in cinema.Rooms)
+                {
+                    Db.Remove(room);
+                }
                 Db.Remove(cinema);
                 Db.SaveChanges();
                 return "Se elimino con exito";

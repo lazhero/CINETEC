@@ -11,9 +11,9 @@ CREATE TABLE CLIENT(
     PRIMARY KEY (Id_card, Username)
 );
 CREATE TABLE ROLE(
-    Id int,
+    Id smallserial,
     Name varchar(15),
-   PRIMARY KEY (Id)
+    PRIMARY KEY (Id)
 );
 CREATE TABLE EMPLOYEE(
   Id_card int,
@@ -37,6 +37,7 @@ CREATE TABLE CINEMA(
     Number_of_rooms smallint,
     PRIMARY KEY (Name)
 );
+
 CREATE TABLE ROOM(
     Cinema_name varchar(32),
     Rows smallint,
@@ -46,21 +47,24 @@ CREATE TABLE ROOM(
     Restriction_percent int,
     PRIMARY KEY (Cinema_name,Number)
 );
+
 CREATE TABLE PROJECTION(
-    Id int,
+    Id serial,
     Date date,
     Initial_time time,
     End_time time,
     Movie_original_name varchar(31),
     PRIMARY KEY (Id)
 );
+
 CREATE TABLE INVOICE(
-    Id int,
+    Id bigserial,
     Description varchar(255),
     Ticket_number int,
-    Total serial,
+    Total int,
     PRIMARY KEY (Id)
 );
+
 CREATE TABLE MOVIE(
     Original_name varchar(31),
     Name varchar(31),
@@ -71,13 +75,15 @@ CREATE TABLE MOVIE(
     Elder_price int,
     PRIMARY KEY (Original_name)
 );
+
 CREATE TABLE CLASSIFICATION(
-    Id int,
+    Id serial,
     Description varchar(255),
     Initial smallint,
     Final smallint,
     PRIMARY KEY (Id)
 );
+
 CREATE TABLE ACTOR(
     First_name varchar(15),
     Middle_name varchar(15),
@@ -86,6 +92,7 @@ CREATE TABLE ACTOR(
     Movie_name varchar(15),
     PRIMARY KEY (First_name,Middle_name,Last_name,Second_last_name)
 );
+
 CREATE TABLE DIRECTOR(
     First_name varchar(15),
     Middle_name varchar(15),
@@ -94,28 +101,33 @@ CREATE TABLE DIRECTOR(
     Movie_name varchar(31),
     PRIMARY KEY (First_name,Middle_name,Last_name,Second_last_name)
 );
+
 CREATE TABLE PROJECTION_INVOICE(
     Projection_id int,
     Invoice_id int,
     PRIMARY KEY (Projection_id,Invoice_id)
 );
+
 CREATE TABLE CLIENT_INVOICE(
     Client_id int,
     Invoice_id int,
     Client_username varchar(15),
     PRIMARY KEY (Client_id,invoice_id,Client_username)
 );
+
 CREATE TABLE PROJECTION_ROOM(
     Projection_id int,
     Cinema_name varchar(32),
     Room_id smallint,
     PRIMARY KEY (Projection_id,Cinema_name,Room_id)
 );
+
 CREATE TABLE MOVIE_CLASSIFICATION(
     Movie_original_name varchar(31),
     Classification_id int,
     PRIMARY KEY (Movie_original_name,Classification_id)
 );
+
 
 CREATE TABLE PROJECTION_CLIENT(
     Projection_id int,
