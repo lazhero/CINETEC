@@ -27,7 +27,7 @@ CREATE TABLE EMPLOYEE(
   Second_last_name varchar(15),
   First_date_working date,
   Cinema_name varchar(32),
-  Role_id int,
+  Role_id smallint,
   PRIMARY KEY(Id_card,Username)
 );
 
@@ -58,7 +58,7 @@ CREATE TABLE PROJECTION(
 );
 
 CREATE TABLE INVOICE(
-    Id bigserial,
+    Id serial,
     Description varchar(255),
     Ticket_number int,
     Total int,

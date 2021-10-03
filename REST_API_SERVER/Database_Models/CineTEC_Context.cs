@@ -1,22 +1,20 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System.Linq;
 
 #nullable disable
 
 namespace REST_API_SERVER.Database_Models
 {
-    public partial class TestingContext : DbContext
+    public partial class CineTEC_Context : DbContext
     {
-        public TestingContext()
+        public CineTEC_Context()
         {
         }
 
-        public TestingContext(DbContextOptions<TestingContext> options)
+        public CineTEC_Context(DbContextOptions<CineTEC_Context> options)
             : base(options)
         {
-            
         }
 
         public virtual DbSet<Actor> Actors { get; set; }
@@ -40,7 +38,7 @@ namespace REST_API_SERVER.Database_Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=localhost;Port=6200;Database=testing;Username=admin;Password=1234");
+                optionsBuilder.UseNpgsql("Host=localhost;Port=6200;Database=cinetec;Username=admin;Password=1234");
             }
         }
 
@@ -84,7 +82,7 @@ namespace REST_API_SERVER.Database_Models
             modelBuilder.Entity<Cinema>(entity =>
             {
                 entity.HasKey(e => e.Name)
-                      .HasName("cinema_pkey");
+                    .HasName("cinema_pkey");
 
                 entity.ToTable("cinema");
 
@@ -103,9 +101,7 @@ namespace REST_API_SERVER.Database_Models
             {
                 entity.ToTable("classification");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
@@ -281,9 +277,7 @@ namespace REST_API_SERVER.Database_Models
             {
                 entity.ToTable("invoice");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
@@ -291,9 +285,7 @@ namespace REST_API_SERVER.Database_Models
 
                 entity.Property(e => e.TicketNumber).HasColumnName("ticket_number");
 
-                entity.Property(e => e.Total)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("total");
+                entity.Property(e => e.Total).HasColumnName("total");
             });
 
             modelBuilder.Entity<Movie>(entity =>
@@ -352,9 +344,7 @@ namespace REST_API_SERVER.Database_Models
             {
                 entity.ToTable("projection");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Date)
                     .HasColumnType("date")
@@ -462,9 +452,7 @@ namespace REST_API_SERVER.Database_Models
             {
                 entity.ToTable("role");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(15)

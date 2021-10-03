@@ -12,7 +12,7 @@ namespace REST_API_SERVER.Database_Models
             Employees = new HashSet<Employee>();
         }
 
-        public int Id { get; set; }
+        public short Id { get; set; }
         public string Name { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }

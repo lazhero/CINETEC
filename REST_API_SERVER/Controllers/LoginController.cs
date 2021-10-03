@@ -12,7 +12,7 @@ namespace REST_API_SERVER.Controllers
     [Route("Login")]
     public class LoginController : Controller
     {
-        private TestingContext Db = new TestingContext();
+        private CineTEC_Context Db = new CineTEC_Context();
 
         [HttpPost]
         public string Post([FromBody]string[] user_data)

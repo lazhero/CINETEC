@@ -20,7 +20,7 @@ namespace REST_API_SERVER.Controllers
     [Route("Admin/Sucursales")]
     public class Admin_sucursales : Controller
     {
-        TestingContext Db = new TestingContext();
+        CineTEC_Context Db = new CineTEC_Context();
         [HttpGet]
         public List<Cinema> Get()
         {
@@ -50,7 +50,6 @@ namespace REST_API_SERVER.Controllers
             try
             {
                 var cinema = Db.Cinemas.Where(suc => suc.Name == new_data.Name).Include(c => c.Employees).Include(c => c.Rooms).Single();
-                
                 foreach(Employee emp in cinema.Employees)
                 {
                     Db.Remove(emp);
