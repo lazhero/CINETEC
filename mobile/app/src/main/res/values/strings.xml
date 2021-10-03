@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">CINETEC</string>
+    <string name="login_user_label">Ingrese su usuario</string>
+    <string name="login_user_hint">Usuario</string>
+    <string name="login_user_label_password">Ingrese su contraseña</string>
+    <string name="login_user_hint_password">Contraseña</string>
+    <string name="login_button_text">Ingresar</string>
+    <string name="movies_button_text">Horarios</string>
+    <string name="cinema_selection_label">Seleccion de Cine</string>
+    <string name="movie_selection_label">Seleccion de Pelicula</string>
+</resources>

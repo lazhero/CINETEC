@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/movie_image_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <com.example.cinetec.customviews.AspectRatioImageView
+        android:id="@+id/cover"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        app:ratio="1.5"
+        app:srcCompat="@drawable/avengers" />
+
+    <com.google.android.material.button.MaterialButton
+
+        android:id="@+id/branch_logo"
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:text="@string/movies_button_text"
+        android:textColor="#455A64"
+        android:textSize="20sp"
+        app:backgroundTint="@color/light_green"
+        app:cornerRadius="10dp"
+        tools:ignore="TextContrastCheck" />
+</LinearLayout>
