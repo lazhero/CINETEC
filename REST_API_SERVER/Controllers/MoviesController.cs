@@ -15,8 +15,7 @@ using Npgsql.Schema;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
 
-namespace REST_API_SERVER.Controllers
-{
+namespace REST_API_SERVER.Controllers{
     [ApiController]
     [Route("Admin/Movies")]
     public class MoviesController : Controller
@@ -25,8 +24,35 @@ namespace REST_API_SERVER.Controllers
         [HttpGet]
         public List<Movie> Get()
         {
-            var movies = Db.Movies.Include(m=> m.Projections).ToList();
-            return movies;
+            try{
+                var movies = Db.Movies.Include(m => m.Projections).ToList();
+                return movies;
+            }catch(Exception e)
+            {
+                throw new ArgumentException(e.ToString());
+            }
+        }
+        [HttpPost]
+        public void Post([FromBody] Movie mov)
+        {
+            try{
+                Db.Movies.Add(mov);
+                Db.SaveChanges();
+            }catch(Exception e){
+                throw new ArgumentException(e.ToString());
+            }
+        }
+        [HttpDelete]
+        public void Delete([FromBody] Movie new_mov)
+        {
+            try{
+                Db.Movies.Remove(new_mov);
+                Db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException(e.ToString());
+            }
         }
     }
 }

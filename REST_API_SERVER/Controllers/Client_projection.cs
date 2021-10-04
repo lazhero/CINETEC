@@ -1,18 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using REST_API_SERVER.Database_Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Query;
-using System.Threading.Tasks;
-using REST_API_SERVER.Database_Models;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using Npgsql;
-using NpgsqlTypes;
-using Npgsql.Util;
-using Npgsql.Logging;
-using Npgsql.Schema;
-using Microsoft.EntityFrameworkCore;
 
 namespace REST_API_SERVER.Controllers
 {
@@ -25,8 +16,7 @@ namespace REST_API_SERVER.Controllers
         [HttpGet]
         public List<Projection> Get(string cine_name)
         {
-            try
-            {
+            try{
                 var projection = Db.Projections
                                  .Include(p => p.MovieOriginalNameNavigation)
                                  .Include(p => p.ProjectionRooms)
@@ -46,8 +36,7 @@ namespace REST_API_SERVER.Controllers
                     }
                 }
                 return res;
-            }catch(Exception e)
-            {
+            }catch(Exception e){
                 throw new ArgumentException(e.ToString());
             }
         }

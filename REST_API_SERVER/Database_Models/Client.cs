@@ -13,7 +13,6 @@ namespace REST_API_SERVER.Database_Models
             ProjectionClients = new HashSet<ProjectionClient>();
         }
 
-        
         public DateTime? Birthdate { get; set; }
 
         public virtual ICollection<ClientInvoice> ClientInvoices { get; set; }

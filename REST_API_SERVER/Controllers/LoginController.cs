@@ -17,23 +17,27 @@ namespace REST_API_SERVER.Controllers
         [HttpPost]
         public Object Post([FromBody]string[] user_data)
         {
-            var clients = Db.Clients.ToList();
-            foreach(Client c in clients)
-            {
-                if(c.Username == user_data[0] && c.Password == user_data[1])
+            try{
+                var clients = Db.Clients.ToList();
+                foreach (Client c in clients)
                 {
-                    return c;
+                    if (c.Username == user_data[0] && c.Password == user_data[1])
+                    {
+                        return c;
+                    }
                 }
-            }
-            var emps = Db.Employees.ToList();
-            foreach (Employee emp in emps)
-            {
-                if (emp.Username == user_data[0] && emp.Password == user_data[1])
+                var emps = Db.Employees.ToList();
+                foreach (Employee emp in emps)
                 {
-                    return emp;
+                    if (emp.Username == user_data[0] && emp.Password == user_data[1])
+                    {
+                        return emp;
+                    }
                 }
+                return null;
+            }catch(Exception e){
+                throw new ArgumentException(e.ToString());
             }
-            return null;
         }
     }
 }
