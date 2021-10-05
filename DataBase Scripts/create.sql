@@ -12,7 +12,7 @@ CREATE TABLE CLIENT(
 );
 CREATE TABLE ROLE(
     Id smallserial,
-    Name varchar(15),
+    Name varchar(30),
     PRIMARY KEY (Id)
 );
 CREATE TABLE EMPLOYEE(
@@ -27,14 +27,13 @@ CREATE TABLE EMPLOYEE(
   Second_last_name varchar(15),
   First_date_working date,
   Cinema_name varchar(32),
-  Role_id smallint,
+  Role_id int,
   PRIMARY KEY(Id_card,Username)
 );
 
 CREATE TABLE CINEMA(
     Name varchar(32),
     Location varchar(31),
-    Number_of_rooms smallint,
     PRIMARY KEY (Name)
 );
 
@@ -43,7 +42,6 @@ CREATE TABLE ROOM(
     Rows smallint,
     Columns smallint,
     Number smallint,
-    Capacity smallint,
     Restriction_percent int,
     PRIMARY KEY (Cinema_name,Number)
 );
@@ -58,7 +56,7 @@ CREATE TABLE PROJECTION(
 );
 
 CREATE TABLE INVOICE(
-    Id serial,
+    Id bigserial,
     Description varchar(255),
     Ticket_number int,
     Total int,
@@ -100,6 +98,13 @@ CREATE TABLE DIRECTOR(
     Second_last_name varchar(15),
     Movie_name varchar(31),
     PRIMARY KEY (First_name,Middle_name,Last_name,Second_last_name)
+);
+
+CREATE TABLE SEAT(
+    Cinema_name varchar(32),
+    Room_Number smallint,
+    Seat_Number smallint,
+    PRIMARY KEY (Cinema_name,Room_Number,Seat_Number)
 );
 
 CREATE TABLE PROJECTION_INVOICE(
@@ -162,6 +167,9 @@ ALTER TABLE DIRECTOR
 ADD CONSTRAINT DIRECTOR_MOVIE
 FOREIGN KEY (Movie_name) REFERENCES  MOVIE(Original_name);
 
+ALTER TABLE SEAT
+ADD CONSTRAINT SEAT_ROOM
+FOREIGN KEY (Cinema_name,Room_Number) REFERENCES ROOM(Cinema_name,Number);
 
 ALTER TABLE PROJECTION_INVOICE
 ADD CONSTRAINT PI_PROJECTION
