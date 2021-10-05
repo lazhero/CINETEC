@@ -1,12 +1,12 @@
 CREATE TABLE CLIENT(
-    Id_card int ,
+    Id_card int UNIQUE ,
     Birthdate date,
     Phone_num int,
     First_name varchar(15),
     Middle_name varchar(15),
     Last_name varchar(15),
     Second_last_name varchar(15),
-    Username varchar(15),
+    Username varchar(15) UNIQUE,
     Password varchar(15),
     PRIMARY KEY (Id_card, Username)
 );
@@ -16,10 +16,10 @@ CREATE TABLE ROLE(
     PRIMARY KEY (Id)
 );
 CREATE TABLE EMPLOYEE(
-  Id_card int,
+  Id_card int UNIQUE,
   Phone_num int,
   Birthdate date,
-  Username varchar(15),
+  Username varchar(15) UNIQUE,
   Password varchar(15),
   First_name varchar(15),
   Middle_name varchar(15),
@@ -71,11 +71,15 @@ CREATE TABLE MOVIE(
     Kid_price int,
     Adult_price int,
     Elder_price int,
+    Director_First_name varchar(15),
+    Director_Middle_name varchar(15),
+    Director_Last_name varchar(15),
+    Director_Second_last_name varchar(15),
     PRIMARY KEY (Original_name)
 );
 
 CREATE TABLE CLASSIFICATION(
-    Id serial,
+    Id varchar(6),
     Description varchar(255),
     Initial smallint,
     Final smallint,
@@ -87,7 +91,6 @@ CREATE TABLE ACTOR(
     Middle_name varchar(15),
     Last_name varchar(15),
     Second_last_name varchar(15),
-    Movie_name varchar(15),
     PRIMARY KEY (First_name,Middle_name,Last_name,Second_last_name)
 );
 
@@ -96,15 +99,13 @@ CREATE TABLE DIRECTOR(
     Middle_name varchar(15),
     Last_name varchar(15),
     Second_last_name varchar(15),
-    Movie_name varchar(31),
     PRIMARY KEY (First_name,Middle_name,Last_name,Second_last_name)
 );
 
 CREATE TABLE SEAT(
-    Cinema_name varchar(32),
-    Room_Number smallint,
+    Projection_id int,
     Seat_Number smallint,
-    PRIMARY KEY (Cinema_name,Room_Number,Seat_Number)
+    PRIMARY KEY (Projection_id,Seat_Number)
 );
 
 CREATE TABLE PROJECTION_INVOICE(
@@ -129,7 +130,7 @@ CREATE TABLE PROJECTION_ROOM(
 
 CREATE TABLE MOVIE_CLASSIFICATION(
     Movie_original_name varchar(31),
-    Classification_id int,
+    Classification_id varchar(6),
     PRIMARY KEY (Movie_original_name,Classification_id)
 );
 
@@ -139,6 +140,16 @@ CREATE TABLE PROJECTION_CLIENT(
     Client_id_card int,
     Client_username varchar(15),
     PRIMARY KEY (Projection_id,Client_id_card,Client_username)
+);
+
+CREATE TABLE ACTOR_MOVIE(
+    Actor_first_name varchar(15),
+    Actor_middle_name varchar(15),
+    Actor_Last_name varchar(15),
+    Actor_second_last_name varchar(15),
+    Movie_Original_name varchar(31),
+    PRIMARY KEY (Actor_first_name,Actor_middle_name,Actor_Last_name,Actor_second_last_name,Movie_Original_name)
+
 );
 
 AlTER TABLE EMPLOYEE
@@ -157,19 +168,14 @@ ALTER TABLE PROJECTION
 ADD CONSTRAINT  PROJECTION_MOVIE
 FOREIGN KEY (Movie_original_name) REFERENCES  MOVIE(Original_name);
 
-ALTER TABLE ACTOR
-ADD CONSTRAINT ACTOR_MOVIE
-FOREIGN KEY (Movie_name) REFERENCES  MOVIE(Original_name);
 
-
-
-ALTER TABLE DIRECTOR
-ADD CONSTRAINT DIRECTOR_MOVIE
-FOREIGN KEY (Movie_name) REFERENCES  MOVIE(Original_name);
+ALTER TABLE MOVIE
+ADD CONSTRAINT MOVIE_DIRECTOR
+FOREIGN KEY (Director_First_name,Director_Middle_name,Director_Last_name,Director_Second_last_name) REFERENCES  DIRECTOR(First_name, Middle_name, Last_name, Second_last_name) ;
 
 ALTER TABLE SEAT
-ADD CONSTRAINT SEAT_ROOM
-FOREIGN KEY (Cinema_name,Room_Number) REFERENCES ROOM(Cinema_name,Number);
+ADD CONSTRAINT SEAT_PROJECTION
+FOREIGN KEY (Projection_id) REFERENCES PROJECTION(Id);
 
 ALTER TABLE PROJECTION_INVOICE
 ADD CONSTRAINT PI_PROJECTION
@@ -200,3 +206,9 @@ ADD CONSTRAINT  PC_PROJECTION
 FOREIGN KEY (projection_id) REFERENCES PROJECTION(Id),
 ADD CONSTRAINT PC_CLIENT
 FOREIGN KEY (Client_id_card,Client_username) REFERENCES CLIENT(Id_card,Username);
+
+ALTER TABLE ACTOR_MOVIE
+ADD CONSTRAINT AM_ACTOR
+FOREIGN KEY (Actor_first_name,Actor_middle_name,Actor_Last_name,Actor_second_last_name) REFERENCES ACTOR(FIRST_NAME, MIDDLE_NAME, LAST_NAME, SECOND_LAST_NAME) ,
+ADD CONSTRAINT AM_MOVIE
+FOREIGN KEY (Movie_Original_name) REFERENCES MOVIE(Original_name);
