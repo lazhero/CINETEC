@@ -1,19 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore.Query;
-using System.Threading.Tasks;
 using REST_API_SERVER.Database_Models;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
-using Npgsql;
-using NpgsqlTypes;
-using Npgsql.Util;
-using Npgsql.Logging;
-using Npgsql.Schema;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
 
 namespace REST_API_SERVER.Controllers
 {
@@ -23,38 +13,33 @@ namespace REST_API_SERVER.Controllers
     {
         CineTEC_Context Db = new CineTEC_Context();
         [HttpGet]
-        public List<Cinema> Get()
-        {
-            var cinemas = Db.Cinemas.Include(c => c.Rooms).Include(c => c.Employees).ToList();
-            return cinemas;
+        public List<Cinema> Get(){
+            try{
+                var cinemas = Db.Cinemas.Include(c => c.Rooms).Include(c => c.Employees).ToList();
+                return cinemas;
+            }catch(Exception e){
+                throw new ArgumentException(e.ToString());
+            }
         }
 
         [HttpPost]
         public void Add([FromBody] Cinema new_cinema)
         {
-            try
-            {
+            try{
                 Db.Add(new_cinema);
                 Db.SaveChanges();
-            }catch(Exception e)
-            {
+            }catch(Exception e){
                 throw new ArgumentException(e.ToString());
             }
-            
         }
 
         [HttpPut]
         public void Modify([FromBody] Cinema new_data)
         {
-            try
-            {
-                var cinema = Db.Cinemas.Find(new_data.Name);
-                cinema.Location = new_data.Location;
-                cinema.NumberOfRooms = new_data.NumberOfRooms;
+            try{
+                Db.Cinemas.Update(new_data);
                 Db.SaveChanges();
-            }
-            catch(Exception e)
-            {
+            }catch(Exception e){
                 throw new ArgumentException(e.ToString());
             }
         }
@@ -62,8 +47,7 @@ namespace REST_API_SERVER.Controllers
         [HttpDelete]
         public void Delete([FromBody] Cinema new_data)
         {
-            try
-            {
+            try{
                 var cinema = Db.Cinemas.Where(suc => suc.Name == new_data.Name).Include(c => c.Employees).Include(c => c.Rooms).Single();
                 foreach(Employee emp in cinema.Employees)
                 {
@@ -76,8 +60,7 @@ namespace REST_API_SERVER.Controllers
                 Db.Remove(cinema);
                 Db.SaveChanges();
             }
-            catch (Exception e)
-            {
+            catch (Exception e){
                 throw new ArgumentException(e.ToString());
             }
         }
