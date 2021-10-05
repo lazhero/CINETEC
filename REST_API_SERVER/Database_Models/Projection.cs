@@ -12,6 +12,7 @@ namespace REST_API_SERVER.Database_Models
             ProjectionClients = new HashSet<ProjectionClient>();
             ProjectionInvoices = new HashSet<ProjectionInvoice>();
             ProjectionRooms = new HashSet<ProjectionRoom>();
+            Seats = new HashSet<Seat>();
         }
 
         public int Id { get; set; }
@@ -24,5 +25,6 @@ namespace REST_API_SERVER.Database_Models
         public virtual ICollection<ProjectionClient> ProjectionClients { get; set; }
         public virtual ICollection<ProjectionInvoice> ProjectionInvoices { get; set; }
         public virtual ICollection<ProjectionRoom> ProjectionRooms { get; set; }
+        public virtual ICollection<Seat> Seats { get; set; }
     }
 }

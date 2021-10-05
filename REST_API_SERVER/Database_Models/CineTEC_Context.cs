@@ -18,6 +18,7 @@ namespace REST_API_SERVER.Database_Models
         }
 
         public virtual DbSet<Actor> Actors { get; set; }
+        public virtual DbSet<ActorMovie> ActorMovies { get; set; }
         public virtual DbSet<Cinema> Cinemas { get; set; }
         public virtual DbSet<Classification> Classifications { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
@@ -33,12 +34,13 @@ namespace REST_API_SERVER.Database_Models
         public virtual DbSet<ProjectionRoom> ProjectionRooms { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
+        public virtual DbSet<Seat> Seats { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseNpgsql("Host=25.92.13.1;Port=6200;Database=cinetec;Username=admin;Password=1234");
+                optionsBuilder.UseNpgsql("Host=localhost;Port=6200;Database=cinetec;Username=admin;Password=1234");
             }
         }
 
@@ -68,15 +70,46 @@ namespace REST_API_SERVER.Database_Models
                 entity.Property(e => e.SecondLastName)
                     .HasMaxLength(15)
                     .HasColumnName("second_last_name");
+            });
 
-                entity.Property(e => e.MovieName)
+            modelBuilder.Entity<ActorMovie>(entity =>
+            {
+                entity.HasKey(e => new { e.ActorFirstName, e.ActorMiddleName, e.ActorLastName, e.ActorSecondLastName, e.MovieOriginalName })
+                    .HasName("actor_movie_pkey");
+
+                entity.ToTable("actor_movie");
+
+                entity.Property(e => e.ActorFirstName)
                     .HasMaxLength(15)
-                    .HasColumnName("movie_name");
+                    .HasColumnName("actor_first_name");
 
-                entity.HasOne(d => d.MovieNameNavigation)
-                    .WithMany(p => p.Actors)
-                    .HasForeignKey(d => d.MovieName)
-                    .HasConstraintName("actor_movie");
+                entity.Property(e => e.ActorMiddleName)
+                    .HasMaxLength(15)
+                    .HasColumnName("actor_middle_name");
+
+                entity.Property(e => e.ActorLastName)
+                    .HasMaxLength(15)
+                    .HasColumnName("actor_last_name");
+
+                entity.Property(e => e.ActorSecondLastName)
+                    .HasMaxLength(15)
+                    .HasColumnName("actor_second_last_name");
+
+                entity.Property(e => e.MovieOriginalName)
+                    .HasMaxLength(31)
+                    .HasColumnName("movie_original_name");
+
+                entity.HasOne(d => d.MovieOriginalNameNavigation)
+                    .WithMany(p => p.ActorMovies)
+                    .HasForeignKey(d => d.MovieOriginalName)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("am_movie");
+
+                entity.HasOne(d => d.Actor)
+                    .WithMany(p => p.ActorMovies)
+                    .HasForeignKey(d => new { d.ActorFirstName, d.ActorMiddleName, d.ActorLastName, d.ActorSecondLastName })
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("am_actor");
             });
 
             modelBuilder.Entity<Cinema>(entity =>
@@ -93,15 +126,15 @@ namespace REST_API_SERVER.Database_Models
                 entity.Property(e => e.Location)
                     .HasMaxLength(31)
                     .HasColumnName("location");
-
-                entity.Property(e => e.NumberOfRooms).HasColumnName("number_of_rooms");
             });
 
             modelBuilder.Entity<Classification>(entity =>
             {
                 entity.ToTable("classification");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .HasMaxLength(6)
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Description)
                     .HasMaxLength(255)
@@ -118,6 +151,12 @@ namespace REST_API_SERVER.Database_Models
                     .HasName("client_pkey");
 
                 entity.ToTable("client");
+
+                entity.HasIndex(e => e.IdCard, "client_id_card_key")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Username, "client_username_key")
+                    .IsUnique();
 
                 entity.Property(e => e.IdCard).HasColumnName("id_card");
 
@@ -202,15 +241,6 @@ namespace REST_API_SERVER.Database_Models
                 entity.Property(e => e.SecondLastName)
                     .HasMaxLength(15)
                     .HasColumnName("second_last_name");
-
-                entity.Property(e => e.MovieName)
-                    .HasMaxLength(31)
-                    .HasColumnName("movie_name");
-
-                entity.HasOne(d => d.MovieNameNavigation)
-                    .WithMany(p => p.Directors)
-                    .HasForeignKey(d => d.MovieName)
-                    .HasConstraintName("director_movie");
             });
 
             modelBuilder.Entity<Employee>(entity =>
@@ -219,6 +249,12 @@ namespace REST_API_SERVER.Database_Models
                     .HasName("employee_pkey");
 
                 entity.ToTable("employee");
+
+                entity.HasIndex(e => e.IdCard, "employee_id_card_key")
+                    .IsUnique();
+
+                entity.HasIndex(e => e.Username, "employee_username_key")
+                    .IsUnique();
 
                 entity.Property(e => e.IdCard).HasColumnName("id_card");
 
@@ -301,6 +337,22 @@ namespace REST_API_SERVER.Database_Models
 
                 entity.Property(e => e.AdultPrice).HasColumnName("adult_price");
 
+                entity.Property(e => e.DirectorFirstName)
+                    .HasMaxLength(15)
+                    .HasColumnName("director_first_name");
+
+                entity.Property(e => e.DirectorLastName)
+                    .HasMaxLength(15)
+                    .HasColumnName("director_last_name");
+
+                entity.Property(e => e.DirectorMiddleName)
+                    .HasMaxLength(15)
+                    .HasColumnName("director_middle_name");
+
+                entity.Property(e => e.DirectorSecondLastName)
+                    .HasMaxLength(15)
+                    .HasColumnName("director_second_last_name");
+
                 entity.Property(e => e.ElderPrice).HasColumnName("elder_price");
 
                 entity.Property(e => e.Image).HasColumnName("image");
@@ -312,6 +364,11 @@ namespace REST_API_SERVER.Database_Models
                     .HasColumnName("name");
 
                 entity.Property(e => e.TimeLength).HasColumnName("time_length");
+
+                entity.HasOne(d => d.Director)
+                    .WithMany(p => p.Movies)
+                    .HasForeignKey(d => new { d.DirectorFirstName, d.DirectorMiddleName, d.DirectorLastName, d.DirectorSecondLastName })
+                    .HasConstraintName("movie_director");
             });
 
             modelBuilder.Entity<MovieClassification>(entity =>
@@ -325,7 +382,9 @@ namespace REST_API_SERVER.Database_Models
                     .HasMaxLength(31)
                     .HasColumnName("movie_original_name");
 
-                entity.Property(e => e.ClassificationId).HasColumnName("classification_id");
+                entity.Property(e => e.ClassificationId)
+                    .HasMaxLength(6)
+                    .HasColumnName("classification_id");
 
                 entity.HasOne(d => d.Classification)
                     .WithMany(p => p.MovieClassifications)
@@ -455,7 +514,7 @@ namespace REST_API_SERVER.Database_Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Name)
-                    .HasMaxLength(15)
+                    .HasMaxLength(30)
                     .HasColumnName("name");
             });
 
@@ -472,8 +531,6 @@ namespace REST_API_SERVER.Database_Models
 
                 entity.Property(e => e.Number).HasColumnName("number");
 
-                entity.Property(e => e.Capacity).HasColumnName("capacity");
-
                 entity.Property(e => e.Columns).HasColumnName("columns");
 
                 entity.Property(e => e.RestrictionPercent).HasColumnName("restriction_percent");
@@ -485,6 +542,24 @@ namespace REST_API_SERVER.Database_Models
                     .HasForeignKey(d => d.CinemaName)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("room_cinema");
+            });
+
+            modelBuilder.Entity<Seat>(entity =>
+            {
+                entity.HasKey(e => new { e.ProjectionId, e.SeatNumber })
+                    .HasName("seat_pkey");
+
+                entity.ToTable("seat");
+
+                entity.Property(e => e.ProjectionId).HasColumnName("projection_id");
+
+                entity.Property(e => e.SeatNumber).HasColumnName("seat_number");
+
+                entity.HasOne(d => d.Projection)
+                    .WithMany(p => p.Seats)
+                    .HasForeignKey(d => d.ProjectionId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("seat_projection");
             });
 
             OnModelCreatingPartial(modelBuilder);
