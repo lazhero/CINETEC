@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
@@ -52,6 +53,8 @@ public class Matrix_layout extends LinearLayout {
         View view= LayoutInflater.from(context).inflate(R.layout.layout_matrix_container,this);
         rows=(LinearLayout) findViewById(R.id.matriz_rows);
         current_row=new LinearLayout(getContext());
+        current_row.setGravity(Gravity.CENTER_HORIZONTAL);
+        current_row.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
         rows.addView(current_row);
         this.setGravity(Gravity.CENTER);
         /*
@@ -70,6 +73,8 @@ public class Matrix_layout extends LinearLayout {
         int number_of_child=current_row.getChildCount();
         if(number_of_child>=max_per_row){
             current_row=new LinearLayout(getContext());
+            current_row.setGravity(Gravity.CENTER_HORIZONTAL);
+            current_row.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.WRAP_CONTENT));
             rows.addView(current_row);
         }
         current_row.addView(view);
