@@ -54,16 +54,16 @@ values (118050449,'2001-03-10',85294927,'Brian','Leo','Wagemans','Alvarado','Dom
 
 
 INSERT INTO EMPLOYEE (Id_card, Phone_num, Birthdate, Username, Password, First_name, Middle_name, Last_name, Second_last_name, First_date_working, Cinema_name, Role_id)
-VALUES(303030301,61302727,'2000-04-30','lazhero','1234','Luis','Andrey','Zuniga','Hernandez','2020-03-19','Paseo de las flores',(SELECT Id FROM Role WHERE Name='Administrador'));
+VALUES(303030301,61302727,'2000-04-30','lazhero','1234','Luis','Andrey','Zuniga','Hernandez','2020-03-19','Paseo de las flores',1);
 
 INSERT INTO EMPLOYEE (Id_card, Phone_num, Birthdate, Username, Password, First_name, Middle_name, Last_name, Second_last_name, First_date_working, Cinema_name, Role_id)
-VALUES(707070701,88334455,'1965-02-25','fabian_25','1234','Fabian','Felipe','Alvarado','Marquez','2020-03-19','Paseo de las flores',(SELECT Id FROM Role WHERE Name='Secretaria'));
+VALUES(707070701,88334455,'1965-02-25','fabian_25','1234','Fabian','Felipe','Alvarado','Marquez','2020-03-19','Paseo de las flores',1);
 
 INSERT INTO EMPLOYEE (Id_card, Phone_num, Birthdate, Username, Password, First_name, Middle_name, Last_name, Second_last_name, First_date_working, Cinema_name, Role_id)
-VALUES(497887875,88447481,'1975-10-28','pedrito_ramirez','8888','Pedro','Marco','Ramirez','Pereira','2020-03-19','Terramall',(SELECT Id FROM Role WHERE Name='Agente de seguridad'));
+VALUES(497887875,88447481,'1975-10-28','pedrito_ramirez','8888','Pedro','Marco','Ramirez','Pereira','2020-03-19','Terramall',1);
 
 INSERT INTO EMPLOYEE (Id_card, Phone_num, Birthdate, Username, Password, First_name, Middle_name, Last_name, Second_last_name, First_date_working, Cinema_name, Role_id)
-VALUES(225622221,40804000,'1996-10-28','hidalgo_sofia','8888','Sofia','Dayana','Azofeifa','Martinez','2020-03-19','Citymall',(SELECT Id FROM Role WHERE Name='Agente Contable'));
+VALUES(225622221,40804000,'1996-10-28','hidalgo_sofia','8888','Sofia','Dayana','Azofeifa','Martinez','2020-03-19','Citymall',1);
 
 
 INSERT INTO CLIENT(ID_CARD, BIRTHDATE, PHONE_NUM, FIRST_NAME, MIDDLE_NAME, LAST_NAME, SECOND_LAST_NAME, USERNAME, PASSWORD)

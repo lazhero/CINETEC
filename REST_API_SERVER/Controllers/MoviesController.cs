@@ -13,7 +13,8 @@ using Npgsql.Util;
 using Npgsql.Logging;
 using Npgsql.Schema;
 using Microsoft.EntityFrameworkCore;
-using System.Net;
+using System.IO;
+using System.Drawing;
 
 namespace REST_API_SERVER.Controllers{
     [ApiController]
@@ -39,6 +40,31 @@ namespace REST_API_SERVER.Controllers{
                 Db.Movies.Add(mov);
                 Db.SaveChanges();
             }catch(Exception e){
+                throw new ArgumentException(e.ToString());
+            }
+        }
+        [HttpPut]
+        public void Put([FromBody] Movie new_mov)
+        {
+            try
+            {
+                var mov = Db.Movies.Find(new_mov);
+                /*
+                        using (Stream bmpStream = System.IO.File.Open("image/50_sombras.jpg", System.IO.FileMode.Open))
+                        {
+                            Image image = Image.FromStream(bmpStream);
+
+                            using (var ms = new MemoryStream())
+                            {
+                                image.Save(ms, image.RawFormat);
+                                mov.Image = ms.ToArray();
+                            }
+                            bmpStream.Close();
+                        }
+                */ 
+                mov.Image = new_mov.Image;
+                Db.SaveChanges();
+            }catch (Exception e){
                 throw new ArgumentException(e.ToString());
             }
         }

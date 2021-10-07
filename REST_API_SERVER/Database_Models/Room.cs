@@ -16,7 +16,6 @@ namespace REST_API_SERVER.Database_Models
         public short? Rows { get; set; }
         public short? Columns { get; set; }
         public short Number { get; set; }
-        public short? Capacity { get; set; }
         public int? RestrictionPercent { get; set; }
 
         public virtual Cinema CinemaNameNavigation { get; set; }

@@ -11,7 +11,7 @@ CREATE TABLE CLIENT(
     PRIMARY KEY (Id_card, Username)
 );
 CREATE TABLE ROLE(
-    Id smallserial,
+    Id serial,
     Name varchar(30),
     PRIMARY KEY (Id)
 );
@@ -56,7 +56,7 @@ CREATE TABLE PROJECTION(
 );
 
 CREATE TABLE INVOICE(
-    Id bigserial,
+    Id serial,
     Description varchar(255),
     Ticket_number int,
     Total int,

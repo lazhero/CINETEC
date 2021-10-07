@@ -9,8 +9,7 @@ namespace REST_API_SERVER.Database_Models
     {
         public Movie()
         {
-            Actors = new HashSet<Actor>();
-            Directors = new HashSet<Director>();
+            ActorMovies = new HashSet<ActorMovie>();
             MovieClassifications = new HashSet<MovieClassification>();
             Projections = new HashSet<Projection>();
         }
@@ -22,9 +21,13 @@ namespace REST_API_SERVER.Database_Models
         public int? KidPrice { get; set; }
         public int? AdultPrice { get; set; }
         public int? ElderPrice { get; set; }
+        public string DirectorFirstName { get; set; }
+        public string DirectorMiddleName { get; set; }
+        public string DirectorLastName { get; set; }
+        public string DirectorSecondLastName { get; set; }
 
-        public virtual ICollection<Actor> Actors { get; set; }
-        public virtual ICollection<Director> Directors { get; set; }
+        public virtual Director Director { get; set; }
+        public virtual ICollection<ActorMovie> ActorMovies { get; set; }
         public virtual ICollection<MovieClassification> MovieClassifications { get; set; }
         public virtual ICollection<Projection> Projections { get; set; }
     }

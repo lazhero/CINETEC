@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace REST_API_SERVER.Database_Models
 {
-    public partial class Client : Person
+    public partial class Client: Person
     {
         public Client()
         {

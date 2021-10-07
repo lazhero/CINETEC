@@ -12,7 +12,7 @@ namespace REST_API_SERVER.Database_Models
             MovieClassifications = new HashSet<MovieClassification>();
         }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Description { get; set; }
         public short? Initial { get; set; }
         public short? Final { get; set; }
