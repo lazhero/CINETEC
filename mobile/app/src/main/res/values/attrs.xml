@@ -6,4 +6,5 @@
     <declare-styleable name="CinemaSelection">
         <attr name="Text" format="string"></attr>
     </declare-styleable>
+    <attr name="myButtonStyle" format="reference"/>
 </resources>

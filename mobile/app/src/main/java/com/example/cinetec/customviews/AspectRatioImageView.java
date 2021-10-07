@@ -53,6 +53,5 @@ public class AspectRatioImageView extends AppCompatImageView {
             width=(int)(height/ratio);
         }
         setMeasuredDimension(width,height);
-
     }
 }

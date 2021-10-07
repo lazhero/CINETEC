@@ -7,6 +7,8 @@ import android.os.Bundle;
 
 import com.example.cinetec.ScreenApp.Cinema_select;
 import com.example.cinetec.ScreenApp.Movie_selection;
+import com.example.cinetec.ScreenApp.Proyection_activity;
+import com.example.cinetec.ScreenApp.Seat_activity;
 
 public class MainActivity extends AppCompatActivity {
 
