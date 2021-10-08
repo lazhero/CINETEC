@@ -25,12 +25,14 @@ namespace REST_API_SERVER.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] Client new_client)
+        public string Post([FromBody] Client new_client)
         {
             try{
                 Db.Clients.Add(new_client);
                 Db.SaveChanges();
+                return "Success";
             }catch (Exception e){
+                return "ERROR CLIENT ALREADY EXISTS";
                 throw new ArgumentException(e.ToString());
             }
         }

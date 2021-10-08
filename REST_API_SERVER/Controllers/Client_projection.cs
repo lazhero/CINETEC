@@ -20,7 +20,7 @@ namespace REST_API_SERVER.Controllers
                 var projection = Db.Projections
                                  .Include(p => p.MovieOriginalNameNavigation)
                                  .Include(p => p.ProjectionRooms)
-                                    .ThenInclude(p => p.CinemaName)
+                                    .ThenInclude(p => p.Room)
                                  .ToList();
 
                 List<Projection> res = new List<Projection>();
@@ -30,8 +30,7 @@ namespace REST_API_SERVER.Controllers
                     {
                         if (room.CinemaName == cine_name)
                         {
-                            res.Append(pro);
-                            break;
+                            res.Add(pro);
                         }
                     }
                 }
