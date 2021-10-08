@@ -1,0 +1,31 @@
+<div class="mainView">
+
+    <div class="mainTitle" style="color:white">
+        CineTEC
+    </div>
+
+    <div class="mainDivision">
+
+        
+
+        <div class="citiesList">
+
+            <div class="questionText" style="color:white">
+                ¿Cuál cine quieres visitar?
+            </div>
+            
+            <div  *ngFor="let theater of theaters" (click)="openTheatherBillBoard(theater)">
+                <div class="theaters">
+                    <img  class="cityIcon" src="../../../assets/CityIcon.svg" alt="">
+                    <div class="citiesName" style="color: white;">
+                        {{theater.name}}
+                    </div>
+                </div>
+                <div class="hLine" style="border-bottom: white solid 1px;"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

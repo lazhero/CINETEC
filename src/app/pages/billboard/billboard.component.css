@@ -1,0 +1,58 @@
+.mainView {
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  font-size: 300%;
+  margin-left: 5%;
+  margin-top: 2%;
+  padding-bottom: 3%;
+}
+
+.movies-background {
+  margin-left: 5%;
+  width: 90%;
+}
+.subTitle {
+  font-size: 270%;
+  text-shadow: 4px 4px #6e6e6e;
+  padding-left: 45%;
+  padding-bottom: 2%;
+}
+.movieDisplay {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-left: 7%;
+}
+.selectMovie {
+  transition: 0.3s;
+  margin-left: 5%;
+  width: 12%;
+  margin-right: 5%;
+}
+.selectMovie:hover {
+  transition: 0.3s;
+  height: 13%;
+  width: 13%;
+}
+.movieRectangle {
+  height: 140%;
+  width: 120%;
+  border-radius: 18px;
+}
+.imageSrc {
+  width: 100%;
+  height: 170%;
+}
+.hourText {
+  text-align: center;
+}
+
+.bottomTitle {
+  position: absolute;
+  font-size: 175%;
+  margin-top: 65%;
+  margin-left: 45%;
+}

@@ -1,0 +1,108 @@
+.mainView {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  align-content: center;
+}
+.register-block {
+  width: 40%;
+  height: 87%;
+  background: #1f2127;
+  border-radius: 2%;
+  margin-top: 5rem;
+  border: 1px solid #ffffff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+}
+.registerContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+}
+.login-button:hover {
+  background: var(--hoverColor);
+}
+.Register-Name {
+  left: 10%;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 6vh;
+
+  color: #ffffff;
+}
+.register-form {
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  border-bottom: solid 1px white;
+  margin-top: 6%;
+  margin-right: 1vh;
+}
+.fieldInput {
+  background: none;
+  width: 12rem;
+  height: 18px;
+  line-height: 25px;
+  display: flex;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  color: white;
+  border: none;
+}
+::placeholder {
+  color: rgb(177, 177, 177);
+  opacity: 1; /* Firefox */
+}
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-content: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.login-button {
+  width: 27vh;
+  height: 8vh;
+  border: 1px solid #ffffff;
+  background-color: #1f2127;
+  border-radius: 6px;
+  margin-top: 10%;
+  right: 5vh;
+  bottom: 5vh;
+}
+.input-label {
+  padding-bottom: 1vh;
+  display: block;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0.02em;
+
+  color: #3e3e3e;
+}
+
+.slide {
+  font-family: Poppins;
+  font-size: 9vh;
+  font-style: normal;
+  font-weight: bold;
+  color: white;
+  left: 2.8%;
+  top: 8.04%;
+}
