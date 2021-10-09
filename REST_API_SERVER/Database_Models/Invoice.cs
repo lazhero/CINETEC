@@ -10,7 +10,7 @@ namespace REST_API_SERVER.Database_Models
         public Invoice()
         {
             ClientInvoices = new HashSet<ClientInvoice>();
-            ProjectionInvoices = new HashSet<ProjectionInvoice>();
+            Seats = new HashSet<Seat>();
         }
 
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace REST_API_SERVER.Database_Models
         public int? Total { get; set; }
 
         public virtual ICollection<ClientInvoice> ClientInvoices { get; set; }
-        public virtual ICollection<ProjectionInvoice> ProjectionInvoices { get; set; }
+        public virtual ICollection<Seat> Seats { get; set; }
     }
 }

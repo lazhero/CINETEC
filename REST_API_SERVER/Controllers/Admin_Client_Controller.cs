@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,12 +28,17 @@ namespace REST_API_SERVER.Controllers
         public string Post([FromBody] Client new_client)
         {
             try{
+              if (Db.Clients.Find(new_client.IdCard, new_client.Username) == null)
+              {
                 Db.Clients.Add(new_client);
                 Db.SaveChanges();
-                return "Success";
+              }
+              else {
+                throw new ArgumentException("CLIENT ALREADY EXIST");
+              }
+                return "{\"response\":\"Succsess\"}";
             }catch (Exception e){
-                return "ERROR CLIENT ALREADY EXISTS";
-                throw new ArgumentException(e.ToString());
+                return "{\"response\":\"ERROR\"}";
             }
         }
 

@@ -19,7 +19,6 @@ namespace REST_API_SERVER.Controllers
       {
         var movies = Db.Movies
                            .Include(m => m.Projections)
-                           .ThenInclude(p=>p.ProjectionRooms)
                            .ToList();
         var res = new List<Movie>();
         foreach(Movie mov in movies)
@@ -39,13 +38,10 @@ namespace REST_API_SERVER.Controllers
 
     private bool Is_in_cinema(Movie mov, string cinema_name)
     {
-       foreach(Projection Proj in mov.Projections)
+       foreach(Projection proj in mov.Projections)
        {
-          foreach(ProjectionRoom PR in Proj.ProjectionRooms)
-          {
-             if(PR.CinemaName == cinema_name){
+          if(proj.CinemaName == cinema_name){
                return true;
-             }
           }
        }
        return false;

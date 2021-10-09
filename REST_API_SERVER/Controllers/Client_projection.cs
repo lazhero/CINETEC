@@ -18,19 +18,14 @@ namespace REST_API_SERVER.Controllers
             try{
                 var projection = Db.Projections
                                  .Include(p => p.MovieOriginalNameNavigation)
-                                 .Include(p => p.ProjectionRooms)
-                                    .ThenInclude(p => p.Room)
                                  .Where(p=>p.MovieOriginalName == Movie_name)
                                  .ToList();
                 List<Projection> res = new List<Projection>();
                 foreach (Projection pro in projection)
                 {
-                    foreach (ProjectionRoom room in pro.ProjectionRooms)
-                    {
-                      if (room.CinemaName == Cinema_name){
+                   if (pro.CinemaName == Cinema_name){
                           res.Add(pro);
-                      }
-                    }
+                   }
                 }
                 return res;
             }catch(Exception e){

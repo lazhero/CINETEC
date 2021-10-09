@@ -9,9 +9,6 @@ namespace REST_API_SERVER.Database_Models
     {
         public Projection()
         {
-            ProjectionClients = new HashSet<ProjectionClient>();
-            ProjectionInvoices = new HashSet<ProjectionInvoice>();
-            ProjectionRooms = new HashSet<ProjectionRoom>();
             Seats = new HashSet<Seat>();
         }
 
@@ -20,11 +17,10 @@ namespace REST_API_SERVER.Database_Models
         public TimeSpan? InitialTime { get; set; }
         public TimeSpan? EndTime { get; set; }
         public string MovieOriginalName { get; set; }
+        public short? RoomNumber { get; set; }
+        public string CinemaName { get; set; }
 
         public virtual Movie MovieOriginalNameNavigation { get; set; }
-        public virtual ICollection<ProjectionClient> ProjectionClients { get; set; }
-        public virtual ICollection<ProjectionInvoice> ProjectionInvoices { get; set; }
-        public virtual ICollection<ProjectionRoom> ProjectionRooms { get; set; }
         public virtual ICollection<Seat> Seats { get; set; }
     }
 }

@@ -7,11 +7,6 @@ namespace REST_API_SERVER.Database_Models
 {
     public partial class Room
     {
-        public Room()
-        {
-            ProjectionRooms = new HashSet<ProjectionRoom>();
-        }
-
         public string CinemaName { get; set; }
         public short? Rows { get; set; }
         public short? Columns { get; set; }
@@ -19,6 +14,5 @@ namespace REST_API_SERVER.Database_Models
         public int? RestrictionPercent { get; set; }
 
         public virtual Cinema CinemaNameNavigation { get; set; }
-        public virtual ICollection<ProjectionRoom> ProjectionRooms { get; set; }
     }
 }
