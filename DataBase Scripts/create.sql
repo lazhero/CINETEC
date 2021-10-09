@@ -52,6 +52,8 @@ CREATE TABLE PROJECTION(
     Initial_time time,
     End_time time,
     Movie_original_name varchar(31),
+    Room_number smallint,
+    Cinema_name varchar(32),
     PRIMARY KEY (Id)
 );
 
@@ -105,13 +107,9 @@ CREATE TABLE DIRECTOR(
 CREATE TABLE SEAT(
     Projection_id int,
     Seat_Number smallint,
-    PRIMARY KEY (Projection_id,Seat_Number)
-);
-
-CREATE TABLE PROJECTION_INVOICE(
-    Projection_id int,
+    State smallint,
     Invoice_id int,
-    PRIMARY KEY (Projection_id,Invoice_id)
+    PRIMARY KEY (Projection_id,Seat_Number)
 );
 
 CREATE TABLE CLIENT_INVOICE(
@@ -121,25 +119,11 @@ CREATE TABLE CLIENT_INVOICE(
     PRIMARY KEY (Client_id,invoice_id,Client_username)
 );
 
-CREATE TABLE PROJECTION_ROOM(
-    Projection_id int,
-    Cinema_name varchar(32),
-    Room_id smallint,
-    PRIMARY KEY (Projection_id,Cinema_name,Room_id)
-);
 
 CREATE TABLE MOVIE_CLASSIFICATION(
     Movie_original_name varchar(31),
     Classification_id varchar(6),
     PRIMARY KEY (Movie_original_name,Classification_id)
-);
-
-
-CREATE TABLE PROJECTION_CLIENT(
-    Projection_id int,
-    Client_id_card int,
-    Client_username varchar(15),
-    PRIMARY KEY (Projection_id,Client_id_card,Client_username)
 );
 
 CREATE TABLE ACTOR_MOVIE(
@@ -166,7 +150,9 @@ FOREIGN KEY (Cinema_name) REFERENCES CINEMA(Name);
 
 ALTER TABLE PROJECTION
 ADD CONSTRAINT  PROJECTION_MOVIE
-FOREIGN KEY (Movie_original_name) REFERENCES  MOVIE(Original_name);
+FOREIGN KEY (Movie_original_name) REFERENCES  MOVIE(Original_name),
+ADD CONSTRAINT  PROJECTION_ROOM
+FOREIGN KEY (Room_number,Cinema_name) REFERENCES  ROOM(Number,Cinema_name);
 
 
 ALTER TABLE MOVIE
@@ -175,12 +161,8 @@ FOREIGN KEY (Director_First_name,Director_Middle_name,Director_Last_name,Directo
 
 ALTER TABLE SEAT
 ADD CONSTRAINT SEAT_PROJECTION
-FOREIGN KEY (Projection_id) REFERENCES PROJECTION(Id);
-
-ALTER TABLE PROJECTION_INVOICE
-ADD CONSTRAINT PI_PROJECTION
 FOREIGN KEY (Projection_id) REFERENCES PROJECTION(Id),
-ADD CONSTRAINT PI_INVOICE
+ADD CONSTRAINT SEAT_INVOICE
 FOREIGN KEY (Invoice_id) REFERENCES INVOICE(Id);
 
 ALTER TABLE CLIENT_INVOICE
@@ -189,23 +171,11 @@ FOREIGN KEY (Client_id,Client_username) REFERENCES CLIENT(Id_card, Username),
 ADD CONSTRAINT CI_INVOICE
 FOREIGN KEY (invoice_id) REFERENCES INVOICE(Id);
 
-ALTER TABLE PROJECTION_ROOM
-ADD CONSTRAINT PR_PROJECTION
-FOREIGN KEY (Projection_id) REFERENCES PROJECTION(Id),
-ADD CONSTRAINT PR_ROOM_CINEMA
-FOREIGN KEY (Cinema_name,Room_id) REFERENCES ROOM(Cinema_name,Number);
-
 ALTER TABLE MOVIE_CLASSIFICATION
 ADD CONSTRAINT MC_MOVIE
 FOREIGN KEY (Movie_original_name) REFERENCES MOVIE(Original_name),
 ADD CONSTRAINT MC_CLASSIFICATION
 FOREIGN KEY (Classification_id) REFERENCES CLASSIFICATION(Id);
-
-ALTER TABLE PROJECTION_CLIENT
-ADD CONSTRAINT  PC_PROJECTION
-FOREIGN KEY (projection_id) REFERENCES PROJECTION(Id),
-ADD CONSTRAINT PC_CLIENT
-FOREIGN KEY (Client_id_card,Client_username) REFERENCES CLIENT(Id_card,Username);
 
 ALTER TABLE ACTOR_MOVIE
 ADD CONSTRAINT AM_ACTOR
