@@ -5,8 +5,10 @@ import java.sql.Time;
 
 public class Projection {
     int Id;
-    Date date;
+    Date Date;
     Time Initial_time;
-    Time End_time;
     String Movie_original_name;
+    String Cinema_name;
+    int Room_Number;
+
 }

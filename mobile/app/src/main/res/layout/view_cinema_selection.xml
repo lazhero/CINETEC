@@ -12,7 +12,7 @@
         android:id="@+id/branch_logo"
 
         android:layout_width="70dp"
-        android:layout_height="match_parent"
+        android:layout_height="80dp"
         android:layout_margin="5dp"
         android:width="40dp"
         app:backgroundTint="@color/white"
