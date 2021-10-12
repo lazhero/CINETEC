@@ -8,7 +8,7 @@ import { HttpParams } from '@angular/common/http';
 export class BackendService {
   constructor(private http: HttpClient) {}
 
-  serverIp: string = 'https://25.92.13.1:44357/';
+  serverIp: string = 'http://25.92.13.1:38389/';
 
   get_request(url: string, Params: any): Observable<any> {
     var http_params = new HttpParams({ fromObject: Params });

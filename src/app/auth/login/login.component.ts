@@ -22,7 +22,11 @@ export class LoginComponent implements OnInit {
   }
   form: FormGroup;
   ngOnInit(): void {}
-
+  devlogin() {
+    this.form.value.Address = 'Luisito354';
+    this.form.value.Password = 'satanas1234';
+    this.login();
+  }
   login() {
     const info = {
       username: this.form.value.Address,
@@ -30,15 +34,18 @@ export class LoginComponent implements OnInit {
     };
 
     this.backend.post_request('Login', info).subscribe((result) => {
-      if (result === null && result == undefined && result == '') {
+      console.log(info);
+      console.log(result);
+
+      if (result === null || result == undefined || result == '') {
         this.swal.showError(
           'Oops',
           'El usuario no se encuentra en la base de datos '
         );
         return;
+      } else {
+        this.router.navigateByUrl('pages');
       }
-
-      this.router.navigateByUrl('pages');
     });
   }
   register() {

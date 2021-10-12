@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { BackendService } from 'src/app/services/backend-service.service';
 import { movieService } from 'src/app/services/movieService';
 import { SwalService } from 'src/app/services/swalService';
 
@@ -11,6 +12,7 @@ import { SwalService } from 'src/app/services/swalService';
 export class MovieMenuComponent implements OnInit {
   constructor(
     public snackmat: MatSnackBar,
+    public backend: BackendService,
     private swal: SwalService,
     private movieService: movieService
   ) {}
@@ -35,7 +37,16 @@ export class MovieMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    const data = {
+      Cinema_name: urlParams.get('theater'),
+      Movie_name: urlParams.get('movie'),
+    };
     this.movie = this.movieService.getCurrentMovie();
+    this.backend.get_request('Client/Projection', data).subscribe((value) => {
+      console.log(value);
+    });
 
     for (let i = 0; i < 50; i++) {
       const newChair = {
@@ -45,15 +56,6 @@ export class MovieMenuComponent implements OnInit {
       };
 
       this.chairs.push(newChair);
-    }
-
-    for (let i = 0; i < 20; i++) {
-      const newProjection = {
-        room: 'S' + i,
-        hour: i + ':00',
-        selected: false,
-      };
-      this.projections.push(newProjection);
     }
   }
 

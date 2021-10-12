@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend-service.service';
 import { SwalService } from 'src/app/services/swalService';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-
 @Component({
   selector: 'app-client-register',
   templateUrl: './client-register.component.html',
@@ -33,22 +32,32 @@ export class ClientRegisterComponent implements OnInit {
   }
   ngOnInit(): void {}
 
+  getRandomInt(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
   createClient(): void {
-    const data = {
-      idCard: 13331,
+    const rand = this.getRandomInt(0, 100000000);
+
+    let data = {
+      idCard: rand,
       phoneNum: 0,
-      firstName: 'TEST',
+      firstName: rand.toString(),
       middleName: 'TEST',
       lastName: 'TEST',
       secondLastName: 'TEST',
-      username: '1333e2',
+      username: rand.toString(),
       password: 'TEST',
-      birthdate: '2021-10-07T18:46:31.254Z',
+      birthdate: new Date(),
       clientInvoices: [],
       projectionClients: [],
     };
+    console.log(data);
+
     this.backend.post_request('Admin/Client', data).subscribe(
-      (data) => {
+      (value) => {
+        console.log(data);
+
         this.swal.showSuccess('Bienvenido', 'Usuario registrado con éxito');
         this.router.navigateByUrl('pages');
       },

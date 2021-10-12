@@ -4,6 +4,7 @@
   flex-wrap: nowrap;
   justify-content: center;
   align-items: stretch;
+  height: 100vh;
   align-content: stretch;
 }
 .viewContainer {
@@ -195,4 +196,9 @@
 .payButtonContainer {
   display: flex;
   flex-direction: row;
+}
+.background {
+  background-color: #1f232b;
+  height: 100%;
+  width: 90%;
 }
