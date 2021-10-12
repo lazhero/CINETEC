@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.cinetec.entities.Cinema;
+import com.example.cinetec.entities.Movie;
 import com.example.cinetec.network.NetworkCommunicator;
 
 import org.json.JSONArray;
@@ -40,7 +41,6 @@ public class Db_helper extends SQLiteOpenHelper {
             "Original_name text,\n"  +
             "Name text,\n" +
             "Image text,\n" +
-            "Cinema_name text,\n"+
             "Primary Key(Original_name)"+
             ");";
     private static String Projection_Table="Create Table If not exists Projection(\n" +
@@ -73,7 +73,7 @@ public class Db_helper extends SQLiteOpenHelper {
             ");";
     private static String ClientsURl="http://25.92.13.1:38389/Admin/Client";
     private static final String CinemasURL="http://25.92.13.1:38389/Admin/Sucursales";
-    private static final String MoviesURL="";
+    private static final String MoviesURL="http://25.92.13.1:38389/Admin/Movies";
     private static final String ProjectionsURL="";
     private static final String SeatUrl="";
     public Db_helper(@Nullable Context context) {
@@ -189,7 +189,7 @@ public class Db_helper extends SQLiteOpenHelper {
         });
 
 
-        /*
+
         NetworkCommunicator.get(MoviesURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -207,10 +207,8 @@ public class Db_helper extends SQLiteOpenHelper {
                         JSONObject Movie=movie_array.getJSONObject(i);
                         String Movie_original_name=Movie.getString("originalName");
                         String Movie_name=Movie.getString("name");
-                        String Movie_image_url="";
-                       // Log.d("EXITO",username);
-                        //Log.d("EXITO",password);
-                        //insertClient(username,password);
+                        String Movie_image_url=Movie.getString("image");
+                        insertMovie(Movie_original_name,Movie_name,Movie_image_url);
                     }
 
 
@@ -219,8 +217,8 @@ public class Db_helper extends SQLiteOpenHelper {
                 catch (Exception e){}
             }
         });
-        */
-        /*
+
+
         NetworkCommunicator.get(CinemasURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -241,7 +239,7 @@ public class Db_helper extends SQLiteOpenHelper {
             }
         });
 
-         */
+
 
 
     }
@@ -291,12 +289,12 @@ public class Db_helper extends SQLiteOpenHelper {
         }
         return true;
     }
-    public boolean insertMovie(String Movie_original_name,String Movie_url,String Cinema_name){
+    public boolean insertMovie(String Movie_original_name,String Movie_name,String Movie_url){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put("Original_name",Movie_original_name);
+        contentValues.put("Name",Movie_name);
         contentValues.put("Image",Movie_url);
-        contentValues.put("Cinema_name",Cinema_name);
         long result=DB.insert("Movie",null,contentValues);
         DB.close();
         if(result==-1){
@@ -374,14 +372,35 @@ public class Db_helper extends SQLiteOpenHelper {
             cinema_array.add(cinema);
             cursor.moveToNext();
         }
-        //cinema_array.add(new Cinema(cursor.getString(0)));
         Cinema cinema=new Cinema(cursor.getString(0));
         cinema_array.add(cinema);
-        //cursor.moveToNext();
         DB.close();
         cursor.close();
         return cinema_array;
     }
+    public ArrayList<Movie> getMovies(){
+        SQLiteDatabase DB=this.getReadableDatabase();
+        Cursor cursor=DB.rawQuery("Select * from Movie",null);
+        if(cursor.getCount()<=0){
+            DB.close();
+            cursor.close();
+            return null;
+        }
+        ArrayList<Movie> movie_array=new ArrayList<>();
+
+        cursor.moveToFirst();
+        while(!cursor.isLast()){
+            Movie movie=new Movie(cursor.getString(0),cursor.getString(1),cursor.getString(2));
+            movie_array.add(movie);
+            cursor.moveToNext();
+        }
+        Movie movie=new Movie(cursor.getString(0),cursor.getString(1),cursor.getString(2));
+        movie_array.add(movie);
+        DB.close();
+        cursor.close();
+        return movie_array;
+    }
+
 
     public boolean verifyClient(String username,String password){
         SQLiteDatabase DB=this.getReadableDatabase();

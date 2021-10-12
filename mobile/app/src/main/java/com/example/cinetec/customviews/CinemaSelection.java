@@ -14,6 +14,7 @@ import com.example.cinetec.R;
 
 public class CinemaSelection extends LinearLayout {
     TextView Cinema_text;
+    LinearLayout layout;
     public CinemaSelection(Context context) {
         super(context);
         build(context);
@@ -42,7 +43,14 @@ public class CinemaSelection extends LinearLayout {
     public void build(Context context){
         View view= LayoutInflater.from(context).inflate(R.layout.view_cinema_selection,this);
         Cinema_text=(TextView) view.findViewById(R.id.branch_text);
+        layout=(LinearLayout) view.findViewById(R.id.view_cinema_selection_linear);
+
+
     }
 
-
+    @Override
+    public void setOnClickListener(@Nullable OnClickListener l) {
+        super.setOnClickListener(l);
+        layout.setOnClickListener(l);
+    }
 }

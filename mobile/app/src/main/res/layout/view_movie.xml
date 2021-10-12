@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         app:ratio="1.5"
-        app:srcCompat="@drawable/avengers" />
+        app:srcCompat="@drawable/no_available" />
 
     <com.google.android.material.button.MaterialButton
 

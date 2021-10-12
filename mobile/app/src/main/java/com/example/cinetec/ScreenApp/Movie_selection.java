@@ -2,15 +2,22 @@ package com.example.cinetec.ScreenApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.LinearLayout;
 
+import com.example.cinetec.DB.Db_helper;
 import com.example.cinetec.R;
 import com.example.cinetec.customviews.Matrix_layout;
 import com.example.cinetec.customviews.MovieView;
+import com.example.cinetec.entities.Movie;
+import com.example.cinetec.state.State;
+
+import java.util.ArrayList;
 
 public class Movie_selection extends AppCompatActivity {
 
@@ -50,7 +57,7 @@ public class Movie_selection extends AppCompatActivity {
     }
 
     public void add_movies_example(){
-
+        /*
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
@@ -64,6 +71,32 @@ public class Movie_selection extends AppCompatActivity {
             layout.add_view(movie);
         }
 
+         */
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        params.setMargins(horizontal_margin, 0, horizontal_margin, dp_px(2));
+        Db_helper DB=new Db_helper(this);
+        ArrayList<Movie> movies=DB.getMovies();
+        for(int i=0,size=movies.size();i<size;i++){
+            MovieView movie=new MovieView(this);
+            movie.set_cover_size(width);
+            movie.setLayoutParams(params);
+            movie.setMovie(movies.get(i));
+            final int index=i;
+            movie.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    State state=State.getInstance();
+                    state.setMovie_original_name(movies.get(index).getOriginal_name());
+                    go_to_projections();
+
+                }
+            });
+            layout.add_view(movie);
+        }
+
     }
 
     private int dp_px(int measure){
@@ -74,6 +107,10 @@ public class Movie_selection extends AppCompatActivity {
                 r.getDisplayMetrics()
         );
         return px;
+    }
+    public void go_to_projections(){
+        Intent switchActivityIntent = new Intent(this, Proyection_activity.class);
+        startActivity(switchActivityIntent);
     }
 
 

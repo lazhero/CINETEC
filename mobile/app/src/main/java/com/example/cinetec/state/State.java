@@ -8,7 +8,7 @@ public class State {
     private State(){
 
     }
-    public State getInstance(){
+    public static State getInstance(){
         if(Instance==null){
             Instance=new State();
         }
