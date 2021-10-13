@@ -30,7 +30,7 @@
             <mat-select (selectionChange)="selectUser($event.value)">
                 <mat-option *ngFor="let user of users"  [value]="user">{{user.Id_card}}</mat-option>
             </mat-select>
-            </mat-form-field>
+        </mat-form-field>
 
         <div *ngIf="Id_card!=''">
 
@@ -90,7 +90,7 @@
 </div>
 
 <div *ngIf="deletingUser">
-    <div class="text" style="margin-bottom: 7px;">Modificación de Usuarios</div>
+    <div class="text" style="margin-bottom: 7px;">Eliminación de usuarios</div>
     <div class="formX" >
 
 

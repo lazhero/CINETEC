@@ -1,1 +1,140 @@
-<p>movie-managment works!</p>
+<div *ngIf="!deletingMovie && !modifyingMovie && !addingMovie">
+    <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
+    <div class="menuButtons ">
+
+        <div class="actButton menuButton" (click)="modifyingMovie=true">
+            <mat-icon class="icon" >edit</mat-icon>
+
+            <div class="text" > Editar película</div>
+        </div>
+        <div class="actButton menuButton" (click)="deletingMovie=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >remove_circle_outline</mat-icon>
+                <div class="text" style="align-items: center;">Eliminar película</div>
+            </div>
+        </div>
+        <div class="actButton menuButton" (click)="addingMovie=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >add_circle_outline</mat-icon>
+                <div class="text" >Agregar película</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="modifyingMovie">
+    <div class="text" style="margin-bottom: 7px;">Edicion de películas</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar película</mat-label>
+            <mat-select (selectionChange)="selectMovie($event.value)">
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.Original_name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="Original_name!=''">
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Original_name"  (input)="Original_name = $any( $event.target).value" placeholder="Nombre original" >
+            </mat-form-field>
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Name"  (input)="Name = $any( $event.target).value" placeholder="Nombre" >
+            </mat-form-field>            
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Length"  (input)="Length = $any( $event.target).value" placeholder="Duracion" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Main_characters"  (input)="Main_characters = $any( $event.target).value" placeholder="Protagonistas" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Director"  (input)="Director = $any( $event.target).value" placeholder="Director" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Rating"  (input)="Rating = $any( $event.target).value" placeholder="Clasificacion" >
+            </mat-form-field>
+            <div class="text" style="color: grey; font-size: 12px;">Imagen</div>
+            <input required type="file" [value]="Image"  (input)="Image = $any( $event.target).value" placeholder="Caratula" >
+        </div>
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="submitModify()">Aceptar</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div *ngIf="addingMovie">
+        <div class="text" style="margin-bottom: 7px;">Agregar película</div>
+        <div class="formX" >
+    
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Original_name"  (input)="Original_name = $any( $event.target).value" placeholder="Nombre original" >
+            </mat-form-field>
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Name"  (input)="Name = $any( $event.target).value" placeholder="Nombre" >
+            </mat-form-field>            
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Length"  (input)="Length = $any( $event.target).value" placeholder="Duracion" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Main_characters"  (input)="Main_characters = $any( $event.target).value" placeholder="Protagonistas" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Director"  (input)="Director = $any( $event.target).value" placeholder="Director" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Rating"  (input)="Rating = $any( $event.target).value" placeholder="Clasificacion" >
+            </mat-form-field>
+            <div class="text" style="color: grey; font-size: 12px;">Imagen</div>
+            <input required type="file" [value]="Image"  (input)="Image = $any( $event.target).value" placeholder="Caratula" >
+        
+        </div>
+</div>
+
+
+<div *ngIf="deletingMovie">
+    <div class="text" style="margin-bottom: 7px;">Eliminación de películas</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar película</mat-label>
+            <mat-select (selectionChange)="selectMovie($event.value)">
+                <mat-option *ngFor="let movie of movies"  value="{{movie.Original_name}}">{{movie.Original_name}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="deleteMovie()">Eliminar película</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>
