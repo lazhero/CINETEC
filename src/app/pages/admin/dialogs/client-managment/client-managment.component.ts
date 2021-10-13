@@ -46,9 +46,7 @@ export class ClientManagmentComponent implements OnInit {
       Password: '1234',
     },
   ];
-  // ESTO DE AQUI NO SE HACE ASI
-  // ESTA HORRIBLE, ESTO SE MANEJA CON FORMS,
-  // PERO LOS FORMS NO ME ESTAN SIRVIENDO BIEN
+ 
   Id_card: string = '';
   Birthday: any = new Date(new Date().getTime() - 3888000000);
   Phone_Num: string = '';
@@ -113,7 +111,7 @@ export class ClientManagmentComponent implements OnInit {
       }
     }
     this.swal.showError(
-      'Error al eliminar usuairo',
+      'Error al eliminar usuario',
       'El usuario no se encuentra en la base de datos'
     );
   }

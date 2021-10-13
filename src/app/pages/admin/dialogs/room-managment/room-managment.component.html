@@ -1,1 +1,26 @@
-<p>room-managment works!</p>
+<div *ngIf="!deletingRoom && !modifyingRoom && !addingRoom">
+    <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
+    <div class="menuButtons ">
+
+        <div class="actButton menuButton" (click)="modifyingRoom=true">
+            <mat-icon class="icon" >edit</mat-icon>
+
+            <div class="text" > Editar sala</div>
+        </div>
+        <div class="actButton menuButton" (click)="deletingRoom=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >remove_circle_outline</mat-icon>
+                <div class="text" style="align-items: center;">Eliminar sala</div>
+            </div>
+        </div>
+        <div class="actButton menuButton" (click)="addingRoom=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >add_circle_outline</mat-icon>
+                <div class="text" >Agregar sala</div>
+            </div>
+
+        </div>
+    </div>
+</div>
