@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.example.cinetec.entities.Cinema;
 import com.example.cinetec.entities.Movie;
+import com.example.cinetec.entities.Projection;
 import com.example.cinetec.network.NetworkCommunicator;
 
 import org.json.JSONArray;
@@ -74,7 +75,7 @@ public class Db_helper extends SQLiteOpenHelper {
     private static String ClientsURl="http://25.92.13.1:38389/Admin/Client";
     private static final String CinemasURL="http://25.92.13.1:38389/Admin/Sucursales";
     private static final String MoviesURL="http://25.92.13.1:38389/Admin/Movies";
-    private static final String ProjectionsURL="";
+    private static final String ProjectionsURL="http://25.92.13.1:38389/Admin/Projections";
     private static final String SeatUrl="";
     public Db_helper(@Nullable Context context) {
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
@@ -125,8 +126,6 @@ public class Db_helper extends SQLiteOpenHelper {
         NetworkCommunicator.get(ClientsURl, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                Log.d("FALLO",e.getLocalizedMessage());
 
             }
 
@@ -156,9 +155,6 @@ public class Db_helper extends SQLiteOpenHelper {
         NetworkCommunicator.get(CinemasURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                e.printStackTrace();
-                Log.d("FALLO","NO ENCONTRE EL CINEMA");
-                Log.d("FALLO",e.getLocalizedMessage());
 
             }
 
@@ -167,15 +163,11 @@ public class Db_helper extends SQLiteOpenHelper {
                 if(!response.isSuccessful())return;
                 try {
                     String json=response.body().source().readUtf8();
-                    Log.d("ENTRE",json);
                     JSONArray cinema_array=new JSONArray(json);
-                    Log.d("ENTRE2",Integer.toString(cinema_array.length()));
-                    //Log.d("ENTRE",Integer.toString(cinema_array.length()));
                     for(int i=0,size=cinema_array.length();i<size;i++){
 
                         JSONObject Cinema=cinema_array.getJSONObject(i);
                         String cinema_name=Cinema.getString("name");
-                        Log.d("EXITO",cinema_name);
                         insertCinema(cinema_name);
                     }
 
@@ -198,7 +190,6 @@ public class Db_helper extends SQLiteOpenHelper {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d("EXITO","EXITO");
 
                 if(!response.isSuccessful())return;
                 try {
@@ -233,6 +224,37 @@ public class Db_helper extends SQLiteOpenHelper {
                     String username=object.getString("Cinema_name");
                     String password=object.getString("password");
                     insertClient(username,password);
+
+                }
+                catch (Exception e){}
+            }
+        });
+        NetworkCommunicator.get(ProjectionsURL, null, new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d("PROJECTIONS","Llegue a projections");
+                if(!response.isSuccessful())return;
+                try {
+                    String request_body=response.body().source().readUtf8();
+                    Log.d("PROJECTIONS",request_body);
+                    JSONArray jsonArray=new JSONArray(request_body);
+                    for(int i=0,size=jsonArray.length();i<size;i++){
+                        JSONObject object=jsonArray.getJSONObject(i);
+                        int id=object.getInt("id");
+                        String movie_name=object.getString("movieOriginalName");
+                        String cinema_name=object.getString("cinemaName");
+                        String initial_time=object.getString("initialTime");
+                        String date=object.getString("date");
+                        int room_number=object.getInt("roomNumber");
+                        insertProjection(id,movie_name,cinema_name,room_number,date,initial_time);
+
+                    }
+
 
                 }
                 catch (Exception e){}
@@ -296,6 +318,22 @@ public class Db_helper extends SQLiteOpenHelper {
         contentValues.put("Name",Movie_name);
         contentValues.put("Image",Movie_url);
         long result=DB.insert("Movie",null,contentValues);
+        DB.close();
+        if(result==-1){
+            return false;
+        }
+        return true;
+    }
+    public boolean insertProjection(int id,String Movie_original_name,String cinema_name,int Room_number,String date,String initial_time){
+        SQLiteDatabase DB=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("Id",id);
+        contentValues.put("Movie_original_name",Movie_original_name);
+        contentValues.put("Cinema_name",cinema_name);
+        contentValues.put("Initial_time",initial_time);
+        contentValues.put("Date",date);
+        contentValues.put("Room_number",Room_number);
+        long result=DB.insert("Projection",null,contentValues);
         DB.close();
         if(result==-1){
             return false;
@@ -399,6 +437,28 @@ public class Db_helper extends SQLiteOpenHelper {
         DB.close();
         cursor.close();
         return movie_array;
+    }
+    public ArrayList<Projection> getProjection(String movie_name,String cinema_name){
+        SQLiteDatabase DB=this.getReadableDatabase();
+        Cursor cursor=DB.rawQuery("Select * from Projection Where Movie_original_name=? AND Cinema_name=? Order by date,Initial_time",new String[]{movie_name,cinema_name});
+        if(cursor.getCount()<=0){
+            DB.close();
+            cursor.close();
+            return null;
+        }
+
+        ArrayList<Projection> projection_array=new ArrayList<>();
+        cursor.moveToFirst();
+        while(!cursor.isLast()){
+            Projection projection=new Projection(cursor.getInt(0),cursor.getString(4),cursor.getInt(5),cursor.getString(3),cursor.getString(1),cursor.getString(2));
+            projection_array.add(projection);
+            cursor.moveToNext();
+        }
+        Projection projection=new Projection(cursor.getInt(0),cursor.getString(4),cursor.getInt(5),cursor.getString(3),cursor.getString(1),cursor.getString(2));
+        projection_array.add(projection);
+        DB.close();
+        cursor.close();
+        return projection_array;
     }
 
 

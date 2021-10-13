@@ -43,6 +43,7 @@ public class MovieView extends LinearLayout {
     private AspectRatioImageView cover;
     private LinearLayout layout;
     private Movie movie;
+    MaterialButton button;
     private final String movie_images_url="http://25.92.13.1:38389/Images";
     public MovieView(Context context) {
         super(context);
@@ -69,6 +70,7 @@ public class MovieView extends LinearLayout {
         View view=LayoutInflater.from(context).inflate(R.layout.view_movie,this);
         cover=(AspectRatioImageView) findViewById(R.id.cover);
         layout=(LinearLayout) findViewById(R.id.movie_image_layout);
+        button=(MaterialButton)findViewById(R.id.branch_logo);
         layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +81,7 @@ public class MovieView extends LinearLayout {
     }
     public void setMovie(Movie movie){
         this.movie=movie;
-
+        setText(this.movie.getName());
         if(movie.getImage()==null || movie.getImage()=="")return;
 
         Map<String,String> params=new HashMap<>();
@@ -104,8 +106,6 @@ public class MovieView extends LinearLayout {
                     String stream=responseInfo.getString("fileContents");
                     if(stream=="" || stream==null)return;
                     Log.d("STREAM",stream);
-                    //URI uri=new URI(stream);
-                    //File imageFile=new File(uri);
                     InputStream inputStream = new ByteArrayInputStream(Base64.decode(stream.getBytes(), Base64.DEFAULT));
                     File imageFile=StreamUtil.stream2file(inputStream);
 
@@ -127,6 +127,9 @@ public class MovieView extends LinearLayout {
     public void set_cover_size(int width){
         cover.getLayoutParams().width=width;
 
+    }
+    public void setText(String text){
+        button.setText(text);
     }
 
     @Override
