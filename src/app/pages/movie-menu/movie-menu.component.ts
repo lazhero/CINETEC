@@ -3,7 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { BackendService } from 'src/app/services/backend-service.service';
 import { movieService } from 'src/app/services/movieService';
 import { SwalService } from 'src/app/services/swalService';
-
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-movie-menu',
   templateUrl: './movie-menu.component.html',
@@ -14,7 +14,8 @@ export class MovieMenuComponent implements OnInit {
     public snackmat: MatSnackBar,
     public backend: BackendService,
     private swal: SwalService,
-    private movieService: movieService
+    private movieService: movieService,
+    private sanitizer: DomSanitizer
   ) {}
   chairs: any[] = [];
   projections: any[] = [];
@@ -43,9 +44,22 @@ export class MovieMenuComponent implements OnInit {
       Cinema_name: urlParams.get('theater'),
       Movie_name: urlParams.get('movie'),
     };
+    //Obtiene la pelicula del localStorage
     this.movie = this.movieService.getCurrentMovie();
+    //Asegura la imagen
+    this.movie.image = this.sanitizer.bypassSecurityTrustResourceUrl(
+      this.movie.image.changingThisBreaksApplicationSecurity
+    );
+
     this.backend.get_request('Client/Projection', data).subscribe((value) => {
-      console.log(value);
+      value.forEach(
+        (projection: { roomNumber: number; initialTime: string }) => {
+          this.projections.push({
+            room: 'S' + projection.roomNumber,
+            hour: projection.initialTime,
+          });
+        }
+      );
     });
 
     for (let i = 0; i < 50; i++) {

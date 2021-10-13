@@ -33,7 +33,6 @@ export class BillboardComponent implements OnInit {
       heightAuto: true,
     });
 
-    this.getImage();
     const urlParams = new URLSearchParams(window.location.search);
 
     this.cinemaName = urlParams.get('theater');
@@ -45,7 +44,7 @@ export class BillboardComponent implements OnInit {
       .get_request('Client/Movie', cinema)
       .subscribe((moviesArray) => {
         moviesArray.forEach(async (movie: { image: any }) => {
-          await this.getImage().then((result: any) => {
+          await this.getImage(movie.originalName).then((result: any) => {
             const image = this.sanitizer.bypassSecurityTrustResourceUrl(
               `data:image/png;base64, ${result.value.fileContents}`
             );
@@ -59,14 +58,15 @@ export class BillboardComponent implements OnInit {
   }
   movieSelected(movie: any): void {
     this.mService.openMovie(movie);
+    localStorage.setItem('movie', movie);
     this.router.navigate(['pages/movieMenu'], {
       queryParams: { theater: this.cinemaName, movie: movie.originalName },
     });
   }
-  async getImage() {
+  async getImage(movieName: string) {
     return new Promise((resolve) => {
       this.backend
-        .get_request('Images', { path: 'Images\\Jumanji.png' })
+        .get_request('Images', { path: 'Images\\' + movieName + '.png' })
         .subscribe((result) => {
           resolve({
             value: result,
