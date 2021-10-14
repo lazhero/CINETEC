@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using REST_API_SERVER.Database_Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using REST_API_SERVER.Database_Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace REST_API_SERVER.Controllers
 {
@@ -13,23 +13,21 @@ namespace REST_API_SERVER.Controllers
     {
         CineTEC_Context Db = new CineTEC_Context();
         [HttpGet]
-        public List<Projection> Get(string Cinema_name, string Movie_name)
+        public ActionResult Get(string Cinema_name, string Movie_name)
         {
             try{
                 var projection = Db.Projections
                                  .Include(p => p.MovieOriginalNameNavigation)
-                                 .Where(p=>p.MovieOriginalName == Movie_name)
+                                 .Where(p=>p.MovieOriginalName == Movie_name && p.CinemaName == Cinema_name)
+                                 .Select(p=> new {
+                                   RoomNumber = p.RoomNumber,
+                                   InitialTime = p.InitialTime,
+                                   CinemaName = p.CinemaName,
+                                 })
                                  .ToList();
-                List<Projection> res = new List<Projection>();
-                foreach (Projection pro in projection)
-                {
-                   if (pro.CinemaName == Cinema_name){
-                          res.Add(pro);
-                   }
-                }
-                return res;
+                return Ok(projection);
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
     }

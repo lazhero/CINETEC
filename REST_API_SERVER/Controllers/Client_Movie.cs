@@ -9,11 +9,11 @@ namespace REST_API_SERVER.Controllers
 {
   [ApiController]
   [Route("Client/Movie")]
-  public class Client_Movie
+  public class Client_Movie : Controller
   {
     CineTEC_Context Db = new CineTEC_Context();
     [HttpGet]
-    public ICollection<Movie> Get(string cinema_name)
+    public ActionResult Get(string cinema_name)
     {
       try
       {
@@ -28,11 +28,11 @@ namespace REST_API_SERVER.Controllers
             res.Add(mov);
           }
         }
-        return res;
+        return Ok(res);
       }
       catch (Exception e)
       {
-        throw new ArgumentException(e.ToString());
+        return BadRequest(e.Message);
       }
     }
 

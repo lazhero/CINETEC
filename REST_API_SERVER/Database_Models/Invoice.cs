@@ -15,8 +15,9 @@ namespace REST_API_SERVER.Database_Models
 
         public int Id { get; set; }
         public string Description { get; set; }
-        public int? TicketNumber { get; set; }
-        public int? Total { get; set; }
+        public int? NumElderTicket { get; set; }
+        public int? NumKidTicket { get; set; }
+        public int? NumAdultTicket { get; set; }
 
         public virtual ICollection<ClientInvoice> ClientInvoices { get; set; }
         public virtual ICollection<Seat> Seats { get; set; }

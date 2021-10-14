@@ -60,15 +60,16 @@ CREATE TABLE PROJECTION(
 CREATE TABLE INVOICE(
     Id serial,
     Description varchar(255),
-    Ticket_number int,
-    Total int,
+    Num_elder_ticket int,
+    Num_kid_ticket int,
+    Num_adult_ticket int,
     PRIMARY KEY (Id)
 );
 
 CREATE TABLE MOVIE(
     Original_name varchar(31),
     Name varchar(31),
-    Image bytea,
+    Image varchar(260),
     Time_length int,
     Kid_price int,
     Adult_price int,

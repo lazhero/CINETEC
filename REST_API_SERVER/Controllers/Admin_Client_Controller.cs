@@ -14,54 +14,50 @@ namespace REST_API_SERVER.Controllers
         CineTEC_Context Db = new CineTEC_Context();
 
         [HttpGet]
-        public List<Client> Get()
+        public ActionResult Get()
         {
             try{
                 var clients = Db.Clients.ToList();
-                return clients;
+                return Ok(clients);
             }catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPost]
-        public string Post([FromBody] Client new_client)
+        public ActionResult Post([FromBody] Client new_client)
         {
             try{
-              if (Db.Clients.Find(new_client.IdCard, new_client.Username) == null)
-              {
                 Db.Clients.Add(new_client);
                 Db.SaveChanges();
-              }
-              else {
-                throw new ArgumentException("CLIENT ALREADY EXIST");
-              }
-                return "{\"response\":\"Succsess\"}";
+                return Ok();
             }catch (Exception e){
-                return "{\"response\":\"ERROR\"}";
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPut]
-        public void Put([FromBody] Client new_client)
+        public ActionResult Put([FromBody] Client new_client)
         {
             try{
                 Db.Clients.Update(new_client);
                 Db.SaveChanges();
+                return Ok();  
             }catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpDelete]
-        public void Delete([FromBody] Client client)
+        public ActionResult Delete([FromBody] Client client)
         {
             try{
                 var cli = Db.Clients.Find(client.IdCard,client.Username);
                 Db.Remove(cli);
                 Db.SaveChanges();
+                return Ok();
             }catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 

@@ -13,39 +13,41 @@ namespace REST_API_SERVER.Controllers
     {
         CineTEC_Context Db = new CineTEC_Context();
         [HttpGet]
-        public List<Cinema> Get(){
+        public ActionResult Get(){
             try{
                 var cinemas = Db.Cinemas.ToList();
-                return cinemas;
+                return Ok(cinemas);
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPost]
-        public void Add([FromBody] Cinema new_cinema)
+        public ActionResult Add([FromBody] Cinema new_cinema)
         {
             try{
                 Db.Add(new_cinema);
                 Db.SaveChanges();
+                return Ok();
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPut]
-        public void Modify([FromBody] Cinema new_data)
+        public ActionResult Modify([FromBody] Cinema new_data)
         {
             try{
                 Db.Cinemas.Update(new_data);
                 Db.SaveChanges();
+                return Ok();
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
         
         [HttpDelete]
-        public void Delete([FromBody] Cinema new_data)
+        public ActionResult Delete([FromBody] Cinema new_data)
         {
             try{
                 var cinema = Db.Cinemas.Where(suc => suc.Name == new_data.Name).Include(c => c.Rooms).Single();
@@ -55,9 +57,10 @@ namespace REST_API_SERVER.Controllers
                 }
                 Db.Remove(cinema);
                 Db.SaveChanges();
+                return Ok();
             }
             catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
     }

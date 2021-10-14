@@ -15,7 +15,7 @@ namespace REST_API_SERVER.Controllers
         private CineTEC_Context Db = new CineTEC_Context();
 
         [HttpPost]
-        public Object Post([FromBody]Client user_data)
+        public ActionResult Post([FromBody]Client user_data)
         {
             try{
                 var clients = Db.Clients.ToList();
@@ -23,7 +23,7 @@ namespace REST_API_SERVER.Controllers
                 {
                     if (c.Username == user_data.Username && c.Password == user_data.Password)
                     {
-                        return c;
+                        return Ok(c);
                     }
                 }
                 var emps = Db.Employees.ToList();
@@ -31,12 +31,12 @@ namespace REST_API_SERVER.Controllers
                 {
                     if (emp.Username == user_data.Username && emp.Password == user_data.Password)
                     {
-                        return emp;
+                        return Ok(emp);
                     }
                 }
-                return null;
+                return BadRequest("No se encontro el usuario");
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest("Error en Login");
             }
         }
     }

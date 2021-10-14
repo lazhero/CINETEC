@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,50 +14,53 @@ namespace REST_API_SERVER.Controllers
         CineTEC_Context Db = new CineTEC_Context();
         
         [HttpGet]
-        public ICollection<Room> Get(string cinema_name)
+        public ActionResult Get(string cinema_name)
         {
             try{
                 var cinema = Db.Cinemas
                                .Where(c=> c.Name == cinema_name)
                                .Include(c => c.Rooms)
                                .Single();
-                return cinema.Rooms;
+                return Ok(cinema.Rooms);
             }catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPost]
-        public void Post(Room cinema_room)
+        public ActionResult Post(Room cinema_room)
         {
             try{
                 Db.Rooms.Add(cinema_room);
                 Db.SaveChanges();
+                return Ok();
             }catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPut]
-        public void Put([FromBody]Room cinema_room)
+        public ActionResult Put([FromBody]Room cinema_room)
         {
             try{
                 var room = Db.Rooms.Find(cinema_room.CinemaName,cinema_room.Number);
                 room.RestrictionPercent = cinema_room.RestrictionPercent;
                 Db.SaveChanges();
+                return Ok();
             }catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpDelete]
-        public void Delete(Room cinema_room)
+        public ActionResult Delete(Room cinema_room)
         {
             try{
                 Db.Rooms.Remove(cinema_room);
                 Db.SaveChanges();
+                return Ok(); 
             }catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
     }

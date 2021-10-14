@@ -12,54 +12,57 @@ namespace REST_API_SERVER.Controllers
   {
     CineTEC_Context Db = new CineTEC_Context();
     [HttpGet]
-    public List<Employee> Get()
+    public ActionResult Get()
     {
       try
       {
-        return Db.Employees.ToList();
+        return Ok(Db.Employees.ToList());
       }
       catch (Exception e)
       {
-        throw new ArgumentException(e.ToString());
+        return BadRequest(e.Message);
       }
     }
 
     [HttpPost]
-    public void Post([FromBody]Employee new_emp)
+    public ActionResult Post([FromBody]Employee new_emp)
     {
       try
       {
         Db.Employees.Add(new_emp);
         Db.SaveChanges();
+        return Ok();
       }
       catch (Exception e) {
-        throw new ArgumentException(e.ToString());
+        return BadRequest(e.Message);
       }
     }
 
     [HttpPut]
-    public void Put([FromBody] Employee new_emp) {
+    public ActionResult Put([FromBody] Employee new_emp) {
       try
       {
         Db.Employees.Update(new_emp);
         Db.SaveChanges();
+        return Ok();
       }
       catch (Exception e)
       {
-        throw new ArgumentException(e.ToString());
+        return BadRequest(e.Message);
       }
     }
     [HttpDelete]
-    public void Delete([FromBody] Employee new_emp)
+    public ActionResult Delete([FromBody] Employee new_emp)
     {
       try
       {
         Db.Employees.Remove(new_emp);
         Db.SaveChanges();
+        return Ok();
       }
       catch (Exception e)
       {
-        throw new ArgumentException(e.ToString());
+        return BadRequest(e.Message);
       }
     }
   }

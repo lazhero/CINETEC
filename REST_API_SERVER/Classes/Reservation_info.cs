@@ -9,6 +9,9 @@ namespace REST_API_SERVER.Database_Models
   {
     public List<int> seats { get; set; }
     public int proj_id { get; set; }
-    public int invoice_id { get; set; }
+    public string client_username { get; set; }
+    public int adult_tickets { get; set; }
+    public int kid_tickets { get; set; }
+    public int elder_tickets { get; set; }
   }
 }
