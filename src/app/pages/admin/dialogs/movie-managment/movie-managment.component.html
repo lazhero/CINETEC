@@ -111,6 +111,15 @@
             <input required type="file" [value]="Image"  (input)="Image = $any( $event.target).value" placeholder="Caratula" >
         
         </div>
+
+        <div class="buttonsContainer">
+            <div class="actButton acceptButton">
+                <div class="text" (click)="submitModify()">Aceptar</div>
+            </div>
+            <div class="actButton cancelButton">
+                <div class="text" (click)="close()">Cancelar</div>
+            </div>
+        </div>
 </div>
 
 

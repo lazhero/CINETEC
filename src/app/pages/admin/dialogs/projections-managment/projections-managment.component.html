@@ -1,1 +1,84 @@
-<p>projections-managment works!</p>
+<div *ngIf="!deletingProjection && !addingProjection">
+    <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
+    <div class="menuButtons ">
+
+        <div class="actButton menuButton" (click)="addingProjection=true">
+            <mat-icon class="icon" >add_circle_outline</mat-icon>
+
+            <div class="text" > Agregar proyección</div>
+        </div>
+        <div class="actButton menuButton" (click)="deletingProjection=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >remove_circle_outline</mat-icon>
+                <div class="text" >Borrar proyección</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="addingProjection">
+    <div class="text" style="margin-bottom: 7px;">Agregar proyección</div>
+    <div class="formX" >
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Id_projection"  (input)="Id_projection = $any( $event.target).value" placeholder="ID proyección" >
+        </mat-form-field>
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Room"  (input)="Room = $any( $event.target).value" placeholder="Sala" >
+        </mat-form-field>            
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Date"  (input)="Date = $any( $event.target).value" placeholder="Fecha" >
+        </mat-form-field>
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Hour"  (input)="Hour = $any( $event.target).value" placeholder="Hora" >
+        </mat-form-field>
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Movie"  (input)="Movie = $any( $event.target).value" placeholder="Película" >
+        </mat-form-field>
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Movie_theater"  (input)="Movie_theater = $any( $event.target).value" placeholder="Cine" >
+        </mat-form-field>
+
+    </div>
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="submitModify()">Aceptar</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="deletingProjection">
+    <div class="text" style="margin-bottom: 7px;">Eliminación de peoyecciones</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar proyección</mat-label>
+            <mat-select (selectionChange)="selectProjections($event.value)">
+                <mat-option *ngFor="let projection of projections"  value="{{projection.Id_projection}}">{{projection.Id_projection}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="deleteProjection()">Eliminar proyeccion</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>
