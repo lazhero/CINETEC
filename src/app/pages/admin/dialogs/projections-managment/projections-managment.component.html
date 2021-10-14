@@ -34,8 +34,11 @@
             <input matInput required type="text" [value]="Date"  (input)="Date = $any( $event.target).value" placeholder="Fecha" >
         </mat-form-field>
 
-        <mat-form-field class="field">
-            <input matInput required type="text" [value]="Hour"  (input)="Hour = $any( $event.target).value" placeholder="Hora" >
+        <mat-form-field appearance="fill">
+            <mat-label>Hora</mat-label>
+            <mat-select >
+                <mat-option *ngFor="let hour of hours_list; index as i"  [value]="hour">{{hours_list[i]}}</mat-option>
+            </mat-select>
         </mat-form-field>
 
         <mat-form-field class="field">
