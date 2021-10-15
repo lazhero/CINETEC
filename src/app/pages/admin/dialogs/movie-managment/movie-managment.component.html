@@ -33,48 +33,80 @@
         <mat-form-field appearance="fill">
             <mat-label>Seleccionar película</mat-label>
             <mat-select (selectionChange)="selectMovie($event.value)">
-                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.Original_name}}</mat-option>
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <div *ngIf="Original_name!=''">
+        <div *ngIf="originalName!=''">
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Original_name"  (input)="Original_name = $any( $event.target).value" placeholder="Nombre original" >
+                <input matInput required type="text" [value]="originalName"  (input)="originalName = $any( $event.target).value" placeholder="Nombre original" >
             </mat-form-field>
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Name"  (input)="Name = $any( $event.target).value" placeholder="Nombre" >
+                <input matInput required type="text" [value]="name"  (input)="name = $any( $event.target).value" placeholder="Nombre" >
             </mat-form-field>            
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Length"  (input)="Length = $any( $event.target).value" placeholder="Duracion" >
+                <input matInput required type="text" [value]="timeLength"  (input)="timeLength = $any( $event.target).value" placeholder="Duracion" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Main_characters"  (input)="Main_characters = $any( $event.target).value" placeholder="Protagonistas" >
+                <input matInput required type="text" [value]="actorMovies"  (input)="actorMovies = $any( $event.target).value" placeholder="Protagonistas" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Director"  (input)="Director = $any( $event.target).value" placeholder="Director" >
+                <input matInput required type="text" [value]="directorFirstName"  (input)="directorFirstName = $any( $event.target).value" placeholder="Nombre director" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Rating"  (input)="Rating = $any( $event.target).value" placeholder="Clasificacion" >
+                <input matInput required type="text" [value]="directorMiddleName"  (input)="directorMiddleName = $any( $event.target).value" placeholder="Segundo nombre" >
             </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="directorLastName"  (input)="directorLastName = $any( $event.target).value" placeholder="Primer apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="directorSecondLastName"  (input)="directorSecondLastName = $any( $event.target).value" placeholder="Segundo apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="adultPrice"  (input)="adultPrice = $any( $event.target).value" placeholder="Precio adulto" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="elderPrice"  (input)="elderPrice = $any( $event.target).value" placeholder="Precio adulto mayor" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="elderPrice"  (input)="elderPrice = $any( $event.target).value" placeholder="Precio adulto mayor" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="kidPrice"  (input)="kidPrice = $any( $event.target).value" placeholder="Precio niño" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="movieClassifications"  (input)="movieClassifications = $any( $event.target).value" placeholder="Categorías" >
+            </mat-form-field>
+
             <div class="text" style="color: grey; font-size: 12px;">Imagen</div>
-            <input required type="file" [value]="Image"  (input)="Image = $any( $event.target).value" placeholder="Caratula" >
+            <input required type="file" [value]="image"  (input)="image = $any( $event.target).value" placeholder="Caratula" >
+        
         </div>
-    </div>
 
 
-    <div class="buttonsContainer">
-        <div class="actButton acceptButton">
-            <div class="text" (click)="submitModify()">Aceptar</div>
+        <div class="buttonsContainer">
+            <div class="actButton acceptButton">
+                <div class="text" (click)="submitModify()">Aceptar</div>
+            </div>
+            <div class="actButton cancelButton">
+                <div class="text" (click)="close()">Cancelar</div>
+            </div>
         </div>
-        <div class="actButton cancelButton">
-            <div class="text" (click)="close()">Cancelar</div>
-        </div>
+
     </div>
+
 </div>
 
 
@@ -86,39 +118,66 @@
         <div class="formX" >
     
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Original_name"  (input)="Original_name = $any( $event.target).value" placeholder="Nombre original" >
+                <input matInput required type="text" [value]="originalName"  (input)="originalName = $any( $event.target).value" placeholder="Nombre original" >
             </mat-form-field>
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Name"  (input)="Name = $any( $event.target).value" placeholder="Nombre" >
+                <input matInput required type="text" [value]="name"  (input)="name = $any( $event.target).value" placeholder="Nombre" >
             </mat-form-field>            
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Length"  (input)="Length = $any( $event.target).value" placeholder="Duracion" >
+                <input matInput required type="text" [value]="timeLength"  (input)="timeLength = $any( $event.target).value" placeholder="Duracion" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Main_characters"  (input)="Main_characters = $any( $event.target).value" placeholder="Protagonistas" >
+                <input matInput required type="text" [value]="actorMovies"  (input)="actorMovies = $any( $event.target).value" placeholder="Protagonistas" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Director"  (input)="Director = $any( $event.target).value" placeholder="Director" >
+                <input matInput required type="text" [value]="directorFirstName"  (input)="directorFirstName = $any( $event.target).value" placeholder="Nombre director" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Rating"  (input)="Rating = $any( $event.target).value" placeholder="Clasificacion" >
+                <input matInput required type="text" [value]="directorMiddleName"  (input)="directorMiddleName = $any( $event.target).value" placeholder="Segundo nombre" >
             </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="directorLastName"  (input)="directorLastName = $any( $event.target).value" placeholder="Primer apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="directorSecondLastName"  (input)="directorSecondLastName = $any( $event.target).value" placeholder="Segundo apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="adultPrice"  (input)="adultPrice = $any( $event.target).value" placeholder="Precio adulto" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="elderPrice"  (input)="elderPrice = $any( $event.target).value" placeholder="Precio adulto mayor" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="kidPrice"  (input)="kidPrice = $any( $event.target).value" placeholder="Precio niño" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="movieClassifications"  (input)="movieClassifications = $any( $event.target).value" placeholder="Categorías" >
+            </mat-form-field>
+
+
             <div class="text" style="color: grey; font-size: 12px;">Imagen</div>
-            <input required type="file" [value]="Image"  (input)="Image = $any( $event.target).value" placeholder="Caratula" >
+            <input required type="text" [value]="image"  (input)="image = $any( $event.target).value" placeholder="Caratula" >
         
-        </div>
 
-        <div class="buttonsContainer">
-            <div class="actButton acceptButton">
-                <div class="text" (click)="submitModify()">Aceptar</div>
+            <div class="buttonsContainer">
+                <div class="actButton acceptButton" (click)="submitAdition()"> 
+                    <div class="text" >Aceptar</div>
+                </div>
+                <div class="actButton cancelButton">
+                    <div class="text" (click)="close()">Cancelar</div>
+                </div>
             </div>
-            <div class="actButton cancelButton">
-                <div class="text" (click)="close()">Cancelar</div>
-            </div>
+            
         </div>
 </div>
 
@@ -131,7 +190,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Seleccionar película</mat-label>
             <mat-select (selectionChange)="selectMovie($event.value)">
-                <mat-option *ngFor="let movie of movies"  value="{{movie.Original_name}}">{{movie.Original_name}}</mat-option>
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
             </mat-select>
             </mat-form-field>
 
