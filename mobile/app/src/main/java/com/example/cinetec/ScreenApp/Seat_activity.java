@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -30,17 +31,25 @@ public class Seat_activity extends AppCompatActivity {
     final int freeSeat=0;
     final int occupiedSeat=1;
     final int covidSeat=2;
+    private Timer timer;
+    private Db_helper DB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat);
         layout=(Matrix_layout) findViewById(R.id.seat_selecction_layout);
         buy_button=(MaterialButton)findViewById(R.id.select_seat_button);
+        buy_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                add_order();
+            }
+        });
         selected_seat=new ArrayList<>();
         state=State.getInstance();
         set_matrix(10);
         final Handler handler = new Handler();
-        Timer timer = new Timer();
+        this.timer = new Timer();
         TimerTask doTask = new TimerTask() {
             @Override
             public void run() {
@@ -59,12 +68,12 @@ public class Seat_activity extends AppCompatActivity {
                 });
             }
         };
-        timer.schedule(doTask, 30000, 30000);
+        timer.schedule(doTask, 30000);
         justprove();
 
     }
     public void justprove(){
-        Db_helper DB=new Db_helper(this);
+        DB=new Db_helper(this);
         ArrayList<Seat> seats=DB.getSeat(state.getProjection_id());
         if(seats==null)return;
         for(int i=0,size=seats.size();i<size;i++){
@@ -96,11 +105,10 @@ public class Seat_activity extends AppCompatActivity {
         final int number=seatNumber;
             @Override
             public void onClick(View view) {
-                highlight(button,seatNumber);
+                highlight(button,number);
 
             }
         });
-
         layout.add_view(button);
     }
     public void add_occupied_seat(){
@@ -169,5 +177,23 @@ public class Seat_activity extends AppCompatActivity {
                 r.getDisplayMetrics()
         );
         return px;
+    }
+    private void add_order(){
+        DB.Process_order(state.getUsername(),state.getProjection_id(),selected_seat);
+       // DB.addOrder(state.getUsername(),state.getProjection_id());
+       // int order=DB.getClientLastOrder();
+       // for(int i=0;i<selected_seat.size();i++){
+
+            //DB.insertReservedSeat(selected_seat.get(i),order);
+            //DB.changeSeatState(state.getProjection_id(),selected_seat.get(i),occupiedSeat);
+        //}
+        //DB.SyncProcess();
+    }
+
+    @Override
+    public void onBackPressed() {
+        timer.cancel();
+        timer.purge();
+        super.onBackPressed();
     }
 }

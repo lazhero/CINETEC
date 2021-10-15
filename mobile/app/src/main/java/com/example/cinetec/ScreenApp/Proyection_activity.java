@@ -28,14 +28,25 @@ public class Proyection_activity extends AppCompatActivity {
     private LinearLayout linear;
     private Db_helper DB=new Db_helper(this);
     private State state=State.getInstance();
+    private Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.proyection_activity);
         linear=(LinearLayout) findViewById(R.id.projection_linear_layout);
+        state=State.getInstance();
         just_prove();
+
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         final Handler handler = new Handler();
-        Timer timer = new Timer();
+        this.timer = new Timer();
         TimerTask doTask = new TimerTask() {
             @Override
             public void run() {
@@ -54,14 +65,12 @@ public class Proyection_activity extends AppCompatActivity {
                 });
             }
         };
-        timer.schedule(doTask, 30000, 30000);
-
-
-
+        timer.schedule(doTask, 30000);
     }
+
     public void just_prove() {
-        Log.d("Cinema name",state.getCinema_name());
-        Log.d("Movie name",state.getMovie_original_name());
+        //Log.d("Cinema name",state.getCinema_name());
+        //Log.d("Movie name",state.getMovie_original_name());
         ArrayList<Projection> projections=DB.getProjection(state.getMovie_original_name(),state.getCinema_name());
         if(projections==null){
             non_available_projections();
@@ -101,7 +110,17 @@ public class Proyection_activity extends AppCompatActivity {
         linear.addView(button);
     }
     public void go_to_seats(){
+        timer.cancel();
+        timer.purge();
         Intent switchActivityIntent = new Intent(this, Seat_activity.class);
         startActivity(switchActivityIntent);
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        timer.cancel();
+        timer.purge();
+        super.onBackPressed();
     }
 }

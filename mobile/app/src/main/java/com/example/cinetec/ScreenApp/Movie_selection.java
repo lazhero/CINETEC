@@ -27,7 +27,7 @@ public class Movie_selection extends AppCompatActivity {
     private int width;
     private int horizontal_margin;
     Matrix_layout layout;
-
+    private Timer timer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +48,25 @@ public class Movie_selection extends AppCompatActivity {
 
             }
         });
+
+
+
+
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        width=layout.getMeasuredWidth();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         final Handler handler = new Handler();
-        Timer timer = new Timer();
+        this.timer = new Timer();
         TimerTask doTask = new TimerTask() {
             @Override
             public void run() {
@@ -68,16 +85,7 @@ public class Movie_selection extends AppCompatActivity {
                 });
             }
         };
-        timer.schedule(doTask, 30000, 30000);
-
-
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        width=layout.getMeasuredWidth();
+        timer.schedule(doTask, 30000);
 
     }
 
@@ -89,6 +97,7 @@ public class Movie_selection extends AppCompatActivity {
         params.setMargins(horizontal_margin, 0, horizontal_margin, dp_px(2));
         Db_helper DB=new Db_helper(this);
         ArrayList<Movie> movies=DB.getMovies();
+        if(movies==null)return;
         for(int i=0,size=movies.size();i<size;i++){
             MovieView movie=new MovieView(this);
             movie.set_cover_size(width);
@@ -119,10 +128,16 @@ public class Movie_selection extends AppCompatActivity {
         return px;
     }
     public void go_to_projections(){
+        timer.cancel();
+        timer.purge();
         Intent switchActivityIntent = new Intent(this, Proyection_activity.class);
         startActivity(switchActivityIntent);
     }
 
-
-
+    @Override
+    public void onBackPressed() {
+        timer.cancel();
+        timer.purge();
+        super.onBackPressed();
+    }
 }

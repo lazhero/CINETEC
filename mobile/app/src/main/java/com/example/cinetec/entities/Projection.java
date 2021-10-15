@@ -10,6 +10,7 @@ public class Projection {
     String Movie_original_name;
     String Date;
     String Initial_time;
+    int Columns;
 
     public int getId() {
         return Id;
@@ -61,12 +62,13 @@ public class Projection {
 
 
 
-    public Projection(int id, String cinema_name, int room_Number, String movie_original_name,String date, String initial_time) {
+    public Projection(int id, String cinema_name, int room_Number, String movie_original_name,String date, String initial_time,int Columns) {
         Id = id;
         Cinema_name = cinema_name;
         Room_Number = room_Number;
         Movie_original_name = movie_original_name;
         Date = date;
         Initial_time = initial_time;
+        this.Columns=Columns;
     }
 }

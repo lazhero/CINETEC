@@ -9,6 +9,7 @@ import android.view.View;
 import com.example.cinetec.DB.Db_helper;
 import com.example.cinetec.R;
 import com.example.cinetec.services.DataUpdate;
+import com.example.cinetec.state.State;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -48,8 +49,9 @@ public class Login_Activity extends AppCompatActivity {
         String password=this.password.getText().toString();
         boolean logCondition=DB.verifyClient(username,password);
         if(logCondition){
+            State state=State.getInstance();
+            state.setUsername(username);
             Intent switchActivityIntent = new Intent(this, Cinema_select.class);
-
             startActivity(switchActivityIntent);
         }
 

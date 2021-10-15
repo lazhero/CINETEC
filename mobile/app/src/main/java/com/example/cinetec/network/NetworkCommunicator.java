@@ -10,11 +10,15 @@ import java.io.IOException;
 import java.util.Map;
 
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.OkHttp;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 
 public class NetworkCommunicator {
@@ -31,6 +35,26 @@ public class NetworkCommunicator {
         }
         Request request = new Request.Builder().url(httpBuilder.build()).build();
         client.newCall(request).enqueue(responseCallback);
+    }
+    public static Response put(String url,JSONObject body) throws IOException {
+        if(url==null || body==null)return null;
+       // client.proxy();
+        RequestBody requestBody = RequestBody.create( body.toString(),
+                MediaType.parse("application/json"));
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+            Response response=client.newCall(request).execute();
+
+            return response;
+
+
+
+
+
     }
 
 

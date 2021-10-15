@@ -5,6 +5,10 @@ public class State {
     private String Cinema_name;
     private String Movie_original_name;
     private int Projection_id;
+    private String username;
+
+
+
     private State(){
 
     }
@@ -36,5 +40,12 @@ public class State {
 
     public void setProjection_id(int projection_id) {
         Projection_id = projection_id;
+    }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
