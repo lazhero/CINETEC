@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -18,6 +19,8 @@ import com.example.cinetec.entities.Movie;
 import com.example.cinetec.state.State;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Movie_selection extends AppCompatActivity {
 
@@ -30,6 +33,7 @@ public class Movie_selection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_selection);
         layout=(Matrix_layout) findViewById(R.id.movies_matrix_layout);
+
         layout.post(new Runnable()
         {
 
@@ -44,6 +48,27 @@ public class Movie_selection extends AppCompatActivity {
 
             }
         });
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @SuppressWarnings("unchecked")
+                    public void run() {
+                        try {
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                        }
+                        catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doTask, 30000, 30000);
 
 
 
@@ -57,21 +82,6 @@ public class Movie_selection extends AppCompatActivity {
     }
 
     public void add_movies_example(){
-        /*
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
-        params.setMargins(horizontal_margin, 0, horizontal_margin, dp_px(2));
-
-        for(int i=0;i<15;i++){
-            MovieView movie=new MovieView(this);
-            movie.set_cover_size(width);
-            movie.setLayoutParams(params);
-            layout.add_view(movie);
-        }
-
-         */
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT

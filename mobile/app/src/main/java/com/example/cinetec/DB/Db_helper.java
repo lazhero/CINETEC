@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import com.example.cinetec.entities.Cinema;
 import com.example.cinetec.entities.Movie;
 import com.example.cinetec.entities.Projection;
+import com.example.cinetec.entities.Seat;
 import com.example.cinetec.network.NetworkCommunicator;
 
 import org.json.JSONArray;
@@ -57,7 +58,7 @@ public class Db_helper extends SQLiteOpenHelper {
     private static String Seat_table="Create Table If not exists Seat( \n" +
             "Projection_id Integer,\n"+
             "Number Integer,\n"+
-            "State text,\n"+
+            "State Integer,\n"+
             "Primary Key(Projection_id,Number)\n"+
             ")";
 
@@ -76,7 +77,7 @@ public class Db_helper extends SQLiteOpenHelper {
     private static final String CinemasURL="http://25.92.13.1:38389/Admin/Sucursales";
     private static final String MoviesURL="http://25.92.13.1:38389/Admin/Movies";
     private static final String ProjectionsURL="http://25.92.13.1:38389/Admin/Projections";
-    private static final String SeatUrl="";
+    private static final String SeatUrl="http://25.92.13.1:38389/Admin/Seats";
     public Db_helper(@Nullable Context context) {
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
     }
@@ -193,11 +194,15 @@ public class Db_helper extends SQLiteOpenHelper {
 
                 if(!response.isSuccessful())return;
                 try {
-                    JSONArray movie_array=new JSONArray(response.body().source().readUtf8());
+                    String request_body=response.body().source().readUtf8();
+                   // Log.d("MOVIE",request_body);
+                    JSONArray movie_array=new JSONArray(request_body);
                     for(int i=0,size=movie_array.length();i<size;i++){
                         JSONObject Movie=movie_array.getJSONObject(i);
                         String Movie_original_name=Movie.getString("originalName");
+                       // Log.d("MOVIE",Movie_original_name);
                         String Movie_name=Movie.getString("name");
+
                         String Movie_image_url=Movie.getString("image");
                         insertMovie(Movie_original_name,Movie_name,Movie_image_url);
                     }
@@ -232,6 +237,7 @@ public class Db_helper extends SQLiteOpenHelper {
         NetworkCommunicator.get(ProjectionsURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d("PROJECTIONS","Falle projecciones");
 
             }
 
@@ -261,11 +267,40 @@ public class Db_helper extends SQLiteOpenHelper {
             }
         });
 
+        NetworkCommunicator.get(SeatUrl, null, new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                //Log.d("PROJECTIONS","Llegue a projections");
+                if(!response.isSuccessful())return;
+                try {
+                    String request_body=response.body().source().readUtf8();
+                   // Log.d("PROJECTIONS",request_body);
+                    JSONArray jsonArray=new JSONArray(request_body);
+                    for(int i=0,size=jsonArray.length();i<size;i++){
+                        JSONObject object=jsonArray.getJSONObject(i);
+                        int Projection_id=object.getInt("projectionId");
+                        int number=object.getInt("seatNumber");
+                        int state=object.getInt("state");
+                        insertSeat(Projection_id,number,state);
+
+                    }
+
+
+                }
+                catch (Exception e){}
+            }
+        });
+
 
 
 
     }
-    public boolean changeSeatState(int Projection_id,int Seat_number,String state){
+    public boolean changeSeatState(int Projection_id,int Seat_number,Integer state){
         String Projection_id_string=Integer.toString(Projection_id);
         String Seat_number_string=Integer.toString(Seat_number);
         SQLiteDatabase DB=this.getWritableDatabase();
@@ -340,6 +375,21 @@ public class Db_helper extends SQLiteOpenHelper {
         }
         return true;
     }
+    public boolean insertSeat(int Projection_id,int seat_number,int state){
+        SQLiteDatabase DB=this.getWritableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("Projection_Id",Projection_id);
+        contentValues.put("Number",seat_number);
+        contentValues.put("State",state);
+        long result=DB.insert("Seat",null,contentValues);
+        DB.close();
+        if(result==-1){
+            return false;
+        }
+        return true;
+    }
+
+
     public boolean insertReservedSeat(int Projection_id,int Seat_number,int Order_id){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -459,6 +509,28 @@ public class Db_helper extends SQLiteOpenHelper {
         DB.close();
         cursor.close();
         return projection_array;
+    }
+    public ArrayList<Seat> getSeat(int Projection_id){
+        SQLiteDatabase DB=this.getReadableDatabase();
+        Cursor cursor=DB.rawQuery("Select * from Seat Where Projection_id=? Order by Number",new String[]{Integer.toString(Projection_id)});
+        if(cursor.getCount()<=0){
+            DB.close();
+            cursor.close();
+            return null;
+        }
+
+        ArrayList<Seat> seat_array=new ArrayList<>();
+        cursor.moveToFirst();
+        while(!cursor.isLast()){
+            Seat seat=new Seat(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2));
+            seat_array.add(seat);
+            cursor.moveToNext();
+        }
+        Seat seat=new Seat(cursor.getInt(0),cursor.getInt(1),cursor.getInt(2));
+        seat_array.add(seat);
+        DB.close();
+        cursor.close();
+        return seat_array;
     }
 
 

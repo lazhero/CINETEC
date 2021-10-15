@@ -18,9 +18,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        DB=new Db_helper(this);
-        DB.SyncProcess();
-       switchActivities();
+       // DB=new Db_helper(this);
+        //DB.SyncProcess();
+      // switchActivities();
     }
     private void switchActivities() {
         Intent switchActivityIntent = new Intent(this, Login_Activity.class);

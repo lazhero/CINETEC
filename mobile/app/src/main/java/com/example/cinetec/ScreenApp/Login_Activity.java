@@ -4,11 +4,14 @@ package com.example.cinetec.ScreenApp;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import com.example.cinetec.DB.Db_helper;
 import com.example.cinetec.R;
+import com.example.cinetec.services.DataUpdate;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+
 
 
 public class Login_Activity extends AppCompatActivity {
@@ -30,7 +33,11 @@ public class Login_Activity extends AppCompatActivity {
                 LoginAttempt();
             }
         });
+        Intent intent=new Intent(this, DataUpdate.class);
+        startService(intent);
         DB=new Db_helper(this);
+
+
 
 
 
@@ -42,6 +49,7 @@ public class Login_Activity extends AppCompatActivity {
         boolean logCondition=DB.verifyClient(username,password);
         if(logCondition){
             Intent switchActivityIntent = new Intent(this, Cinema_select.class);
+
             startActivity(switchActivityIntent);
         }
 

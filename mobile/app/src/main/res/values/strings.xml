@@ -10,4 +10,5 @@
     <string name="movie_selection_label">Seleccion de Pelicula</string>
     <string name="projection_label">Seleccione la projeccion que desea</string>
     <string name="seat_label">Seleccione asientos</string>
+    <string name="seat_button_text">Reservar</string>
 </resources>

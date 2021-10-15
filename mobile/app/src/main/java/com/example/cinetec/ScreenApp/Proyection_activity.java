@@ -3,7 +3,9 @@ package com.example.cinetec.ScreenApp;
 import androidx.annotation.Dimension;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Gravity;
@@ -19,6 +21,8 @@ import com.example.cinetec.state.State;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Proyection_activity extends AppCompatActivity {
     private LinearLayout linear;
@@ -30,6 +34,28 @@ public class Proyection_activity extends AppCompatActivity {
         setContentView(R.layout.proyection_activity);
         linear=(LinearLayout) findViewById(R.id.projection_linear_layout);
         just_prove();
+        final Handler handler = new Handler();
+        Timer timer = new Timer();
+        TimerTask doTask = new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(new Runnable() {
+                    @SuppressWarnings("unchecked")
+                    public void run() {
+                        try {
+                            Intent intent = getIntent();
+                            finish();
+                            startActivity(intent);
+                        }
+                        catch (Exception e) {
+                            // TODO Auto-generated catch block
+                        }
+                    }
+                });
+            }
+        };
+        timer.schedule(doTask, 30000, 30000);
+
 
 
     }
@@ -68,8 +94,14 @@ public class Proyection_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 state.setProjection_id(projection.getId());
+                go_to_seats();
             }
+
         });
         linear.addView(button);
+    }
+    public void go_to_seats(){
+        Intent switchActivityIntent = new Intent(this, Seat_activity.class);
+        startActivity(switchActivityIntent);
     }
 }
