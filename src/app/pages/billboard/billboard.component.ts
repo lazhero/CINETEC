@@ -43,15 +43,14 @@ export class BillboardComponent implements OnInit {
     this.backend
       .get_request('Client/Movie', cinema)
       .subscribe((moviesArray) => {
-        moviesArray.forEach(async (movie: { image: any }) => {
-          await this.getImage(movie.originalName).then((result: any) => {
-            const image = this.sanitizer.bypassSecurityTrustResourceUrl(
-              `data:image/png;base64, ${result.value.fileContents}`
-            );
-            movie.image = image;
-          });
-          Swal.close();
-        });
+        moviesArray.forEach(
+          async (movie: { image: any; originalName: string }) => {
+            await this.getImage(movie.originalName).then((result: any) => {
+              movie.image = result;
+            });
+            Swal.close();
+          }
+        );
 
         this.movies = moviesArray;
       });
@@ -63,6 +62,14 @@ export class BillboardComponent implements OnInit {
       queryParams: { theater: this.cinemaName, movie: movie.originalName },
     });
   }
+  fixImage(image: any) {
+    if (!image || !image.value) return;
+    const fiximage = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `data:image/png;base64, ${image.value.fileContents}`
+    );
+    return fiximage;
+  }
+
   async getImage(movieName: string) {
     return new Promise((resolve) => {
       this.backend

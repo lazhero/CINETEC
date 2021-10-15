@@ -15,7 +15,7 @@
                 <div class="movieRectangle" style="background-color:#292929;" (click)="movieSelected(movie)">
  
                     <div class="movieImage" >
-                        <img class="imageSrc" [src]="movie.image" alt="">
+                        <img class="imageSrc"   [src]="fixImage(movie.image)" alt="">
                     </div>
                     <div class="hourText" style="color:white ;font-size: 16px;">
                         Horarios

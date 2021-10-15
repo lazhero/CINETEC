@@ -1,110 +1,171 @@
 <div class="mainView">
     <div class="background">
-    <div class="viewContainer">
-        <div class="text" style="color: white; font-size: 30px;">{{movie.name}}</div>
-        <div class="infoContainer">
+        <div class="viewContainer">
+            <div class="text" style="color: white; font-size: 50px;">{{movie.name}}</div>
+            <div class="infoContainer">
 
-            <div class="infoDisp">
-                <div class="infoCard" >
-                    <div class="text infoTxt">Duración: {{movie.duration}} m
-                    </div>
-                </div>
-                <div class="infoCard" >
-                    <div class="text infoTxt" >Precio niños: {{movie.kidPrice}}
-                    </div>
-                </div>
-                <div class="infoCard" >
-                    <div class="text infoTxt" >Precio adultos: {{movie.adultPrice}}
-                    </div>
-                </div>
-
-                <div class="infoCard">
-                    <div class="text infoTxt">Precio adulto mayor: {{movie.elderPrice}}
-                    </div>
-                </div>
-                <div class="infoCard" >
-                    <div class="text infoTxt">Nombre original: {{movie.originalName}}
-                    </div>
-                </div>
-            </div>
-
-            <img class="imageSrc" [src]="movie.image" alt="">
-        </div>
-
-        <div class="proyectionsDisp">
-            <div class="text" style="color: white; font-size: 30px; margin:1em 0em 0em 0em">Proyecciones</div>
-            <div class="text" style="color: white; font-size: 19px;  margin:1em 0em 0em 1em ;">seleccione una proyección</div>
-            <div class="centerDisp">
-                <div class="proyectionScroll">
-                    <div class="scrollButton" (click)="moveLeft()">
-                        <mat-icon style="color: #333333;">arrow_back</mat-icon>
-                    </div>
-                    <div #panel class="itemScroll">
-                        <div class="itemContainer" *ngFor="let projection of projections">
-
-                            <div *ngIf="!projection.selected" class="item" (click)="selectProjection(projection)" style="background: rgb(255, 255, 255);">
-                                <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
-                                    {{projection.room}} {{projection.hour}}
-                                </div>
-                            </div>
-                            <div *ngIf="projection.selected" class="item" (click)="unselectAllProjections()" style="background: #fcff7b;">
-                                <div class="text" style="color: #333333; font-size: 16px; position: absolute;margin-left: 1em;margin-top: .5em;">
-                                    {{projection.room}} {{projection.hour}}
-                                </div>
-                            </div>
+                <div class="infoDisp">
+                    <div class="infoCard">
+                        <div class="text infoTxt">Duración: {{movie.duration}} m
                         </div>
-
-            
                     </div>
-                    <div class="scrollButton" (click)="moveRight()">
-                        <mat-icon style="color: #333333;">arrow_forward</mat-icon>
+                    <div class="infoCard">
+                        <div class="text infoTxt">Precio niños: {{movie.kidPrice}}
+                        </div>
+                    </div>
+                    <div class="infoCard">
+                        <div class="text infoTxt">Precio adultos: {{movie.adultPrice}}
+                        </div>
+                    </div>
+
+                    <div class="infoCard">
+                        <div class="text infoTxt">Precio adulto mayor: {{movie.elderPrice}}
+                        </div>
+                    </div>
+                    <div class="infoCard">
+                        <div class="text infoTxt">Nombre original: {{movie.originalName}}
+                        </div>
                     </div>
                 </div>
-            </div>
 
+                <img class="imageSrc" [src]="fixImage(movie.image)" alt="">
+            </div>
             <div class="hLine" style="margin-top: 2em;"></div>
-
-            <div *ngIf="currentProjection!=undefined">
-                <div class="text" style="color: white; font-size: 30px ;margin:1em 0em 0em 0em ">Asientos</div>
-                <div class="text" style="color: white; font-size: 19px;  margin:1em 0em 0em 1em ;">seleccione su asiento</div>
-                <div  class="chairsDisplayerContainer">
-                    <div class="chairsDisplayer">
-                        <div class="chair" *ngFor="let chair of chairs">
-
-                            <div *ngIf="chair.state &&!chair.selected" (click)="selectChair(chair)">
-                                <img  class="chairIcon" src="../../../assets/chair.svg" alt="">
-                                <div class="chairText" style="color: #333333;" >{{chair.number}}</div>
-                            </div>
-
-                            <div *ngIf="chair.state &&chair.selected" (click)="unselectAllChairs()">
-                                <img  class="chairIcon" src="../../../assets/chairSelected.svg" alt="">
-                                <div class="chairText" style="color: #333333;" >{{chair.number}}</div>
-                            </div>
-
-                            <div *ngIf="!chair.state" (click)="this.snackmat.open('Este asiento ya esta ocupado, por favor selecciona otro','Entendido')">
-                                <img  class="chairIcon" src="../../../assets/chairDisabled.svg" alt="">
-                                <div class="chairText" style="color: w;" >{{chair.number}}</div>
-                            </div>
+            <div class="proyectionsDisp">
+                <div class="text" style="color: white; font-size: 30px; margin:1em 0em 0em 0em">Proyecciones</div>
+                <div class="text" style="color: white; font-size: 19px;  margin:1em 0em 0em 1em ;">seleccione una
+                    proyección</div>
+                <div class="centerDisp">
+                    <div class="proyectionScroll">
+                        <div *ngIf="projections.length>1" class="scrollButton" (click)="moveLeft()">
+                            <mat-icon style="color: #333333;">arrow_back</mat-icon>
                         </div>
-        
-                        <img class="screenIcon" src="../../../assets/ScreenIcon.svg" alt="">
-                    </div>
-                </div>
-                <div  class="centerDisp" style="margin-bottom: 5em;">
-                    <div class="payButton" (click)="buyTicket()" style="margin: 2em 0 1em 0;">
-                        <div class="payButtonContainer">
-                            <div class="text" style="font-size: 16px; color: white; margin: .3em 0 0 .1em;">
-                                Comprar tiquete
+                        <div #panel class="itemScroll">
+                            <div class="itemContainer" *ngFor="let projection of projections">
+
+                                <div *ngIf="!projection.selected" class="item" (click)="selectProjection(projection)"
+                                    style="background: rgb(255, 255, 255);">
+                                    <div class="text projTex">
+                                        {{projection.room}} {{projection.hour}}
+                                    </div>
+                                </div>
+                                <div *ngIf="projection.selected" class="item" (click)="unselectAllProjections()"
+                                    style="background: #fcff7b;">
+                                    <div class="text projTex">
+                                        {{projection.room}} {{projection.hour}}
+                                    </div>
+                                </div>
                             </div>
-                            <mat-icon style="color: white; font-size: 35px; margin: 0 0 .5em 1em;">credit_card</mat-icon>
+
+
+                        </div>
+                        <div *ngIf="projections.length>1" class="scrollButton" (click)="moveRight()">
+                            <mat-icon style="color: #333333;">arrow_forward</mat-icon>
                         </div>
                     </div>
                 </div>
+
+                <div class="hLine" style="margin-top: 2em;"></div>
+
+                <div *ngIf="currentProjection!=undefined">
+                    <div class="text" style="color: white; font-size: 30px ;margin:1em 0em 0em 0em ">Asientos</div>
+                    <div class="text" style="color: white; font-size: 19px;  margin:1em 0em 0em 1em ;">seleccione su
+                        asiento</div>
+<!---sillas-->
+                    <div class="chairsDisplayerContainer">
+                        <div class="chairsDisplayer">
+                            <div  *ngFor="let row of chairs;">
+                                <div class="chair" *ngFor="let chair of row">
+
+                                    <div *ngIf="chair.state==0 &&!isSelect(chair)" (click)="selectChair(chair)">
+                                        <img class="chairIcon" src="../../../assets/chair.svg" alt="">
+                                        <div class="chairText" style="color: #333333;">{{chair.seatNumber}}</div>
+                                    </div>
+
+                                    <div *ngIf="isSelect(chair)" (click)="unselectChair(chair)">
+                                        <img class="chairIcon" src="../../../assets/chairSelected.svg" alt="">
+                                        <div class="chairText" style="color: #333333;">{{chair.seatNumber}}</div>
+                                    </div>
+
+                                    <div *ngIf="chair.state==1"(click)="this.snackmat.open('Este asiento ya esta ocupado, por favor selecciona otro','Entendido')">
+                                        <img class="chairIcon" src="../../../assets/chairDisabled.svg" alt="">
+                                        <div class="chairText" style="color: #333333;">{{chair.seatNumber}}</div>
+                                    </div>
+
+                                 </div>
+                            </div>
+
+                            <img class="screenIcon" src="../../../assets/ScreenIcon.svg" alt="">
+                        </div>
+                    </div>
+
+
+                    
+                    <div class="centerDisp" style="margin-bottom: 5em;">
+                        <div class="hLine" style="margin-top: 2em;"></div>
+<!---TIQUETES EDAD-->
+                        <div style="display: flex; margin-top: 4vh; margin-bottom: 1vh;">
+
+                            <div class="iconCounter"  style="color: white;">
+                                <mat-icon>child_care</mat-icon>
+                                <div class="text">Niños</div>
+                                <div class="text">{{childCount}}</div>
+                                <div style="display: flex; align-items: center;">
+                                    <div class="addlessButton" (click)="childCount=childCount-1">
+                                      <img  src="../../../../assets/expand_more.svg" alt="">
+                                    </div>
+                                    <div class="addlessButton" (click)="childCount=childCount+1">
+                                      <img src="../../../../assets/expand_less_black_24dp.svg" alt="">
+                                    </div>
+                                </div>
+                                  
+                            </div>
+                            <div class="iconCounter" style="color: white;">
+                                <mat-icon style="color: white;">emoji_people</mat-icon>
+                                <div class="text">Adultos</div>
+                                <div class="text">{{adultCount}}</div>
+                                <div style="display: flex; align-items: center;">
+                                  <div class="addlessButton" (click)="adultCount=adultCount-1">
+                                  <img src="../../../../assets/expand_more.svg" alt="">
+                                </div>
+                                <div class="addlessButton" (click)="adultCount=adultCount+1">
+                                  <img src="../../../../assets/expand_less_black_24dp.svg" alt="">
+                                </div>
+                                </div>
+                            </div>
+                            <div class="iconCounter" style="color: white;">
+                                <mat-icon>elderly</mat-icon>
+                                <div class="text">Adulto mayor</div>
+                                <div class="text">{{olderCount}}</div>
+                                <div style="display: flex; align-items: center;">
+                                    <div class="addlessButton" (click)="olderCount=olderCount-1">
+                                        <img src="../../../../assets/expand_more.svg" alt="">
+                                    </div>
+                                    <div class="addlessButton" (click)="olderCount=olderCount+1">
+                                     <img src="../../../../assets/expand_less_black_24dp.svg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hLine" style="margin-top: 2em;"></div>
+<!--Boton de compras-->
+                        <div class="payButton" (click)="buyTicket()" style="margin: 2em 0 1em 0;">
+                            <div class="payButtonContainer">
+                                <div class="text" style="font-size: 16px; color: white; margin: .3em 0 0 .1em;">
+                                    Comprar tiquete
+                                </div>
+                                <mat-icon style="color: white; font-size: 35px; margin: 0 0 .5em 1em;">credit_card
+                                </mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            
+
         </div>
 
+        
     </div>
 
-</div>
 </div>

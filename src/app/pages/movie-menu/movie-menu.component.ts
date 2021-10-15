@@ -4,6 +4,7 @@ import { BackendService } from 'src/app/services/backend-service.service';
 import { movieService } from 'src/app/services/movieService';
 import { SwalService } from 'src/app/services/swalService';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-movie-menu',
   templateUrl: './movie-menu.component.html',
@@ -15,14 +16,20 @@ export class MovieMenuComponent implements OnInit {
     public backend: BackendService,
     private swal: SwalService,
     private movieService: movieService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public dialog: MatDialog
   ) {}
+
   chairs: any[] = [];
   projections: any[] = [];
   scrollableItemSize = 100;
 
+  childCount: number = 0;
+  adultCount: number = 0;
+  olderCount: number = 0;
+
   currentProjection: any;
-  currentChair: any;
+  selectedChairs: any[] = [];
 
   movie: any;
 
@@ -31,6 +38,7 @@ export class MovieMenuComponent implements OnInit {
     // min and max included
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
+
   getRandomBool() {
     var numb = this.randomIntFromInterval(0, 100);
 
@@ -38,61 +46,105 @@ export class MovieMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const urlParams = new URLSearchParams(window.location.search);
+    const user = JSON.parse(localStorage.getItem('user') as string);
 
-    const data = {
-      Cinema_name: urlParams.get('theater'),
-      Movie_name: urlParams.get('movie'),
-    };
+    const urlParams = new URLSearchParams(window.location.search);
     //Obtiene la pelicula del localStorage
     this.movie = this.movieService.getCurrentMovie();
-    //Asegura la imagen
-    this.movie.image = this.sanitizer.bypassSecurityTrustResourceUrl(
-      this.movie.image.changingThisBreaksApplicationSecurity
-    );
+    const data = {
+      Cinema_name: urlParams.get('theater'),
+      Movie_name: this.movie.originalName,
+    };
 
     this.backend.get_request('Client/Projection', data).subscribe((value) => {
       value.forEach(
-        (projection: { roomNumber: number; initialTime: string }) => {
+        (projection: {
+          roomNumber: number;
+          initialTime: string;
+          id: number;
+          rows: number;
+          columns: number;
+        }) => {
           this.projections.push({
             room: 'S' + projection.roomNumber,
             hour: projection.initialTime,
+            projectionId: projection.id,
+            rows: projection.rows,
+            columns: projection.columns,
           });
         }
       );
     });
-
-    for (let i = 0; i < 50; i++) {
-      const newChair = {
-        state: this.getRandomBool(),
-        number: 'A' + i,
-        selected: false,
-      };
-
-      this.chairs.push(newChair);
-    }
   }
 
-  /**
-   * It verifies the process of buying tickets and do the buy
-   * @returns
-   */
-  buyTicket(): void {
-    if (!this.currentProjection || !this.currentChair) {
+  validate() {
+    if (
+      this.childCount + this.adultCount + this.olderCount !=
+      this.selectedChairs.length
+    ) {
       this.swal.showError(
         'Error',
-        'Por favor seleccione una sala y un asiento válido'
+        'Por favor seleccione la misma cantidad de personas que de asientos '
       );
-      return;
+      return false;
+    }
+    if (!this.currentProjection) {
+      this.swal.showError('Error', 'Por favor seleccione una sala ');
+      return false;
     }
 
+    if (this.selectedChairs.length < 1) {
+      this.swal.showError('Error', 'Por favor uno o más asientos ');
+      return false;
+    }
+    return true;
+  }
+  buyTicket(): void {
+    if (!this.validate()) return;
+    const user: string = JSON.parse(
+      localStorage.getItem('user') as string
+    ).username;
+    let allChairNumber: number[] = [];
+    let allChairName: string = '';
+
+    this.selectedChairs.forEach((asiento) => {
+      allChairNumber.push(asiento.seatNumber);
+      allChairName += 'A' + asiento.seatNumber + ', ';
+    });
     this.swal
       .htmloptionSwal(
         'Compra de tiquete',
-        'A continuación se procederá a realizar la compra del tiquete <br><br> Sala:' +
+        'A continuación se procederá a realizar la compra del tiquete <br><br>' +
+          '<div class="text">Película: </div>' +
+          this.movie.name +
+          '<div class="text">Sala: </div>' +
           this.currentProjection.room +
-          '<br>Asiento:' +
-          this.currentChair.number +
+          '<br><div class="text">Asientos: </div> ' +
+          allChairName +
+          '<br><div class="text">Usuario: </div>' +
+          user +
+          `
+          <br>
+          <div style="display:flex;gap:10px; flex-direction:row; align-items:center; align-items: center;justify-content:center">
+          
+            <div style="display:flex ;flex-direction:column">
+              <div class="text">Niños</div>
+              <div class="text">${this.childCount}</div>
+            </div>
+
+            <div style="display:flex ;flex-direction:column">
+                <div class="text">Adultos</div>
+                <div class="text">${this.adultCount}</div>
+                
+            </div>
+
+            <div style="display:flex ;flex-direction:column">
+                <div class="text">Adulto mayor</div>
+                <div class="text">${this.olderCount}</div>
+            </div>
+
+          </div>
+          ` +
           '<br><br> Por favor inserte su targeta de crédito para realizar la compra',
         'Cancelar',
         'Comprar',
@@ -105,7 +157,15 @@ export class MovieMenuComponent implements OnInit {
           return;
         }
 
+        const data = {
+          seats: allChairNumber,
+          proj_id: this.currentProjection.projectionId,
+          client_username: user,
+        };
+
         if (result.isConfirmed) {
+          this.backend.put_request('Client/Seats', data);
+
           this.swal.showSuccess(
             'Tiquete comprado',
             'Descargando tu tiquete y tu factura,  ¡Nos vemos!'
@@ -113,35 +173,73 @@ export class MovieMenuComponent implements OnInit {
         }
       });
   }
-  /**
-   * Unselect all chairs
-   */
-  unselectAllChairs() {
-    this.chairs.forEach((chair) => {
-      chair.selected = false;
-    });
-    this.currentChair = null;
-  }
+
   /**
    * Projections
    */
   unselectAllProjections() {
+    this.childCount = 0;
+    this.adultCount = 0;
+    this.olderCount = 0;
     this.projections.forEach((projection) => {
       projection.selected = false;
     });
     this.currentProjection = null;
+    this.unselectAllChairs();
   }
+
   selectProjection(projection: any) {
     this.unselectAllProjections();
     projection.selected = true;
     this.currentProjection = projection;
+
+    this.backend
+      .get_request('Client/Seats', {
+        projection_id: this.currentProjection.projectionId,
+      })
+      .subscribe((value) => {
+        console.log(projection);
+
+        let counter = 0;
+        for (let y = 0; y < this.currentProjection.columns; y++) {
+          let newRow = [];
+          for (let x = 0; x < this.currentProjection.rows; x++) {
+            newRow.push(value[counter]);
+            counter++;
+          }
+          this.chairs.push(newRow);
+        }
+        console.log(this.chairs);
+      });
   }
 
   selectChair(chair: any) {
-    this.unselectAllChairs();
     chair.selected = true;
-    this.currentChair = chair;
+    this.selectedChairs.push(chair);
   }
+  /**
+   * Unselect all chairs
+   */
+  unselectAllChairs() {
+    this.selectedChairs = [];
+  }
+  unselectChair(chair: any) {
+    for (let i = 0; i < this.selectedChairs.length; i++) {
+      if (this.selectedChairs[i].seatNumber === chair.seatNumber) {
+        this.selectedChairs.splice(i, 1);
+      }
+    }
+  }
+
+  isSelect(chair: any) {
+    for (let i = 0; i < this.selectedChairs.length; i++) {
+      if (this.selectedChairs[i].seatNumber === chair.seatNumber) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /**
    * moves the (itemScroll) projectionsScroll to the left
    */
@@ -160,5 +258,13 @@ export class MovieMenuComponent implements OnInit {
       left: this.panel.nativeElement.scrollLeft + this.scrollableItemSize,
       behavior: 'smooth',
     });
+  }
+
+  fixImage(image: any) {
+    if (!image || !image.value) return;
+    const fiximage = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `data:image/png;base64, ${image.value.fileContents}`
+    );
+    return fiximage;
   }
 }

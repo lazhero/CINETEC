@@ -33,17 +33,17 @@ export class LoginComponent implements OnInit {
       password: this.form.value.Password,
     };
 
-    this.backend.post_request('Login', info).subscribe((result) => {
-      console.log(info);
-      console.log(result);
+    this.backend.post_request('Login', info).subscribe((user) => {
+      console.log(user);
 
-      if (result === null || result == undefined || result == '') {
+      if (user === null || user == undefined || user == '') {
         this.swal.showError(
           'Oops',
           'El usuario no se encuentra en la base de datos '
         );
         return;
       } else {
+        localStorage.setItem('user', JSON.stringify(user));
         this.router.navigateByUrl('pages');
       }
     });
