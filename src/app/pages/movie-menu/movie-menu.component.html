@@ -92,6 +92,11 @@
                                             <img class="chairIcon" src="../../../assets/chairDisabled.svg" alt="">
                                             <div class="chairText" style="color: white;">{{chair.seatNumber}}</div>
                                         </div>
+                                        
+                                        <div *ngIf="chair.state==2"(click)="this.snackmat.open('Este asiento está restringido por el Covid-19','Entendido')">
+                                            <img class="chairIcon" src="../../../assets/covidSeat.svg" alt="">
+                                            <div class="chairText" style="color: white;">{{chair.seatNumber}}</div>
+                                        </div>
 
                                     </div>
                                 </div>

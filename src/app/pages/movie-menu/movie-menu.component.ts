@@ -223,6 +223,8 @@ export class MovieMenuComponent implements OnInit {
         projection_id: this.currentProjection.projectionId,
       })
       .subscribe((asientos) => {
+        console.log(asientos);
+
         asientos = asientos.sort((n1: any, n2: any) => {
           if (n1.seatNumber > n2.seatNumber) {
             return 1;
