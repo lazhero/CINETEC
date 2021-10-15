@@ -190,7 +190,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Seleccionar película</mat-label>
             <mat-select (selectionChange)="selectMovie($event.value)">
-                <mat-option *ngFor="let movie of movies"  value="{{movie.originalName}}">{{movie.originalName}}</mat-option>
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
             </mat-select>
             </mat-form-field>
 

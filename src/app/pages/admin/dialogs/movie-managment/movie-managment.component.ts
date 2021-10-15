@@ -47,7 +47,6 @@ export class MovieManagmentComponent implements OnInit {
   }
 
   selectMovie(event: any) {
-
     this.actorMovies            = event.actorMovies;
     this.adultPrice             = event.adultPrice;
     this.directorFirstName      = event.directorFirstName;
@@ -169,41 +168,18 @@ export class MovieManagmentComponent implements OnInit {
   }
 
   deleteMovie() {
-    for (let i = 0; i < this.movies.length; i++) {
-      if (this.movies[i].originalName === this.originalName) {
-        this.movies.splice(i, 1);
+    
+    
+    this.backend.delete_request("Admin/Movies",
+                                {movie_org_name: this.originalName})
+        .subscribe(result=>{
+          this.swal.showSuccess(
+            'Película eliminada',
+            'Película eliminada con éxito'
+          );
 
-        const data = { mov:{
-          actorMovies: this.parseActors(this.movies[i].actorMovies),        
-          adultPrice: this.movies[i].adultPrice,         
-          director:this.movies[i].director,
-          directorFirstName:this.movies[i].directorFirstName,  
-          directorLastName:this.movies[i].directorLastName,   
-          directorMiddleName:this.movies[i].directorMiddleName,     
-          directorSecondLastName:this.movies[i].directorSecondLastName, 
-          elderPrice:this.movies[i].elderPrice,             
-          image:this.movies[i].image,                  
-          kidPrice:this.movies[i].kidPrice,              
-          movieClassifications:{MovieOriginalName:this.movies[i].originalName,
-                                ClassificationId: this.movies[i].movieClassifications},   
-          name:this.movies[i].name,                   
-          originalName:this.movies[i].originalName,           
-          projections:this.movies[i].projections,            
-          timeLength:this.movies[i].timeLength
-        }, image: this.movies[i].image
-      }
-        this.backend.delete_request("Admin/Movies",data);
-        this.swal.showSuccess(
-          'Película eliminada',
-          'Película eliminada con éxito'
-        );
-        return;
-      }
-    }
-    this.swal.showError(
-      'Error al eliminar película',
-      'La película no se encuentra en la base de datos'
-    );
+        })
+    
   }
 
   close(): void {
