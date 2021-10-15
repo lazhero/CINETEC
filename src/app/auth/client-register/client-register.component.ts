@@ -42,22 +42,19 @@ export class ClientRegisterComponent implements OnInit {
     let data = {
       idCard: rand,
       phoneNum: 0,
-      firstName: rand.toString(),
-      middleName: 'TEST',
-      lastName: 'TEST',
-      secondLastName: 'TEST',
-      username: rand.toString(),
-      password: 'TEST',
-      birthdate: new Date(),
+      firstName: this.form.value.name,
+      middleName: '',
+      lastName: this.form.value.lastName,
+      secondLastName: '',
+      username: this.form.value.userName,
+      password: this.form.value.Password,
+      birthdate: new Date(this.form.value.birthDate),
       clientInvoices: [],
       projectionClients: [],
     };
-    console.log(data);
 
     this.backend.post_request('Admin/Client', data).subscribe(
       (value) => {
-        console.log(data);
-
         this.swal.showSuccess('Bienvenido', 'Usuario registrado con éxito');
         this.router.navigateByUrl('pages');
       },

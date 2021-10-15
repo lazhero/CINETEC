@@ -161,15 +161,38 @@ export class MovieMenuComponent implements OnInit {
           seats: allChairNumber,
           proj_id: this.currentProjection.projectionId,
           client_username: user,
+          adult_tickets: this.adultCount,
+          kid_tickets: this.childCount,
+          elder_tickets: this.olderCount,
         };
+        console.log(data);
 
         if (result.isConfirmed) {
-          this.backend.put_request('Client/Seats', data);
+          this.backend
+            .put_request('Client/Seats', data)
+            .subscribe((invoiceId) => {
+              console.log(invoiceId);
 
-          this.swal.showSuccess(
-            'Tiquete comprado',
-            'Descargando tu tiquete y tu factura,  ¡Nos vemos!'
-          );
+              this.backend
+                .get_request('Invoice', { Invoice_id: invoiceId })
+                .subscribe((file) => {
+                  console.log(file);
+
+                  const linkSource =
+                    'data:application/pdf;base64,' + file.fileContents;
+                  const downloadLink = document.createElement('a');
+                  const fileName = 'factura.pdf';
+
+                  downloadLink.href = linkSource;
+                  downloadLink.download = fileName;
+                  downloadLink.click();
+
+                  this.swal.showSuccess(
+                    'Tiquete comprado',
+                    'Descargando tu tiquete y tu factura,  ¡Nos vemos!'
+                  );
+                });
+            });
         }
       });
   }
@@ -189,6 +212,8 @@ export class MovieMenuComponent implements OnInit {
   }
 
   selectProjection(projection: any) {
+    console.log(projection);
+
     this.unselectAllProjections();
     projection.selected = true;
     this.currentProjection = projection;
@@ -197,19 +222,29 @@ export class MovieMenuComponent implements OnInit {
       .get_request('Client/Seats', {
         projection_id: this.currentProjection.projectionId,
       })
-      .subscribe((value) => {
-        console.log(projection);
+      .subscribe((asientos) => {
+        console.log(asientos);
+
+        asientos = asientos.sort((n1: any, n2: any) => {
+          if (n1.seatNumber > n2.seatNumber) {
+            return 1;
+          }
+
+          if (n1.seatNumber < n2.seatNumber) {
+            return -1;
+          }
+          return 0;
+        });
 
         let counter = 0;
-        for (let y = 0; y < this.currentProjection.columns; y++) {
+        for (let y = 0; y < this.currentProjection.rows; y++) {
           let newRow = [];
-          for (let x = 0; x < this.currentProjection.rows; x++) {
-            newRow.push(value[counter]);
+          for (let x = 0; x < this.currentProjection.columns; x++) {
+            newRow.push(asientos[counter]);
             counter++;
           }
           this.chairs.push(newRow);
         }
-        console.log(this.chairs);
       });
   }
 

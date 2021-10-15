@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BackendService } from 'src/app/services/backend-service.service';
 import { SwalService } from 'src/app/services/swalService';
 
 @Component({
@@ -11,20 +12,21 @@ import { SwalService } from 'src/app/services/swalService';
 export class TheatherManagmentComponent implements OnInit {
   creatingTheather: boolean = false;
   modifiyingTheather: boolean = false;
-
-  theaters: any[] = [
-    { name: 'sucursal1', location: 'Santa Ana', roomNumber: '32' },
-    { name: 'sucursal2', location: 'Alajuela', roomNumber: '12' },
-    { name: 'sucursal3', location: 'Heredia', roomNumber: '4' },
-  ];
+  deletingMovie: boolean = false;
+  theaters: any[] = [];
 
   constructor(
     public swal: SwalService,
     public dialogRef: MatDialogRef<TheatherManagmentComponent>,
     public formBuilder: FormBuilder,
+    public backed: BackendService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.backed.get_request('Admin/Sucursales', null).subscribe((value) => {
+      this.theaters = value;
+    });
+  }
 
   sucursal: string = '';
   location: string = '';
@@ -49,11 +51,18 @@ export class TheatherManagmentComponent implements OnInit {
   }
   create() {
     if (this.sucursal !== '' && this.location !== '' && this.roomNumber >= 0) {
-      this.swal.showSuccess(
-        'Sucursal agregada',
-        'la sucursal fue agregada con éxito'
-      );
-      console.log(this.sucursal + ' ' + this.location + ' ' + this.roomNumber);
+      const data = {
+        name: this.sucursal,
+        location: this.location,
+        employees: [],
+        rooms: [],
+      };
+      this.backed.post_request('Admin/Sucursales', data).subscribe((value) => {
+        this.swal.showSuccess(
+          'Sucursal agregada',
+          'la sucursal fue agregada con éxito'
+        );
+      });
     } else
       this.swal.showError(
         'Erro al agregar la sucursal',
@@ -61,6 +70,24 @@ export class TheatherManagmentComponent implements OnInit {
       );
   }
   submitModify() {
-    console.log(this.sucursal + ' ' + this.location + ' ' + this.roomNumber);
+    const data = {
+      name: this.sucursal,
+      location: this.location,
+      employees: [],
+      rooms: [],
+    };
+    this.backed.put_request('Admin/Sucursales', data).subscribe((value) => {
+      console.log(value);
+    });
+  }
+
+  submitDelete() {
+    const data = {
+      new_data: this.sucursal,
+    };
+    console.log(data);
+    this.backed.delete_request('Admin/Sucursales', data).subscribe((value) => {
+      this.swal.showSuccess('Acción ejecutada', 'Sucursal eliminada con éxito');
+    });
   }
 }

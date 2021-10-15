@@ -32,20 +32,20 @@
 
 
         <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
             <mat-label>Seleccionar sala</mat-label>
             <mat-select (selectionChange)="selectRoom($event.value)">
-                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.Room_id}}</mat-option>
+                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.number}}</mat-option>
             </mat-select>
         </mat-form-field>
 
         <div *ngIf="Room_id!=''">
-
-            <mat-form-field class="field">
-                <input matInput required type="text" [value]="Room_id"  (input)="Room_id = $any( $event.target).value" placeholder="ID de la sala" >
-            </mat-form-field>
-            <mat-form-field class="field">
-                <input matInput required type="text" [value]="Theater_name"  (input)="Theater_name = $any( $event.target).value" placeholder="Nombre" >
-            </mat-form-field>            
+        
 
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="Row_number"  (input)="Row_number = $any( $event.target).value" placeholder="Duracion" >
@@ -80,9 +80,15 @@
         <mat-form-field class="field">
             <input matInput required type="text" [value]="Room_id"  (input)="Room_id = $any( $event.target).value" placeholder="ID de la sala" >
         </mat-form-field>
-        <mat-form-field class="field">
-            <input matInput required type="text" [value]="Theater_name"  (input)="Theater_name = $any( $event.target).value" placeholder="Cine" >
-        </mat-form-field>            
+
+        
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
 
         <mat-form-field class="field">
             <input matInput required type="text" [value]="Row_number"  (input)="Row_number = $any( $event.target).value" placeholder="Filas" >
@@ -100,7 +106,7 @@
 
     <div class="buttonsContainer">
         <div class="actButton acceptButton">
-            <div class="text" (click)="submitModify()">Aceptar</div>
+            <div class="text" (click)="create()">Aceptar</div>
         </div>
         <div class="actButton cancelButton">
             <div class="text" (click)="close()">Cancelar</div>
@@ -111,14 +117,19 @@
 
 
 <div *ngIf="deletingRoom">
-    <div class="text" style="margin-bottom: 7px;">Deshabilitar sala</div>
+    <div class="text" style="margin-bottom: 7px;">Eliminar sala</div>
     <div class="formX" >
 
-
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Seleccionar sala</mat-label>
             <mat-select (selectionChange)="selectRoom($event.value)">
-                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.Room_id}}</mat-option>
+                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.number}}</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -127,7 +138,7 @@
 
     <div class="buttonsContainer">
         <div class="actButton acceptButton">
-            <div class="text" (click)="deleteRoom()">Deshabilitar</div>
+            <div class="text" (click)="deleteRoom()">Eliminar</div>
         </div>
         <div class="actButton cancelButton">
             <div class="text" (click)="close()">Cancelar</div>
