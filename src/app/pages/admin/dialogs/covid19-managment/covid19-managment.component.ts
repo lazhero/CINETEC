@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Covid19ManagmentComponent implements OnInit {
 
+
+  max_seats: string = '';
   constructor() { }
 
   ngOnInit(): void {

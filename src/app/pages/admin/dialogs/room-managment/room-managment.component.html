@@ -24,3 +24,113 @@
         </div>
     </div>
 </div>
+
+
+<div *ngIf="modifyingRoom">
+    <div class="text" style="margin-bottom: 7px;">Edicion de sala</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar sala</mat-label>
+            <mat-select (selectionChange)="selectRoom($event.value)">
+                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.Room_id}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="Room_id!=''">
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Room_id"  (input)="Room_id = $any( $event.target).value" placeholder="ID de la sala" >
+            </mat-form-field>
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Theater_name"  (input)="Theater_name = $any( $event.target).value" placeholder="Nombre" >
+            </mat-form-field>            
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Row_number"  (input)="Row_number = $any( $event.target).value" placeholder="Duracion" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Column_number"  (input)="Column_number = $any( $event.target).value" placeholder="Protagonistas" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Capacity"  (input)="Capacity = $any( $event.target).value" placeholder="Capacidad" >
+            </mat-form-field>
+            
+        </div>
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="submitModify()">Aceptar</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="addingRoom">
+    <div class="text" style="margin-bottom: 7px;">Agregar sala</div>
+    <div class="formX" >
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Room_id"  (input)="Room_id = $any( $event.target).value" placeholder="ID de la sala" >
+        </mat-form-field>
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Theater_name"  (input)="Theater_name = $any( $event.target).value" placeholder="Cine" >
+        </mat-form-field>            
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Row_number"  (input)="Row_number = $any( $event.target).value" placeholder="Filas" >
+        </mat-form-field>
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Column_number"  (input)="Column_number = $any( $event.target).value" placeholder="Columnas" >
+        </mat-form-field>
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Capacity"  (input)="Capacity = $any( $event.target).value" placeholder="Capacidad" >
+        </mat-form-field>
+    
+    </div>
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="submitModify()">Aceptar</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="deletingRoom">
+    <div class="text" style="margin-bottom: 7px;">Deshabilitar sala</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar sala</mat-label>
+            <mat-select (selectionChange)="selectRoom($event.value)">
+                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.Room_id}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="deleteRoom()">Deshabilitar</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>

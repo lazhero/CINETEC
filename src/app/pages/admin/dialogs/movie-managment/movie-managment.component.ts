@@ -16,13 +16,13 @@ export class MovieManagmentComponent implements OnInit {
   movies: any[] = [];
 
   
-    Original_name: string ='';         
-    Name: string = '';
-    Image: any;          
-    Length: string = ''; 
-    Main_characters: any = '';            
-    Director: string = '';
-    Rating: string = '';
+  Original_name: string ='';         
+  Name: string = '';
+  Image: any;          
+  Length: string = ''; 
+  Main_characters: any = '';            
+  Director: string = '';
+  Rating: string = '';
             
 
   constructor(
