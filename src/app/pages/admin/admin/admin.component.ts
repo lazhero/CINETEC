@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientManagmentComponent } from '../dialogs/client-managment/client-managment.component';
 import { Covid19ManagmentComponent } from '../dialogs/covid19-managment/covid19-managment.component';
+import { EmployeeManagmentComponent } from '../dialogs/employee-managment/employee-managment.component';
 import { MovieManagmentComponent } from '../dialogs/movie-managment/movie-managment.component';
 import { ProjectionsManagmentComponent } from '../dialogs/projections-managment/projections-managment.component';
 import { RoomManagmentComponent } from '../dialogs/room-managment/room-managment.component';
@@ -22,6 +23,13 @@ export class AdminComponent implements OnInit {
       width: '350px',
       data: {},
     });
+  }
+
+  openEmployeeManagment(){
+    let dialogRef = this.dialog.open(EmployeeManagmentComponent,{
+      width: '350px',
+      data: {},
+    })
   }
   openCovid19Managment() {
     let dialogRef = this.dialog.open(Covid19ManagmentComponent, {

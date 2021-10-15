@@ -1,0 +1,188 @@
+
+<div *ngIf="!deletingEmployee && !modifiyingEmployee && !addingEmployee">
+    <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
+    <div class="menuButtons ">
+
+        <div class="actButton menuButton" (click)="modifiyingEmployee=true">
+            <mat-icon class="icon" >edit</mat-icon>
+
+            <div class="text" > Modificar empleado</div>
+        </div>
+        <div class="actButton menuButton" (click)="deletingEmployee=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >remove_circle_outline</mat-icon>
+                <div class="text" >Borrar empleado</div>
+            </div>
+        </div>
+
+        <div class="actButton menuButton" (click)="addingEmployee=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >add_circle_outline</mat-icon>
+                <div class="text" >Agregar empleado</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div *ngIf="modifiyingEmployee">
+    <div class="text" style="margin-bottom: 7px;">Modificación de Empleados</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar empleado</mat-label>
+            <mat-select (selectionChange)="selectUser($event.value)">
+                <mat-option *ngFor="let employee of employees"  [value]="employee">{{employee.idCard}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="idCard!=''">
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="birthdate"  (input)="birthdate = $any( $event.target).value" placeholder="Fecha de nacimiento" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="cinemaName"  (input)="cinemaName = $any( $event.target).value" placeholder="Cine" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="firstDateWorking"  (input)="firstDateWorking = $any( $event.target).value" placeholder="Fecha de ingreso" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="role"  (input)="role = $any( $event.target).value" placeholder="Rol" >
+            </mat-form-field>
+            
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="phoneNum"  (input)="phoneNum = $any( $event.target).value" placeholder="Número de teléfono" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="firstName"  (input)="firstName = $any( $event.target).value" placeholder="Primer nombre" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="middleName"  (input)="middleName = $any( $event.target).value" placeholder="Segundo nombre" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="lastName"  (input)="middleName = $any( $event.target).value" placeholder="Primer apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="secondLastName"  (input)="secondLastName = $any( $event.target).value" placeholder="Segundo apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="username"  (input)="username = $any( $event.target).value" placeholder="Nombre de usuario" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="password" [value]="password"  (input)="password = $any( $event.target).value" placeholder="Contraseña" >
+            </mat-form-field>
+        </div>
+
+        <div class="buttonsContainer">
+            <div class="actButton acceptButton">
+                <div class="text" (click)="submitModify()">Aceptar</div>
+            </div>
+            <div class="actButton cancelButton">
+                <div class="text" (click)="close()">Cancelar</div>
+            </div>
+        </div>
+    </div>
+
+
+    
+</div>
+
+<div *ngIf="deletingEmployee">
+    <div class="text" style="margin-bottom: 7px;">Eliminación de empleados</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar empleado</mat-label>
+            <mat-select (selectionChange)="selectUser($event.value)">
+                <mat-option *ngFor="let employee of employees"  value="{{employee.idCard}}">{{employee.idCard}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="deleteUser()">Eliminar usuario</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="addingEmployee">
+    <div class="text" style="margin-bottom: 7px;">Creacion de empleados</div>
+    <div class="formX" >
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="birthdate"  (input)="birthdate = $any( $event.target).value" placeholder="Fecha de nacimiento" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="cinemaName"  (input)="cinemaName = $any( $event.target).value" placeholder="Cine" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="firstDateWorking"  (input)="firstDateWorking = $any( $event.target).value" placeholder="Fecha de ingreso" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="role"  (input)="role = $any( $event.target).value" placeholder="Rol" >
+            </mat-form-field>
+            
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="phoneNum"  (input)="phoneNum = $any( $event.target).value" placeholder="Número de teléfono" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="firstName"  (input)="firstName = $any( $event.target).value" placeholder="Primer nombre" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="middleName"  (input)="middleName = $any( $event.target).value" placeholder="Segundo nombre" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="lastName"  (input)="middleName = $any( $event.target).value" placeholder="Primer apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="secondLastName"  (input)="secondLastName = $any( $event.target).value" placeholder="Segundo apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="username"  (input)="username = $any( $event.target).value" placeholder="Nombre de usuario" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="password" [value]="password"  (input)="password = $any( $event.target).value" placeholder="Contraseña" >
+            </mat-form-field>
+
+            <div class="buttonsContainer">
+                <div class="actButton acceptButton">
+                    <div class="text" (click)="submitModify()">Aceptar</div>
+                </div>
+                <div class="actButton cancelButton">
+                    <div class="text" (click)="close()">Cancelar</div>
+                </div>
+            </div>
+        </div>
+
+</div>

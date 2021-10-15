@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PagesComponent } from './pages.component';
+import { EmployeeManagmentComponent } from './admin/dialogs/employee-managment/employee-managment.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { PagesComponent } from './pages.component';
     ClientManagmentComponent,
     ProjectionsManagmentComponent,
     PagesComponent,
+    EmployeeManagmentComponent,
   ],
   imports: [
     MatDatepickerModule,
