@@ -4,5 +4,13 @@
     <mat-form-field class="field">
         <input matInput required type="text" [value]="max_seats"  (input)="max_seats = $any( $event.target).value" placeholder="Aforo" >
     </mat-form-field>
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="create()">Aceptar</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
 
 </div>

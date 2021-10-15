@@ -21,7 +21,8 @@ export class BackendService {
   put_request(url: string, Params: object) {
     return this.http.put(this.serverIp + url, Params);
   }
-  delete_request(url: string, Params: object) {
-    return this.http.delete(this.serverIp + url, Params);
+  delete_request(url: string, Params: any) {
+    var http_params = new HttpParams({ fromObject: Params });
+    return this.http.delete(this.serverIp + url, { params: http_params });
   }
 }

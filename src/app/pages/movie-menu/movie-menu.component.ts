@@ -233,6 +233,7 @@ export class MovieMenuComponent implements OnInit {
           if (n1.seatNumber < n2.seatNumber) {
             return -1;
           }
+          return 0;
         });
 
         let counter = 0;
