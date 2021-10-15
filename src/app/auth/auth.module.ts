@@ -11,6 +11,9 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientRegisterComponent } from '../auth/client-register/client-register.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [LoginComponent, ClientRegisterComponent],
@@ -24,6 +27,15 @@ import { ClientRegisterComponent } from '../auth/client-register/client-register
     MatMenuModule,
     CommonModule,
     AuthRoutingModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatInputModule,
+    MatDatepickerModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    MatMenuModule,
+    MatFormFieldModule,
+    MatIconModule,
   ],
   exports: [
     MatButtonModule,

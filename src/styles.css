@@ -29,3 +29,44 @@ body {
   border-bottom: white solid 3px;
   width: 100%;
 }
+.bottomBar {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 9vh;
+  background-color: #242933;
+  margin-top: 10%;
+  position: absolute;
+}
+
+.mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;
+}
+
+.mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+  font-family: Poppins !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  letter-spacing: 0.02em !important;
+}
+
+mat-datepicker-toggle {
+  color: white !important;
+}
+
+.mat-form-field-underline {
+  display: none;
+}
+.mat-input-element {
+  color: white !important;
+}
