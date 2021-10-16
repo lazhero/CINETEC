@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<FacturaElectronica>
+  <Clave>56446548462546545648964XD1321351354</Clave>
+  <NumeroConsecutivo>1</NumeroConsecutivo>
+  <FechaEmision>15/10/2021 00:14:38</FechaEmision>
+  <Emisor>
+    <Nombre>CineTEC Cinemas</Nombre>
+    <Identificacion>
+      <Type>02</Type>
+      <Numero>51654561</Numero>
+    </Identificacion>
+    <Ubicacion>Heredia</Ubicacion>
+  </Emisor>
+  <Receptor>
+    <Identificacion>
+      <Type>1</Type>
+      <Numero>402470071</Numero>
+    </Identificacion>
+    <Telefono>
+      <CodigoPais>506</CodigoPais>
+      <NumTelefono>22652222</NumTelefono>
+    </Telefono>
+  </Receptor>
+  <CondicionVenta>1</CondicionVenta>
+  <MedioPago>1</MedioPago>
+  <DetalleServicio>
+    <LineaDetalle>
+      <NumeroLinea>12</NumeroLinea>
+      <Codigo>
+        <Tipo>0</Tipo>
+        <Codigo>123412D-3413</Codigo>
+      </Codigo>
+      <Cantidad>1</Cantidad>
+      <UnidadMedida>Unid</UnidadMedida>
+      <Detalle>Ticketes para adultos</Detalle>
+      <PrecioUnitario>4000</PrecioUnitario>
+      <SubTotal>4000</SubTotal>
+      <MontoTotal>4000</MontoTotal>
+    </LineaDetalle>
+    <LineaDetalle>
+      <NumeroLinea />
+      <Codigo>
+        <Tipo>0</Tipo>
+        <Codigo>123412D-3414</Codigo>
+      </Codigo>
+      <Cantidad>0</Cantidad>
+      <UnidadMedida>Unid</UnidadMedida>
+      <Detalle>ticketes para los infantes</Detalle>
+      <PrecioUnitario>1200</PrecioUnitario>
+      <SubTotal>0</SubTotal>
+      <MontoTotal>0</MontoTotal>
+    </LineaDetalle>
+    <LineaDetalle>
+      <NumeroLinea>3</NumeroLinea>
+      <Codigo>
+        <Tipo>0</Tipo>
+        <Codigo>123412D-3415</Codigo>
+      </Codigo>
+      <Cantidad>0</Cantidad>
+      <UnidadMedida>Unid</UnidadMedida>
+      <Detalle>ticketes para los adultos mayores</Detalle>
+      <PrecioUnitario>3500</PrecioUnitario>
+      <SubTotal>0</SubTotal>
+      <MontoTotal>0</MontoTotal>
+    </LineaDetalle>
+  </DetalleServicio>
+  <ResumenFactura>
+    <CodigoMoneda>CRC</CodigoMoneda>
+    <TipoCambio>1</TipoCambio>
+    <TotalServGravados>4000</TotalServGravados>
+    <TotalGravado>4000</TotalGravado>
+    <TotalVenta>4000</TotalVenta>
+    <TotalImpuesto>520</TotalImpuesto>
+    <TotalComprobante>4520</TotalComprobante>
+  </ResumenFactura>
+</FacturaElectronica>

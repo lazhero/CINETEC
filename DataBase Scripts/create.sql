@@ -49,8 +49,8 @@ CREATE TABLE ROOM(
 CREATE TABLE PROJECTION(
     Id serial,
     Date date,
-    Initial_time time,
-    End_time time,
+    Initial_time timestamp,
+    End_time timestamp,
     Movie_original_name varchar(31),
     Room_number smallint,
     Cinema_name varchar(32),

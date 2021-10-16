@@ -54,13 +54,12 @@ namespace REST_API_SERVER.Controllers
         cli_inv.ClientUsername = cli.Username;
         Db.ClientInvoices.Add(cli_inv);
 
-        foreach(int s in info.seats)
+        foreach(Seat s in temp)
         {
-          var seat = Db.Seats.Find(info.proj_id,s);
-          if(seat.State == 0)
+          if(s.State == 0)
           {
-            seat.State = 1;
-            seat.InvoiceId = invoice.Id;
+            s.State = 1;
+            s.InvoiceId = invoice.Id;
           }
           else
           {

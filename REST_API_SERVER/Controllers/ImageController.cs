@@ -22,7 +22,6 @@ namespace REST_API_SERVER.Controllers
       catch (Exception e) {
         return BadRequest(e.Message);
       }
-      return View();
     }
   }
 }

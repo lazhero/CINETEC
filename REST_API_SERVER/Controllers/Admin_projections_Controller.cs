@@ -64,7 +64,19 @@ namespace REST_API_SERVER.Controllers
     {
       try
       {
+        int id = Db.Projections.Max(p=>p.Id)+1;
+        proj.Id = id;
+        var room = Db.Rooms.Where(p => p.CinemaName == proj.CinemaName && p.Number == proj.RoomNumber).Single() ;
+        for(int i =0; i < (int)(room.Rows * room.Columns); i++)
+        {
+          Seat s = new Seat();
+          s.State = 0;
+          s.SeatNumber = (short)i;
+          s.ProjectionId = proj.Id;
+          Db.Seats.Add(s);
+        }
         Db.Projections.Add(proj);
+
         Db.SaveChanges();
         return Ok();
       }
@@ -74,11 +86,14 @@ namespace REST_API_SERVER.Controllers
       }
     }
     [HttpDelete]
-    public ActionResult Delete([FromBody] Projection proj)
+    public ActionResult Delete(int proj)
     {
       try
       {
-        Db.Projections.Remove(proj);
+        var Projec = Db.Projections.Include(p=>p.Seats).Where(p=>p.Id==proj).Single();
+        Db.Seats.RemoveRange(Projec.Seats);
+        Db.Projections.Remove(Projec);
+        
         Db.SaveChanges();
         return Ok();
       }

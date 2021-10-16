@@ -11,7 +11,7 @@ namespace REST_API_SERVER.Controllers
     [Route("Admin/Sucursales")]
     public class Admin_sucursales : Controller
     {
-        CineTEC_Context Db = new CineTEC_Context();
+    CineTEC_Context Db = new CineTEC_Context();
         [HttpGet]
         public ActionResult Get(){
             try{
@@ -27,6 +27,7 @@ namespace REST_API_SERVER.Controllers
         {
             try{
                 Db.Add(new_cinema);
+
                 Db.SaveChanges();
                 return Ok();
             }catch(Exception e){
@@ -39,6 +40,7 @@ namespace REST_API_SERVER.Controllers
         {
             try{
                 Db.Cinemas.Update(new_data);
+          
                 Db.SaveChanges();
                 return Ok();
             }catch(Exception e){
@@ -47,15 +49,11 @@ namespace REST_API_SERVER.Controllers
         }
         
         [HttpDelete]
-        public ActionResult Delete([FromBody] Cinema new_data)
+        public ActionResult Delete(string new_data)
         {
             try{
-                var cinema = Db.Cinemas.Where(suc => suc.Name == new_data.Name).Include(c => c.Rooms).Single();
-                foreach (Room room in cinema.Rooms)
-                {
-                    Db.Remove(room);
-                }
-                Db.Remove(cinema);
+                var cine = Db.Cinemas.Find(new_data);
+                Db.Remove(cine);
                 Db.SaveChanges();
                 return Ok();
             }

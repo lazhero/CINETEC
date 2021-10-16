@@ -43,8 +43,31 @@ namespace REST_API_SERVER.Controllers
         public ActionResult Put([FromBody]Room cinema_room)
         {
             try{
+                
+                Db.Rooms.Update(cinema_room);
                 var room = Db.Rooms.Find(cinema_room.CinemaName,cinema_room.Number);
-                room.RestrictionPercent = cinema_room.RestrictionPercent;
+                var projs = Db.Projections.Include(p=>p.Seats).Where(p=>p.CinemaName == cinema_room.CinemaName && p.RoomNumber==cinema_room.Number).ToList();
+                foreach(Projection p in projs)
+                {
+                foreach (Seat s in p.Seats) {
+                  if(s.State == 2)
+                    {
+                      s.State = 0;
+                    }
+                }
+                  decimal restric = Decimal.Divide((int)room.RestrictionPercent, 100);
+                  int to_skip = (int)(((int)Math.Ceiling((double)(room.Columns*restric)))*room.Rows);
+                  foreach(Seat s in p.Seats)
+                  {
+                    if (to_skip <= 0)
+                    {
+                      break;
+                    }
+                    s.State = 2;
+                    to_skip--;
+                  }
+                }
+                
                 Db.SaveChanges();
                 return Ok();
             }catch (Exception e){
@@ -53,10 +76,11 @@ namespace REST_API_SERVER.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete(Room cinema_room)
+        public ActionResult Delete(string cinema_name, int room_number)
         {
             try{
-                Db.Rooms.Remove(cinema_room);
+                var cine = Db.Rooms.Where(r=>r.CinemaName==cinema_name && r.Number ==room_number).Single();
+                Db.Rooms.Remove(cine);
                 Db.SaveChanges();
                 return Ok(); 
             }catch (Exception e){

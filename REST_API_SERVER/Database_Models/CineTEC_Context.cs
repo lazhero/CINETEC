@@ -37,7 +37,6 @@ namespace REST_API_SERVER.Database_Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseNpgsql("Host=localhost;Port=6200;Database=cinetec;Username=admin;Password=1234");
             }
         }
@@ -415,13 +414,9 @@ namespace REST_API_SERVER.Database_Models
                     .HasColumnType("date")
                     .HasColumnName("date");
 
-                entity.Property(e => e.EndTime)
-                    .HasColumnType("time without time zone")
-                    .HasColumnName("end_time");
+                entity.Property(e => e.EndTime).HasColumnName("end_time");
 
-                entity.Property(e => e.InitialTime)
-                    .HasColumnType("time without time zone")
-                    .HasColumnName("initial_time");
+                entity.Property(e => e.InitialTime).HasColumnName("initial_time");
 
                 entity.Property(e => e.MovieOriginalName)
                     .HasMaxLength(31)

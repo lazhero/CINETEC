@@ -167,34 +167,34 @@ INSERT INTO MOVIE_CLASSIFICATION(MOVIE_ORIGINAL_NAME,CLASSIFICATION_ID)
 VALUES('Naruto','C3');
 
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-15','16:00:00','19:00:00','50 sombras de Grey',1,'Paseo de las flores');
+VALUES('2021-10-26','2021-10-26 16:00:00','2021-10-26 19:00:00','50 sombras de Grey',1,'Paseo de las flores');
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-16','16:00:00','19:00:00','50 sombras de Grey',1,'Terramall');
+VALUES('2021-10-27','2021-10-27 16:00:00','2021-10-27 19:00:00','50 sombras de Grey',1,'Terramall');
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-17','16:00:00','19:00:00','50 sombras de Grey',1,'Oxigeno');
+VALUES('2021-10-28','2021-10-28 16:00:00','2021-10-28 19:00:00','50 sombras de Grey',1,'Oxigeno');
 
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-15','16:00:00','19:00:00','Bob esponja',2,'Paseo de las flores');
+VALUES('2021-10-26','2021-10-26 16:00:00','2021-10-26 19:00:00','Bob esponja',2,'Paseo de las flores');
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-16','16:00:00','19:00:00','Bob esponja',2,'Terramall');
+VALUES('2021-10-27','2021-10-27 16:00:00','2021-10-27 19:00:00','Bob esponja',2,'Terramall');
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-17','16:00:00','19:00:00','Bob esponja',2,'Oxigeno');
-
-
-INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-15','16:00:00','19:00:00','Jurassic Park',3,'Oxigeno');
-INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-16','16:00:00','19:00:00','Jurassic Park',3,'Terramall');
-INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-17','16:00:00','19:00:00','Jurassic Park',3,'Paseo de las flores');
+VALUES('2021-10-28','2021-10-28 16:00:00','2021-10-28 19:00:00','Bob esponja',2,'Oxigeno');
 
 
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-15','16:00:00','19:00:00','Naruto',1,'Citymall');
+VALUES('2021-10-26','2021-10-26 16:00:00','2021-10-26 19:00:00','Jurassic Park',3,'Oxigeno');
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-16','16:00:00','19:00:00','Naruto',1,'Cinema 2000');
+VALUES('2021-10-27','2021-10-27 16:00:00','2021-10-27 19:00:00','Jurassic Park',3,'Terramall');
 INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
-VALUES('2021-10-17','16:00:00','19:00:00','Naruto',2,'Citymall');
+VALUES('2021-10-28','2021-10-28 16:00:00','2021-10-28 19:00:00','Jurassic Park',3,'Paseo de las flores');
+
+
+INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
+VALUES('2021-10-27','2021-10-27 16:00:00','2021-10-27 19:00:00','Naruto',1,'Citymall');
+INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
+VALUES('2021-10-28','2021-10-28 16:00:00','2021-10-28 19:00:00','Naruto',1,'Cinema 2000');
+INSERT INTO PROJECTION(DATE, INITIAL_TIME, END_TIME, MOVIE_ORIGINAL_NAME,room_number,cinema_name)
+VALUES('2021-10-29','2021-10-29 16:00:00','2021-10-29 19:00:00','Naruto',2,'Citymall');
 
 
 
@@ -315,21 +315,29 @@ begin
 
    while i < 13 loop
        j:=1;
-       while j < 57 loop
-           INSERT INTO SEAT(PROJECTION_ID, SEAT_NUMBER,state)
-           VALUES (i,j,0);
-            j:= j + 1;
-        end loop;
+       while j < 57
+        LOOP
+           IF (MOD(j,2) = 0)THEN INSERT INTO SEAT(PROJECTION_ID, SEAT_NUMBER,state)VALUES (i,j,0);
+           ELSE INSERT INTO SEAT(PROJECTION_ID, SEAT_NUMBER,state)VALUES (i,j,2);
+           END IF;
+           j:= j + 1;
+        end LOOP;
 	     i :=i + 1;
    end loop;
 end$$;
 
 do $$
 declare
+   s integer := 20;
    x integer := 1;
+   i integer := 1;
 begin
-    while  x<=20 loop
-        Update SEAT set invoice_id = x where projection_id = 1 AND seat_number = x;
+    while  s>0 loop
+        IF ((select state from seat where projection_id = 1 AND seat_number = x) = 0)
+            THEN Update SEAT set invoice_id = i where projection_id = 1 AND seat_number = x;
+            s:=s-1;
+            i:=s+1;
+        END IF;
         x:=x+1;
     end loop;
 end$$
