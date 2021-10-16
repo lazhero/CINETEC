@@ -29,7 +29,8 @@ namespace REST_API_SERVER.Controllers{
         public ActionResult Get()
         {
             try{
-                var movies = Db.Movies.ToList();
+                var classifications = Db.Classifications.ToList();
+                var movies = Db.Movies.Include(m=>m.MovieClassifications).Include(m=>m.Director).Include(m=>m.ActorMovies).ToList();
                 return Ok(movies);
             }catch(Exception e)
             {
@@ -78,9 +79,9 @@ namespace REST_API_SERVER.Controllers{
                       Db.Actors.Add(new_actor);
                       Db.SaveChanges();
                     }
-                    info.mov.MovieClassifications = null;
                     act.Actor=actor;
                     Db.Movies.Add(info.mov);
+                    Db.MovieClassifications.Add(info.mov.MovieClassifications.Single());
                     act.MovieOriginalName= info.mov.OriginalName;
                     Db.ActorMovies.Add(act);
                     Db.SaveChanges();

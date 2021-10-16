@@ -26,6 +26,7 @@ namespace REST_API_SERVER.Controllers
                                    RoomNumber = p.RoomNumber,
                                    InitialTime = p.InitialTime,
                                    CinemaName = p.CinemaName,
+                                   Seats = p.Seats
                                  })
                                  .ToList();
                 List<Projection_Room> res = new();
@@ -40,17 +41,6 @@ namespace REST_API_SERVER.Controllers
                   temp.InitialTime = PR.InitialTime;
                   temp.RoomNumber = PR.RoomNumber;
                   res.Add(temp);
-                  decimal restric = Decimal.Divide((int)room.RestrictionPercent, 100);
-                  int to_skip = (int)(((int)Math.Ceiling((double)(room.Columns * restric))) * room.Rows);
-                  foreach (Seat s in PR.Seats)
-                  {
-                    if (to_skip <= 0)
-                    {
-                      break;
-                    }
-                    s.State = 2;
-                    to_skip--;
-                  }
                 }
                 return Ok(res);
             }catch(Exception e){

@@ -2,7 +2,7 @@
 <FacturaElectronica>
   <Clave>56446548462546545648964XD1321351354</Clave>
   <NumeroConsecutivo>21</NumeroConsecutivo>
-  <FechaEmision>15/10/2221 14:51:34</FechaEmision>
+  <FechaEmision>16/12/2121 17:13:47</FechaEmision>
   <Emisor>
     <Nombre>CineTEC Cinemas</Nombre>
     <Identificacion>
@@ -30,12 +30,12 @@
         <Tipo>0</Tipo>
         <Codigo>123412D-3413</Codigo>
       </Codigo>
-      <Cantidad>3</Cantidad>
+      <Cantidad>0</Cantidad>
       <UnidadMedida>Unid</UnidadMedida>
       <Detalle>Ticketes para adultos</Detalle>
-      <PrecioUnitario>4000</PrecioUnitario>
-      <SubTotal>12000</SubTotal>
-      <MontoTotal>12000</MontoTotal>
+      <PrecioUnitario>1111</PrecioUnitario>
+      <SubTotal>0</SubTotal>
+      <MontoTotal>0</MontoTotal>
     </LineaDetalle>
     <LineaDetalle>
       <NumeroLinea />
@@ -46,7 +46,7 @@
       <Cantidad>0</Cantidad>
       <UnidadMedida>Unid</UnidadMedida>
       <Detalle>ticketes para los infantes</Detalle>
-      <PrecioUnitario>1200</PrecioUnitario>
+      <PrecioUnitario>11</PrecioUnitario>
       <SubTotal>0</SubTotal>
       <MontoTotal>0</MontoTotal>
     </LineaDetalle>
@@ -56,21 +56,21 @@
         <Tipo>0</Tipo>
         <Codigo>123412D-3415</Codigo>
       </Codigo>
-      <Cantidad>0</Cantidad>
+      <Cantidad>2</Cantidad>
       <UnidadMedida>Unid</UnidadMedida>
       <Detalle>ticketes para los adultos mayores</Detalle>
-      <PrecioUnitario>3500</PrecioUnitario>
-      <SubTotal>0</SubTotal>
-      <MontoTotal>0</MontoTotal>
+      <PrecioUnitario>111</PrecioUnitario>
+      <SubTotal>222</SubTotal>
+      <MontoTotal>222</MontoTotal>
     </LineaDetalle>
   </DetalleServicio>
   <ResumenFactura>
     <CodigoMoneda>CRC</CodigoMoneda>
     <TipoCambio>1</TipoCambio>
-    <TotalServGravados>12000</TotalServGravados>
-    <TotalGravado>12000</TotalGravado>
-    <TotalVenta>12000</TotalVenta>
-    <TotalImpuesto>1560</TotalImpuesto>
-    <TotalComprobante>13560</TotalComprobante>
+    <TotalServGravados>222</TotalServGravados>
+    <TotalGravado>222</TotalGravado>
+    <TotalVenta>222</TotalVenta>
+    <TotalImpuesto>28,86</TotalImpuesto>
+    <TotalComprobante>250,86</TotalComprobante>
   </ResumenFactura>
 </FacturaElectronica>
