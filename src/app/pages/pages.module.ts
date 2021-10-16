@@ -24,7 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PagesComponent } from './pages.component';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 @NgModule({
   declarations: [
     PagesComponent,
@@ -41,6 +41,8 @@ import { PagesComponent } from './pages.component';
     PagesComponent,
   ],
   imports: [
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatInputModule,
