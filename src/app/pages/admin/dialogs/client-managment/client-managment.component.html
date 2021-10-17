@@ -14,8 +14,8 @@
                 <mat-icon class="icon" >remove_circle_outline</mat-icon>
                 <div class="text" >Borrar usuario</div>
             </div>
-
         </div>
+
     </div>
 </div>
 
@@ -28,52 +28,41 @@
         <mat-form-field appearance="fill">
             <mat-label>Seleccionar usuario</mat-label>
             <mat-select (selectionChange)="selectUser($event.value)">
-                <mat-option *ngFor="let user of users"  [value]="user">{{user.Id_card}}</mat-option>
+                <mat-option *ngFor="let user of users"  [value]="user">{{user.idCard}}</mat-option>
             </mat-select>
         </mat-form-field>
 
-        <div *ngIf="Id_card!=''">
+        <div *ngIf="idCard!=''">
 
-            <!---
-            <mat-form-field class="example-full-width" appearance="fill">
-                <input matInput [matDatepicker]="picker"  >
-                <mat-label>Fecha de nacimiento</mat-label>
-
-                <mat-datepicker-toggle matSuffix [for]="picker">
-                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker #picker ng-model="Birthday"></mat-datepicker>
-            </mat-form-field>
--->
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Birthday"  (input)="Birthday = $any( $event.target).value" placeholder="Fecha de nacimiento" >
+                <input matInput required type="text" [value]="birthdate"  (input)="birthdate = $any( $event.target).value" placeholder="Fecha de nacimiento" >
             </mat-form-field>
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Phone_Num"  (input)="Phone_Num = $any( $event.target).value" placeholder="Número de teléfono" >
+                <input matInput required type="text" [value]="phoneNum"  (input)="phoneNum = $any( $event.target).value" placeholder="Número de teléfono" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="First_Name"  (input)="First_Name = $any( $event.target).value" placeholder="Primer nombre" >
+                <input matInput required type="text" [value]="firstName"  (input)="firstName = $any( $event.target).value" placeholder="Primer nombre" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Middle_Name"  (input)="Middle_Name = $any( $event.target).value" placeholder="Segundo nombre" >
+                <input matInput required type="text" [value]="middleName"  (input)="middleName = $any( $event.target).value" placeholder="Segundo nombre" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Last_Name"  (input)="Middle_Name = $any( $event.target).value" placeholder="Primer apellido" >
+                <input matInput required type="text" [value]="lastName"  (input)="middleName = $any( $event.target).value" placeholder="Primer apellido" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Second_LastName"  (input)="Second_LastName = $any( $event.target).value" placeholder="Segundo apellido" >
+                <input matInput required type="text" [value]="secondLastName"  (input)="secondLastName = $any( $event.target).value" placeholder="Segundo apellido" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="Username"  (input)="Username = $any( $event.target).value" placeholder="Nombre de usuario" >
+                <input matInput required type="text" [value]="username"  (input)="username = $any( $event.target).value" placeholder="Nombre de usuario" >
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="password" [value]="Password"  (input)="Password = $any( $event.target).value" placeholder="Contraseña" >
+                <input matInput required type="password" [value]="password"  (input)="password = $any( $event.target).value" placeholder="Contraseña" >
             </mat-form-field>
         </div>
     </div>
@@ -97,7 +86,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Seleccionar usuario</mat-label>
             <mat-select (selectionChange)="selectUser($event.value)">
-                <mat-option *ngFor="let user of users"  value="{{user.Id_card}}">{{user.Id_card}}</mat-option>
+                <mat-option *ngFor="let user of users"  value="{{user.idCard}}">{{user.idCard}}</mat-option>
             </mat-select>
             </mat-form-field>
 

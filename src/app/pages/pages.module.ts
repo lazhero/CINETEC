@@ -25,6 +25,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PagesComponent } from './pages.component';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { EmployeeManagmentComponent } from './admin/dialogs/employee-managment/employee-managment.component';
+
 @NgModule({
   declarations: [
     PagesComponent,
@@ -39,6 +41,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
     ClientManagmentComponent,
     ProjectionsManagmentComponent,
     PagesComponent,
+    EmployeeManagmentComponent,
   ],
   imports: [
     OwlDateTimeModule,

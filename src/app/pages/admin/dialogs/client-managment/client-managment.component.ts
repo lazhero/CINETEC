@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { BackendService } from 'src/app/services/backend-service.service';
 import { SwalService } from 'src/app/services/swalService';
 import { TheatherManagmentComponent } from '../theather-managment/theather-managment.component';
 @Component({
@@ -10,110 +11,138 @@ import { TheatherManagmentComponent } from '../theather-managment/theather-manag
 export class ClientManagmentComponent implements OnInit {
   deletingUser: boolean = false;
   modifiyingUser: boolean = false;
-  get: boolean = false;
-  users: any[] = [
-    {
-      Id_card: 'abc',
-      Birthday: '9/9/2021',
-      Phone_Num: '6025000',
-      First_Name: 'Pedro',
-      Middle_Name: 'Josue',
-      Last_Name: 'Gomez',
-      Second_LastName: 'Jimenez',
-      Username: 'JGOMJI',
-      Password: '1234',
-    },
-    {
-      Id_card: 'abcde',
-      Birthday: '9/9/2021',
-      Phone_Num: '60898900',
-      First_Name: 'Luis',
-      Middle_Name: 'Andrey',
-      Last_Name: 'Zuñiga',
-      Second_LastName: 'Algo',
-      Username: 'luicito',
-      Password: '1234',
-    },
-    {
-      Id_card: 'abcdef',
-      Birthday: '9/9/2021',
-      Phone_Num: '8887000',
-      First_Name: 'Adrian',
-      Middle_Name: 'Josue',
-      Last_Name: 'González',
-      Second_LastName: 'Jimenez',
-      Username: 'adrian',
-      Password: '1234',
-    },
-  ];
 
-  Id_card: string = '';
-  Birthday: any = new Date(new Date().getTime() - 3888000000);
-  Phone_Num: string = '';
-  First_Name: string = '';
-  Middle_Name: string = '';
-  Last_Name: string = '';
-  Second_LastName: string = '';
-  Username: string = '';
-  Password: string = '';
-  selected: boolean = false;
+  users: any[] = [];
+
+
+  birthdate:      string = '';
+  firstName:      string = '';
+  idCard:         string = '';
+  lastName:       string = '';
+  middleName:     string = '';
+  password:       string = '';
+  phoneNum:       string = '';
+  secondLastName: string = '';
+  username:       string = '';
+ 
 
   constructor(
     public swal: SwalService,
-    public dialogRef: MatDialogRef<TheatherManagmentComponent>
+    public dialogRef: MatDialogRef<TheatherManagmentComponent>,
+    public backend: BackendService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let clients: any[] = [];
+    this.backend.get_request("Admin/Client",null)
+    .subscribe(result=>{
+      console.log(result);
+      clients = result;
+      clients.forEach(client=>{
+        this.users.push(client);
+      })
+    })
+    
+    
+  }
   selectUser(event: any) {
-    this.Id_card = event.Id_card;
-    this.Birthday = new Date(new Date().getTime() - 3888000000);
-    this.Phone_Num = event.Phone_Num;
-    this.First_Name = event.First_Name;
-    this.Middle_Name = event.Middle_Name;
-    this.Last_Name = event.Last_Name;
-    this.Second_LastName = event.Second_LastName;
-    this.Username = event.Username;
-    this.Password = event.Password;
+
+    this.birthdate      = event.birthdate;
+    this.firstName   = event.firstName;
+    this.idCard = event.idCard;
+    this.lastName = event.lastName;
+    this.middleName = event.middleName;
+    this.password = event.password;
+    this.phoneNum = event.phoneNum;
+    this.secondLastName = event.secondLastName;
+    this.username = event.username;
   }
   submitModify() {
     if (
-      this.Id_card !== '' &&
-      this.Birthday !== undefined &&
-      this.Phone_Num !== '' &&
-      this.First_Name !== '' &&
-      this.Middle_Name !== '' &&
-      this.Last_Name !== '' &&
-      this.Second_LastName !== '' &&
-      this.Username !== '' &&
-      this.Password
+      this.birthdate      !== '' &&
+      this.firstName      !== '' &&
+      this.lastName       !== '' &&
+      this.middleName     !== '' &&
+      this.password       !== '' &&
+      this.phoneNum       !== '' &&
+      this.secondLastName !== '' &&
+      this.username       !== '' 
     ) {
-      this.swal.showSuccess(
-        'Usuario modificado',
-        'Usuario modificado con éxito'
-      );
+      let data = {
+        birthdate: this.birthdate,    
+        firstName: this.firstName,            
+        lastName: this.lastName,       
+        middleName: this.middleName,     
+        password: this.password,       
+        phoneNum: this.phoneNum,       
+        secondLastName: this.secondLastName, 
+        username: this.username       
+      }
+      this.backend.put_request("Admin/Client",data)
+      .subscribe(responde=>{
+        this.swal.showSuccess(
+          'Empleado modificado',
+          'Empleado modificado con éxito'
+        );
+      })
     } else {
       this.swal.showError(
-        'Error al modificar el usuario',
-        'Los datos ingresados son insuficientes o el usuario no existe en nuestra base de datos'
+        'Error al modificar al empleado',
+        'Los datos ingresados son insuficientes o el empleado no existe en nuestra base de datos'
+      );
+    }
+  }
+
+
+  submitAdition() {
+    if (
+      this.birthdate      !== '' &&
+      this.firstName      !== '' &&
+      this.idCard         !== '' &&
+      this.lastName       !== '' &&
+      this.middleName     !== '' &&
+      this.password       !== '' &&
+      this.phoneNum       !== '' &&
+      this.secondLastName !== '' &&
+      this.username       !== '' 
+    ) {
+      let data = {
+        birthdate: this.birthdate,    
+        firstName: this.firstName,      
+        idCard: this.idCard,         
+        lastName: this.lastName,       
+        middleName: this.middleName,     
+        password: this.password,       
+        phoneNum: this.phoneNum,       
+        secondLastName: this.secondLastName, 
+        username: this.username       
+      }
+      this.backend.post_request("Admin/Client",data)
+      .subscribe(responde=>{
+        this.swal.showSuccess(
+          'Empleado modificado',
+          'Empleado modificado con éxito'
+        );
+      })
+    } else {
+      this.swal.showError(
+        'Error al modificar al empleado',
+        'Los datos ingresados son insuficientes o el empleado no existe en nuestra base de datos'
       );
     }
   }
 
   deleteUser() {
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].Id_card === this.Id_card) {
-        this.users.splice(i, 1);
-        this.swal.showSuccess(
-          'Usuario eliminado',
-          'Usuario eliminado con éxito'
-        );
-        return;
-      }
-    }
-    this.swal.showError(
-      'Error al eliminar usuario',
-      'El usuario no se encuentra en la base de datos'
-    );
+    
+    this.backend.delete_request("Admin/Movies",
+                                {movie_org_name: this.idCard})
+        .subscribe(result=>{
+          this.swal.showSuccess(
+            'Película eliminada',
+            'Película eliminada con éxito'
+          );
+
+        })
   }
   close() {
     this.dialogRef.close();
