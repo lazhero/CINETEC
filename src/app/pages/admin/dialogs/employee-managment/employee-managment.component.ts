@@ -74,13 +74,10 @@ export class EmployeeManagmentComponent implements OnInit {
       this.cinemaName            !== '' &&
       this.firstDateWorking      !== '' &&
       this.firstName             !== '' &&
-      this.idCard                !== '' &&
       this.lastName              !== '' &&
       this.middleName            !== '' &&
       this.password              !== '' &&
       this.phoneNum              !== '' &&
-      this.role                  !== '' &&
-      this.roleId                !== '' &&
       this.secondLastName        !== '' &&
       this.username              !== '' 
     ) {
@@ -89,13 +86,11 @@ export class EmployeeManagmentComponent implements OnInit {
         cinemaName: this.cinemaName,
         firstDateWorking: this.firstDateWorking,
         firstName: this.firstName,
-        idCard: this.idCard,
         lastName: this.lastName,
         middleName: this.middleName,
         password: this.password,
         phoneNum: this.phoneNum,
-        role: this.role,
-        roleId: this.roleId,
+        roleId: 1,
         secondLastName: this.secondLastName,
         username:this.username          
       }

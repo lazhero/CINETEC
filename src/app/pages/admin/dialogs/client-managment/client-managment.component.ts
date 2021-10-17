@@ -60,42 +60,89 @@ export class ClientManagmentComponent implements OnInit {
   submitModify() {
     if (
       this.birthdate      !== '' &&
-      this.firstName   !== '' &&
-      this.idCard !== '' &&
-      this.lastName !== '' &&
-      this.middleName !== '' &&
-      this.password !== '' &&
-      this.phoneNum !== '' &&
+      this.firstName      !== '' &&
+      this.lastName       !== '' &&
+      this.middleName     !== '' &&
+      this.password       !== '' &&
+      this.phoneNum       !== '' &&
       this.secondLastName !== '' &&
-      this.username !== '' 
+      this.username       !== '' 
     ) {
-      this.swal.showSuccess(
-        'Usuario modificado',
-        'Usuario modificado con éxito'
-      );
+      let data = {
+        birthdate: this.birthdate,    
+        firstName: this.firstName,            
+        lastName: this.lastName,       
+        middleName: this.middleName,     
+        password: this.password,       
+        phoneNum: this.phoneNum,       
+        secondLastName: this.secondLastName, 
+        username: this.username       
+      }
+      this.backend.put_request("Admin/Client",data)
+      .subscribe(responde=>{
+        this.swal.showSuccess(
+          'Empleado modificado',
+          'Empleado modificado con éxito'
+        );
+      })
     } else {
       this.swal.showError(
-        'Error al modificar el usuario',
-        'Los datos ingresados son insuficientes o el usuario no existe en nuestra base de datos'
+        'Error al modificar al empleado',
+        'Los datos ingresados son insuficientes o el empleado no existe en nuestra base de datos'
+      );
+    }
+  }
+
+
+  submitAdition() {
+    if (
+      this.birthdate      !== '' &&
+      this.firstName      !== '' &&
+      this.idCard         !== '' &&
+      this.lastName       !== '' &&
+      this.middleName     !== '' &&
+      this.password       !== '' &&
+      this.phoneNum       !== '' &&
+      this.secondLastName !== '' &&
+      this.username       !== '' 
+    ) {
+      let data = {
+        birthdate: this.birthdate,    
+        firstName: this.firstName,      
+        idCard: this.idCard,         
+        lastName: this.lastName,       
+        middleName: this.middleName,     
+        password: this.password,       
+        phoneNum: this.phoneNum,       
+        secondLastName: this.secondLastName, 
+        username: this.username       
+      }
+      this.backend.post_request("Admin/Client",data)
+      .subscribe(responde=>{
+        this.swal.showSuccess(
+          'Empleado modificado',
+          'Empleado modificado con éxito'
+        );
+      })
+    } else {
+      this.swal.showError(
+        'Error al modificar al empleado',
+        'Los datos ingresados son insuficientes o el empleado no existe en nuestra base de datos'
       );
     }
   }
 
   deleteUser() {
-    for (let i = 0; i < this.users.length; i++) {
-      if (this.users[i].idCard === this.idCard) {
-        this.users.splice(i, 1);
-        this.swal.showSuccess(
-          'Usuario eliminado',
-          'Usuario eliminado con éxito'
-        );
-        return;
-      }
-    }
-    this.swal.showError(
-      'Error al eliminar usuario',
-      'El usuario no se encuentra en la base de datos'
-    );
+    
+    this.backend.delete_request("Admin/Movies",
+                                {movie_org_name: this.idCard})
+        .subscribe(result=>{
+          this.swal.showSuccess(
+            'Película eliminada',
+            'Película eliminada con éxito'
+          );
+
+        })
   }
   close() {
     this.dialogRef.close();
