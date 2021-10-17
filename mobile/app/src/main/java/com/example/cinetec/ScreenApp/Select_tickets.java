@@ -2,7 +2,10 @@ package com.example.cinetec.ScreenApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +32,7 @@ public class Select_tickets extends AppCompatActivity {
     private int max_tickets=10;
     private State state;
     private Db_helper DB;
+    private boolean success=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,9 +149,38 @@ public class Select_tickets extends AppCompatActivity {
         return false;
     }
     public void buy(){
-        DB.Process_order(state.getUsername(),state.getProjection_id(),state.getSeats(),children_ticket,adult_tickets,elder_ticket);
-        Toast toast=Toast.makeText(getApplicationContext(),"Compra Agregada",Toast.LENGTH_SHORT);
-        toast.setMargin(400,400);
+        Toast toast;
+        String Toast_text;
+        if(children_ticket+adult_tickets+elder_ticket==max_tickets){
+            DB.Process_order(state.getUsername(),state.getProjection_id(),state.getSeats(),children_ticket,adult_tickets,elder_ticket);
+            Toast_text="Compra Agregada";
+            success=true;
+        }
+        else{
+            Toast_text="No coincide con la cantidad de asientos seleccionada";
+        }
+        toast=Toast.makeText(getApplicationContext(),Toast_text,Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER_HORIZONTAL|Gravity.CENTER_HORIZONTAL,0,0);
+
+
         toast.show();
+        if(success==true){
+            Buy.setEnabled(false);
+            Buy.setClickable(false);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onBackPressed();
+                }
+            }, 2000);
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent switchActivityIntent = new Intent(this, Seat_activity.class);
+        startActivity(switchActivityIntent);
+        finish();
     }
 }

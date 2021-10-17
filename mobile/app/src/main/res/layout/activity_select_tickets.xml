@@ -37,8 +37,9 @@
         android:id="@+id/constraintLayout"
         android:layout_width="243dp"
         android:layout_height="64dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_selection_subtitle">
 
@@ -110,9 +111,9 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="243dp"
         android:layout_height="64dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
@@ -184,9 +185,9 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="243dp"
         android:layout_height="64dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.625"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
 
@@ -260,7 +261,7 @@
         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         android:layout_width="327dp"
         android:layout_height="74dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/black"
         android:text="@string/tickets_button_text"
         android:textColor="@color/white"

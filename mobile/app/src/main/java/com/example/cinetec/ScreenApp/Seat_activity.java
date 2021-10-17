@@ -47,7 +47,6 @@ public class Seat_activity extends AppCompatActivity {
         });
         selected_seat=new ArrayList<>();
         state=State.getInstance();
-        set_matrix(10);
         final Handler handler = new Handler();
         this.timer = new Timer();
         TimerTask doTask = new TimerTask() {
@@ -74,6 +73,8 @@ public class Seat_activity extends AppCompatActivity {
     }
     public void justprove(){
         DB=new Db_helper(this);
+        int seats_number=DB.getColumnsNumber(state.getProjection_id());
+        set_matrix(seats_number);
         ArrayList<Seat> seats=DB.getSeat(state.getProjection_id());
         if(seats==null)return;
         for(int i=0,size=seats.size();i<size;i++){
@@ -182,6 +183,9 @@ public class Seat_activity extends AppCompatActivity {
         state.setSeats(selected_seat);
         Intent switchActivityIntent = new Intent(this, Select_tickets.class);
         startActivity(switchActivityIntent);
+        timer.cancel();
+        timer.purge();
+        finish();
        // DB.addOrder(state.getUsername(),state.getProjection_id());
        // int order=DB.getClientLastOrder();
        // for(int i=0;i<selected_seat.size();i++){

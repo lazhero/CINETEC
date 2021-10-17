@@ -88,6 +88,7 @@ public class Db_helper extends SQLiteOpenHelper {
     private static final String ProjectionsURL="http://25.92.13.1:38389/Admin/Projections";
     private static final String SeatUrl="http://25.92.13.1:38389/Admin/Seats";
     private static final String ClientReservation="http://25.92.13.1:38389/Client/Seats";
+    private final String movie_images_url="http://25.92.13.1:38389/Images";
     public Db_helper(@Nullable Context context) {
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
         this.context=context;
@@ -584,6 +585,23 @@ public class Db_helper extends SQLiteOpenHelper {
         DB.close();
         cursor.close();
         return seat_array;
+    }
+    public int getColumnsNumber(int Projection_id){
+        SQLiteDatabase DB=this.getReadableDatabase();
+        Cursor cursor=DB.rawQuery("Select * from Projection Where Id=?",new String[]{Integer.toString(Projection_id)});
+        int columns;
+        if(cursor.getCount()==0){
+
+            columns= 0;
+        }
+        else{
+            cursor.moveToFirst();
+            columns=cursor.getInt(6);
+        }
+        cursor.close();
+        DB.close();
+        return columns;
+
     }
     public JSONArray getUpdateInfo(SQLiteDatabase DB){
         Cursor cursor=DB.rawQuery("Select * from Orden",null);

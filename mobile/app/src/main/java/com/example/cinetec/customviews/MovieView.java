@@ -97,7 +97,7 @@ public class MovieView extends LinearLayout {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(!response.isSuccessful())return;
                 String fileContent=response.body().source().readUtf8();
-                Log.d("MOVIES",fileContent);
+                //Log.d("MOVIES",fileContent);
                 try{
                     JSONObject responseInfo=new JSONObject(fileContent);
                     String stream=responseInfo.getString("fileContents");

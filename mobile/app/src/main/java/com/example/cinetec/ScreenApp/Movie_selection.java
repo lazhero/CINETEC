@@ -85,7 +85,7 @@ public class Movie_selection extends AppCompatActivity {
                 });
             }
         };
-        timer.schedule(doTask, 30000);
+        timer.schedule(doTask, 60000);
 
     }
 
