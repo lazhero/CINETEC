@@ -50,9 +50,7 @@
                 <input matInput required type="text" [value]="timeLength"  (input)="timeLength = $any( $event.target).value" placeholder="Duracion" >
             </mat-form-field>
 
-            <mat-form-field class="field">
-                <input matInput required type="text" [value]="actorMovies"  (input)="actorMovies = $any( $event.target).value" placeholder="Protagonistas" >
-            </mat-form-field>
+
 
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="directorFirstName"  (input)="directorFirstName = $any( $event.target).value" placeholder="Nombre director" >
@@ -85,13 +83,15 @@
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="kidPrice"  (input)="kidPrice = $any( $event.target).value" placeholder="Precio niño" >
             </mat-form-field>
-
-            <mat-form-field class="field">
-                <input matInput required type="text" [value]="movieClassifications"  (input)="movieClassifications = $any( $event.target).value" placeholder="Categorías" >
+            <mat-form-field appearance="fill">
+                <mat-label>Seleccionar clasificación</mat-label>
+                <mat-select (selectionChange)="selectClassification($event.value)" >
+                    <mat-option *ngFor="let clasificacion of clasificaciones"  [value]="clasificacion.id">{{clasificacion.description}}</mat-option>
+                </mat-select>
             </mat-form-field>
 
             <div class="text" style="color: grey; font-size: 12px;">Imagen</div>
-            <input required type="file" [value]="image"  (input)="image = $any( $event.target).value" placeholder="Caratula" >
+            <input type="file" (change)="selectImage($event)"  accept="image/png" >
         
         </div>
 
@@ -129,7 +129,7 @@
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="actorMovies"  (input)="actorMovies = $any( $event.target).value" placeholder="Protagonistas" >
+                <input matInput required type="text" [value]="actorMoviesString"  (input)="actorMoviesString = $any( $event.target).value" placeholder="Protagonistas" >
             </mat-form-field>
 
             <mat-form-field class="field">
@@ -160,13 +160,16 @@
                 <input matInput required type="text" [value]="kidPrice"  (input)="kidPrice = $any( $event.target).value" placeholder="Precio niño" >
             </mat-form-field>
 
-            <mat-form-field class="field">
-                <input matInput required type="text" [value]="movieClassifications"  (input)="movieClassifications = $any( $event.target).value" placeholder="Categorías" >
+            <mat-form-field appearance="fill">
+                <mat-label>Seleccionar clasificación</mat-label>
+                <mat-select (selectionChange)="selectClassification($event.value)">
+                    <mat-option *ngFor="let clasificacion of clasificaciones"  [value]="clasificacion.id">{{clasificacion.description}}</mat-option>
+                </mat-select>
             </mat-form-field>
 
 
             <div class="text" style="color: grey; font-size: 12px;">Imagen</div>
-            <input required type="text" [value]="image"  (input)="image = $any( $event.target).value" placeholder="Caratula" >
+            <input type="file" (change)="selectImage($event)"  accept="image/png" >
         
 
             <div class="buttonsContainer">

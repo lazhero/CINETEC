@@ -20,6 +20,7 @@ export class BillboardComponent implements OnInit {
     public mService: movieService,
     private sanitizer: DomSanitizer
   ) {}
+  dev: boolean = false;
 
   async ngOnInit(): Promise<void> {
     const x = Swal.fire({
@@ -53,6 +54,16 @@ export class BillboardComponent implements OnInit {
         );
 
         this.movies = moviesArray;
+        if (this.dev) {
+          this.movies = this.movies
+            .concat(this.movies)
+            .concat(this.movies)
+            .concat(this.movies)
+            .concat(this.movies)
+            .concat(this.movies)
+            .concat(this.movies);
+        }
+        console.log(this.movies);
       });
   }
   movieSelected(movie: any): void {
