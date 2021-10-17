@@ -20,16 +20,16 @@ export class AdminComponent implements OnInit {
 
   openClientManagment() {
     let dialogRef = this.dialog.open(ClientManagmentComponent, {
-      width: '350px',
+      width: '450px',
       data: {},
     });
   }
 
-  openEmployeeManagment(){
-    let dialogRef = this.dialog.open(EmployeeManagmentComponent,{
-      width: '350px',
+  openEmployeeManagment() {
+    let dialogRef = this.dialog.open(EmployeeManagmentComponent, {
+      width: '450px',
       data: {},
-    })
+    });
   }
   openCovid19Managment() {
     let dialogRef = this.dialog.open(Covid19ManagmentComponent, {

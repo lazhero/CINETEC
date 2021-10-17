@@ -11,20 +11,19 @@ import { TheatherManagmentComponent } from '../theather-managment/theather-manag
 export class ClientManagmentComponent implements OnInit {
   deletingUser: boolean = false;
   modifiyingUser: boolean = false;
+  addingUser: boolean = false;
+  get: boolean = false;
 
   users: any[] = [];
-
-
-  birthdate:      string = '';
-  firstName:      string = '';
-  idCard:         string = '';
-  lastName:       string = '';
-  middleName:     string = '';
-  password:       string = '';
-  phoneNum:       string = '';
+  birthdate: Date = new Date();
+  firstName: string = '';
+  idCard: string = '';
+  lastName: string = '';
+  middleName: string = '';
+  password: string = '';
+  phoneNum: string = '';
   secondLastName: string = '';
-  username:       string = '';
- 
+  username: string = '';
 
   constructor(
     public swal: SwalService,
@@ -34,21 +33,19 @@ export class ClientManagmentComponent implements OnInit {
 
   ngOnInit(): void {
     let clients: any[] = [];
-    this.backend.get_request("Admin/Client",null)
-    .subscribe(result=>{
+    this.backend.get_request('Admin/Client', null).subscribe((result) => {
       console.log(result);
       clients = result;
-      clients.forEach(client=>{
+      clients.forEach((client) => {
         this.users.push(client);
-      })
-    })
-    
-    
+      });
+    });
   }
   selectUser(event: any) {
+    console.log(event);
 
-    this.birthdate      = event.birthdate;
-    this.firstName   = event.firstName;
+    this.birthdate = event.birthdate;
+    this.firstName = event.firstName;
     this.idCard = event.idCard;
     this.lastName = event.lastName;
     this.middleName = event.middleName;
@@ -59,32 +56,31 @@ export class ClientManagmentComponent implements OnInit {
   }
   submitModify() {
     if (
-      this.birthdate      !== '' &&
-      this.firstName      !== '' &&
-      this.lastName       !== '' &&
-      this.middleName     !== '' &&
-      this.password       !== '' &&
-      this.phoneNum       !== '' &&
+      this.firstName !== '' &&
+      this.lastName !== '' &&
+      this.middleName !== '' &&
+      this.password !== '' &&
+      this.phoneNum !== '' &&
       this.secondLastName !== '' &&
-      this.username       !== '' 
+      this.username !== ''
     ) {
       let data = {
-        birthdate: this.birthdate,    
-        firstName: this.firstName,            
-        lastName: this.lastName,       
-        middleName: this.middleName,     
-        password: this.password,       
-        phoneNum: this.phoneNum,       
-        secondLastName: this.secondLastName, 
-        username: this.username       
-      }
-      this.backend.put_request("Admin/Client",data)
-      .subscribe(responde=>{
+        birthdate: this.birthdate,
+        firstName: this.firstName,
+        idCard: this.idCard,
+        lastName: this.lastName,
+        middleName: this.middleName,
+        password: this.password,
+        phoneNum: this.phoneNum,
+        secondLastName: this.secondLastName,
+        username: this.username,
+      };
+      this.backend.put_request('Admin/Client', data).subscribe((responde) => {
         this.swal.showSuccess(
           'Empleado modificado',
           'Empleado modificado con éxito'
         );
-      })
+      });
     } else {
       this.swal.showError(
         'Error al modificar al empleado',
@@ -93,58 +89,58 @@ export class ClientManagmentComponent implements OnInit {
     }
   }
 
-
   submitAdition() {
     if (
-      this.birthdate      !== '' &&
-      this.firstName      !== '' &&
-      this.idCard         !== '' &&
-      this.lastName       !== '' &&
-      this.middleName     !== '' &&
-      this.password       !== '' &&
-      this.phoneNum       !== '' &&
+      this.birthdate !== undefined &&
+      this.firstName !== '' &&
+      this.idCard !== '' &&
+      this.lastName !== '' &&
+      this.middleName !== '' &&
+      this.password !== '' &&
+      this.phoneNum !== '' &&
       this.secondLastName !== '' &&
-      this.username       !== '' 
+      this.username !== ''
     ) {
       let data = {
-        birthdate: this.birthdate,    
-        firstName: this.firstName,      
-        idCard: this.idCard,         
-        lastName: this.lastName,       
-        middleName: this.middleName,     
-        password: this.password,       
-        phoneNum: this.phoneNum,       
-        secondLastName: this.secondLastName, 
-        username: this.username       
-      }
-      this.backend.post_request("Admin/Client",data)
-      .subscribe(responde=>{
-        this.swal.showSuccess(
-          'Empleado modificado',
-          'Empleado modificado con éxito'
-        );
-      })
+        birthdate: this.birthdate,
+        firstName: this.firstName,
+        idCard: this.idCard,
+        lastName: this.lastName,
+        middleName: this.middleName,
+        password: this.password,
+        phoneNum: this.phoneNum,
+        secondLastName: this.secondLastName,
+        username: this.username,
+      };
+      this.backend.post_request('Admin/Client', data).subscribe((responde) => {
+        this.swal.showSuccess('Empleado Creado', 'Empleado Creado con éxito');
+      });
     } else {
       this.swal.showError(
-        'Error al modificar al empleado',
+        'Error al crear al empleado',
         'Los datos ingresados son insuficientes o el empleado no existe en nuestra base de datos'
       );
     }
   }
 
   deleteUser() {
-    
-    this.backend.delete_request("Admin/Movies",
-                                {movie_org_name: this.idCard})
-        .subscribe(result=>{
-          this.swal.showSuccess(
-            'Película eliminada',
-            'Película eliminada con éxito'
-          );
-
-        })
+    this.backend
+      .delete_request('Admin/Client', {
+        id: this.idCard,
+        username: this.username,
+      })
+      .subscribe((result) => {
+        this.swal.showSuccess(
+          'Película eliminada',
+          'Película eliminada con éxito'
+        );
+      });
   }
   close() {
     this.dialogRef.close();
+  }
+  selectDate(event: any) {
+    this.birthdate = event._selected;
+    console.log(this.birthdate);
   }
 }

@@ -1,5 +1,5 @@
 
-<div *ngIf="!deletingEmployee && !modifiyingEmployee && !addingEmployee">
+<div *ngIf="!deletingEmployee && !modifiyingEmployee && !addingEmployee &&!get">
     <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
     <div class="menuButtons ">
 
@@ -24,10 +24,18 @@
             </div>
         </div>
 
+        <div class="actButton menuButton" (click)="get=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >search</mat-icon>
+                <div class="text" >Visualizar Empleados</div>
+            </div>
+        </div>
+
     </div>
 </div>
 
-
+<!--Modificar-->
 <div *ngIf="modifiyingEmployee">
     <div class="text" style="margin-bottom: 7px;">Modificación de Empleados</div>
     <div class="formX" >
@@ -54,9 +62,7 @@
                 <input matInput required type="text" [value]="firstDateWorking"  (input)="firstDateWorking = $any( $event.target).value" placeholder="Fecha de ingreso" >
             </mat-form-field>
 
-            <mat-form-field class="field">
-                <input matInput required type="text" [value]="role"  (input)="role = $any( $event.target).value" placeholder="Rol" >
-            </mat-form-field>
+        
             
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="phoneNum"  (input)="phoneNum = $any( $event.target).value" placeholder="Número de teléfono" >
@@ -100,8 +106,8 @@
 
     
 </div>
-
-<div *ngIf="deletingEmployee">
+<!--Borrar-->
+<div class="delView" *ngIf="deletingEmployee">
     <div class="text" style="margin-bottom: 7px;">Eliminación de empleados</div>
     <div class="formX" >
 
@@ -109,7 +115,7 @@
         <mat-form-field appearance="fill">
             <mat-label>Seleccionar empleado</mat-label>
             <mat-select (selectionChange)="selectUser($event.value)">
-                <mat-option *ngFor="let employee of employees"  value="{{employee.idCard}}">{{employee.idCard}}</mat-option>
+                <mat-option *ngFor="let employee of employees"  [value]="employee">{{employee.idCard}}</mat-option>
             </mat-select>
             </mat-form-field>
 
@@ -126,7 +132,7 @@
     </div>
 </div>
 
-
+<!--Agregar-->
 <div *ngIf="addingEmployee">
     <div class="text" style="margin-bottom: 7px;">Creacion de empleados</div>
     <div class="formX" >
@@ -142,7 +148,7 @@
             <mat-form-field appearance="fill">
                 <mat-label>Cine</mat-label>
                 <mat-select (selectionChange)="selectSucursal($event.value)">
-                  <mat-option *ngFor="let employee of employees"  value="{{employee}}">{{employee.cinemaName}}</mat-option>
+                  <mat-option *ngFor="let employee of employees"  value="{{employee.cinemaName}}">{{employee.cinemaName}}</mat-option>
                 </mat-select>
             </mat-form-field>
 
@@ -187,5 +193,35 @@
                 </div>
             </div>
         </div>
+
+</div>
+
+<!--Get-->
+<div class="getView" *ngIf="get">
+
+
+
+
+    <div class="text" style="margin-bottom: 7px;">Visualización de empleados</div>
+
+    <div class="employeeCard" *ngFor="let employee of employees"> 
+        <div class="verticarlContainer">
+            <mat-icon class="iconContainer">person</mat-icon>
+            <div class="text infotxt" >{{employee.firstName}} {{employee.middleName}} {{ employee.lastName}} {{employee.secondLastName}}</div>
+        </div>
+
+        <div class="employeeInfo">
+            <div class="text infotxt">Sucursal: {{employee.cinemaName}}</div>
+            <div class="text infotxt">Nacimiento: {{employee.birthdate}}</div>
+            <div class="text infotxt">Número de teléfono: {{employee.phoneNum}}</div>
+            <div class="text infotxt">Fecha de ingreso a CineTec{{employee.firstDateWorking}}</div>
+            <div class="text infotxt">Usuario: {{employee.username}}</div>
+        </div>
+
+
+    </div>
+
+
+
 
 </div>

@@ -12,26 +12,22 @@ export class EmployeeManagmentComponent implements OnInit {
   deletingEmployee: boolean = false;
   modifiyingEmployee: boolean = false;
   addingEmployee: boolean = false;
-
+  get: boolean = false;
   employees: any[] = [];
 
-
- 
-  birthdate:            string = '';
-  cinemaName:           string = '';
-  firstDateWorking:     string = '';
-  firstName:            string = '';
-  idCard:               string = '';
-  lastName:             string = '';
-  middleName:           string = '';
-  password:             string = '';
-  phoneNum:             string = '';
-  role:                 string = '';
-  roleId:               string = '';
-  secondLastName:       string = '';
-  username:             string = '';
-
-
+  birthdate: string = '';
+  cinemaName: string = '';
+  firstDateWorking: string = '';
+  firstName: string = '';
+  idCard: string = '';
+  lastName: string = '';
+  middleName: string = '';
+  password: string = '';
+  phoneNum: string = '';
+  role: string = '';
+  roleId: string = '';
+  secondLastName: string = '';
+  username: string = '';
 
   constructor(
     public swal: SwalService,
@@ -41,45 +37,42 @@ export class EmployeeManagmentComponent implements OnInit {
 
   ngOnInit(): void {
     let employeesList: any[] = [];
-    this.backend.get_request("Admin/Employee",null)
-    .subscribe(result=>{
+    this.backend.get_request('Admin/Employee', null).subscribe((result) => {
       console.log(result);
       employeesList = result;
-      employeesList.forEach(employee=>{
+      employeesList.forEach((employee) => {
         this.employees.push(employee);
-      })
-    })
-    
-    
+      });
+    });
   }
   selectUser(event: any) {
-
-    this.birthdate             = event.birthdate;
-    this.cinemaName            = event.cinemaName;
-    this.firstDateWorking      = event.firstDateWorking;
-    this.firstName             = event.firstName;
-    this.idCard                = event.idCard;
-    this.lastName              = event.lastName;
-    this.middleName            = event.middleName;
-    this.password              = event.password;
-    this.phoneNum              = event.phoneNum;
-    this.role                  = event.role;
-    this.roleId                = event.roleId;
-    this.secondLastName        = event.secondLastName;
-    this.username              = event.username;
+    this.birthdate = event.birthdate;
+    this.cinemaName = event.cinemaName;
+    this.firstDateWorking = event.firstDateWorking;
+    this.firstName = event.firstName;
+    this.idCard = event.idCard;
+    this.lastName = event.lastName;
+    this.middleName = event.middleName;
+    this.password = event.password;
+    this.phoneNum = event.phoneNum;
+    this.role = event.role;
+    this.roleId = event.roleId;
+    this.secondLastName = event.secondLastName;
+    this.username = event.username;
+    console.log(event);
   }
   submitModify() {
     if (
-      this.birthdate             !== '' &&
-      this.cinemaName            !== '' &&
-      this.firstDateWorking      !== '' &&
-      this.firstName             !== '' &&
-      this.lastName              !== '' &&
-      this.middleName            !== '' &&
-      this.password              !== '' &&
-      this.phoneNum              !== '' &&
-      this.secondLastName        !== '' &&
-      this.username              !== '' 
+      this.birthdate !== '' &&
+      this.cinemaName !== '' &&
+      this.firstDateWorking !== '' &&
+      this.firstName !== '' &&
+      this.lastName !== '' &&
+      this.middleName !== '' &&
+      this.password !== '' &&
+      this.phoneNum !== '' &&
+      this.secondLastName !== '' &&
+      this.username !== ''
     ) {
       let data = {
         birthdate: this.birthdate,
@@ -91,16 +84,18 @@ export class EmployeeManagmentComponent implements OnInit {
         password: this.password,
         phoneNum: this.phoneNum,
         roleId: 1,
+        idCard: this.idCard,
         secondLastName: this.secondLastName,
-        username:this.username          
-      }
-      this.backend.post_request("Admin/Employee",data)
-      .subscribe(responde=>{
+        username: this.username,
+      };
+      console.log(data);
+
+      this.backend.put_request('Admin/Employee', data).subscribe((responde) => {
         this.swal.showSuccess(
           'Empleado modificado',
           'Empleado modificado con éxito'
         );
-      })
+      });
     } else {
       this.swal.showError(
         'Error al modificar al empleado',
@@ -109,52 +104,45 @@ export class EmployeeManagmentComponent implements OnInit {
     }
   }
 
-  selectSucursal($event: any) {
+  selectSucursal($event: string) {
     this.cinemaName = $event;
-    console.log(this.cinemaName);
-
-    this.backend
-      .get_request('Admin/Sucursales', { cinema_name: this.cinemaName })
-      .subscribe((value) => {
-        this.cinemaName = value;
-      });
   }
 
   submitAdition() {
     if (
-      this.birthdate             !== '' &&
-      this.cinemaName            !== '' &&
-      this.firstDateWorking      !== '' &&
-      this.firstName             !== '' &&
-      this.idCard                !== '' &&
-      this.lastName              !== '' &&
-      this.middleName            !== '' &&
-      this.password              !== '' &&
-      this.phoneNum              !== '' &&
-      this.secondLastName        !== '' &&
-      this.username              !== '' 
+      this.birthdate !== '' &&
+      this.cinemaName !== '' &&
+      this.firstDateWorking !== '' &&
+      this.firstName !== '' &&
+      this.idCard !== '' &&
+      this.lastName !== '' &&
+      this.middleName !== '' &&
+      this.password !== '' &&
+      this.phoneNum !== '' &&
+      this.secondLastName !== '' &&
+      this.username !== ''
     ) {
       let data = {
-        birthdate: this.birthdate,
+        birthdate: new Date(this.birthdate),
         cinemaName: this.cinemaName,
-        firstDateWorking: this.firstDateWorking,
+        firstDateWorking: new Date(this.firstDateWorking),
         firstName: this.firstName,
         idCard: this.idCard,
         lastName: this.lastName,
         middleName: this.middleName,
         password: this.password,
         phoneNum: this.phoneNum,
-        roleId:1,
+        roleId: 1,
         secondLastName: this.secondLastName,
-        username:this.username          
-      }
-      this.backend.post_request("Admin/Employee",data)
-      .subscribe(responde=>{
-        this.swal.showSuccess(
-          'Empleado modificado',
-          'Empleado modificado con éxito'
-        );
-      })
+        username: this.username,
+      };
+      console.log(data);
+
+      this.backend
+        .post_request('Admin/Employee', data)
+        .subscribe((responde) => {
+          this.swal.showSuccess('Empleado Creado', 'Empleado Creado con éxito');
+        });
     } else {
       this.swal.showError(
         'Error al modificar al empleado',
@@ -164,18 +152,18 @@ export class EmployeeManagmentComponent implements OnInit {
   }
 
   deleteUser() {
-    
-    
-    this.backend.delete_request("Admin/Movies",
-                                {movie_org_name: this.idCard})
-        .subscribe(result=>{
-          this.swal.showSuccess(
-            'Película eliminada',
-            'Película eliminada con éxito'
-          );
+    const data = {
+      username: this.username,
+      id: this.idCard,
+    };
+    console.log(data);
 
-        })
-    
+    this.backend.delete_request('Admin/Employee', data).subscribe((result) => {
+      this.swal.showSuccess(
+        'Empleado eliminado',
+        'Empleado eliminado con éxito'
+      );
+    });
   }
   close() {
     this.dialogRef.close();

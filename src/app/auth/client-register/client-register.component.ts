@@ -20,7 +20,9 @@ export class ClientRegisterComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       name: '',
+      middleName: '',
       lastName: '',
+      secondLastName: '',
       userName: '',
       Password: '',
       Address: '',
@@ -43,9 +45,9 @@ export class ClientRegisterComponent implements OnInit {
       idCard: rand,
       phoneNum: 0,
       firstName: this.form.value.name,
-      middleName: '',
+      middleName: this.form.value.middleName,
       lastName: this.form.value.lastName,
-      secondLastName: '',
+      secondLastName: this.form.value.secondLastName,
       username: this.form.value.userName,
       password: this.form.value.Password,
       birthdate: new Date(this.form.value.birthDate),
@@ -56,6 +58,8 @@ export class ClientRegisterComponent implements OnInit {
     this.backend.post_request('Admin/Client', data).subscribe(
       (value) => {
         this.swal.showSuccess('Bienvenido', 'Usuario registrado con éxito');
+
+        localStorage.setItem('user', JSON.stringify(data));
         this.router.navigateByUrl('pages');
       },
       (error) => {
@@ -66,5 +70,9 @@ export class ClientRegisterComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  selectDate(event: any) {
+    this.form.value.birthDate = event._selected;
   }
 }

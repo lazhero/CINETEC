@@ -14,10 +14,13 @@ import { ClientRegisterComponent } from '../auth/client-register/client-register
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
 @NgModule({
   declarations: [LoginComponent, ClientRegisterComponent],
   imports: [
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,

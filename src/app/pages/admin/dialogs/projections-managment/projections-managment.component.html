@@ -25,7 +25,7 @@
         <div class="actButton menuButton" (click)="get=true">
 
             <div class="buttonContent"> 
-                <mat-icon class="icon" >remove_circle_outline</mat-icon>
+                <mat-icon class="icon" >search</mat-icon>
                 <div class="text" >Visualizar proyecciones</div>
             </div>
         </div>
@@ -62,17 +62,17 @@
 
 
         <input [owlDateTimeTrigger]="dt"  [owlDateTime]="dt" [selectMode]="'range'">
-        <owl-date-time  #dt ></owl-date-time>
+        <owl-date-time  (afterPickerClosed)="selectDate(dt)"  #dt ></owl-date-time>
          
      
     </div>
 
     <div class="buttonsContainer">
-        <div class="actButton acceptButton">
-            <div class="text" (click)="create()">Aceptar</div>
+        <div class="actButton acceptButton" (click)="create()">
+            <div class="text" >Aceptar</div>
         </div>
-        <div class="actButton cancelButton">
-            <div class="text" (click)="close()">Cancelar</div>
+        <div class="actButton cancelButton"  (click)="close()">
+            <div class="text">Cancelar</div>
         </div>
     </div>
 </div>
@@ -116,8 +116,62 @@
 </div>
 
 <!--MODIFICAR-->
-<div *ngIf="modifyingProjection">
+<div  class="mainView" *ngIf="modifyingProjection">
     <div class="text" style="margin-bottom: 7px;">Eliminación de Proyecciones</div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar película</mat-label>
+            <mat-select (selectionChange)="selectMovie($event.value)">
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Seleccionar proyección</mat-label>
+                <mat-select (selectionChange)="selectProjections($event.value)">
+                    <mat-option *ngFor="let projection of projections"  [value]="projection">{{projection.id}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+   
+        <div class="mainView" *ngIf="projection!=undefined">
+            <div class="text">Intérvalo de tiempo</div>
+            <input [owlDateTimeTrigger]="dt"   [owlDateTime]="dt"[selectMode]="'range'" placeholder="Fecha Inicial">
+            <owl-date-time  (afterPickerClosed)="selectDate(dt)"  #dt ></owl-date-time>
+
+
+            <mat-form-field appearance="fill">
+                <mat-label>Sala</mat-label>
+                <mat-select (selectionChange)="selectRoom($event.value)">
+                    <mat-option *ngFor="let room of rooms"  [value]="room">{{room.number}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton">
+            <div class="text" (click)="submitModify()">Modificar proyeccion</div>
+        </div>
+        <div class="actButton cancelButton">
+            <div class="text" (click)="close()">Cancelar</div>
+        </div>
+    </div>
+</div>
+<!--GET-->
+
+<div *ngIf="get">
+    <div class="text" style="margin-bottom: 7px;">Visualización de Proyecciones</div>
     <div class="formX" >
 
         <mat-form-field appearance="fill">
@@ -133,7 +187,7 @@
             <mat-select (selectionChange)="selectMovie($event.value)">
                 <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
             </mat-select>
-            </mat-form-field>
+        </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>Seleccionar proyección</mat-label>
@@ -155,13 +209,5 @@
     </div>
 
 
-    <div class="buttonsContainer">
-        <div class="actButton acceptButton">
-            <div class="text" (click)="submitModify()">Eliminar proyeccion</div>
-        </div>
-        <div class="actButton cancelButton">
-            <div class="text" (click)="close()">Cancelar</div>
-        </div>
-    </div>
+
 </div>
-<!--GET-->

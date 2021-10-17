@@ -44,6 +44,7 @@ export class ProjectionsManagmentComponent implements OnInit {
   projection: any;
   Room_id: string = '';
   Theater_name: string = '';
+  newRoomId: string = '';
 
   constructor(
     public swal: SwalService,
@@ -64,6 +65,8 @@ export class ProjectionsManagmentComponent implements OnInit {
   selectProjections(event: any) {
     this.projection = event;
     this.Id_projection = event.id;
+    this.Room_id = event.roomNumber;
+    this.initHour = event.initialTime;
   }
   selectMovie(event: any) {
     this.Movie = event.originalName;
@@ -85,10 +88,10 @@ export class ProjectionsManagmentComponent implements OnInit {
 
   selectRoom(event: any) {
     this.Room_id = event.number;
+    console.log(event);
   }
   selectSucursal($event: any) {
     this.Theater_name = $event;
-    console.log(this.Theater_name);
 
     this.backend
       .get_request('Admin/Sucursales/Room', { cinema_name: this.Theater_name })
@@ -113,17 +116,24 @@ export class ProjectionsManagmentComponent implements OnInit {
     });
   }
   submitModify() {
-    if (
-      this.Id_projection !== '' &&
-      this.Room !== '' &&
-      this.Date !== undefined &&
-      this.initHour !== '' &&
-      this.Movie !== ''
-    ) {
-      this.swal.showSuccess(
-        'Proyección modificada',
-        'Proyección modificada con éxito'
-      );
+    if (true) {
+      const data = {
+        cinemaName: this.Theater_name,
+        date: null,
+        movieOriginalName: this.Movie,
+        id: this.Id_projection,
+        roomNumber: this.Room_id,
+        initialTime: this.dates[0],
+        endTime: this.dates[1],
+      };
+      console.log(data);
+
+      this.backend.put_request('Admin/Projections', data).subscribe((value) => {
+        this.swal.showSuccess(
+          'Proyección modificada',
+          'Proyección modificada con éxito'
+        );
+      });
     } else {
       this.swal.showError(
         'Error al modificar la proyección',

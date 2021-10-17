@@ -11,11 +11,19 @@
                             <div class="text" style="color: white; font-size: 16px;">Nombre</div>
                             <input class="fieldInput"   formControlName="name" placeholder=""   />
                         </div>
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px;">Segundo Nombre</div>
+                          <input class="fieldInput"   formControlName="middleName" placeholder=""   />
+                      </div>
 
                         <div class="field">
-                            <div class="text" style="color: white; font-size: 16px;">Apellidos</div>
+                            <div class="text" style="color: white; font-size: 16px;">Primer Apellido</div>
                             <input class="fieldInput"   formControlName="lastName" placeholder=""   />
                         </div>
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px;">Segundo Apellido</div>
+                          <input class="fieldInput"   formControlName="secondLastName" placeholder=""   />
+                      </div>
 
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px;">Nombre de Usuario</div>
@@ -27,12 +35,13 @@
                           <input class="fieldInput"   formControlName="userName" placeholder=""   />
                         </div>
                         
-                        <mat-form-field class="field" appearance="fill" >
-                          <mat-label>Fecha de nacimiento</mat-label>
-                          <input matInput [matDatepicker]="picker">
-                          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                          <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px; "> Fecha</div>
+                          <input class="text" [owlDateTimeTrigger]="dt"  [owlDateTime]="dt"  style="color:white;border: none;background-color: #1f2127;" >
+                          <owl-date-time [pickerType]="'calendar'"   (afterPickerClosed)="selectDate(dt)"#dt ></owl-date-time>
+                        </div>
+
+
 
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px;">Contraseña</div>
@@ -49,11 +58,12 @@
             
 
 
-                <button  class="login-button" (click)="createClient()">                        
-                    <div class="text" style="color: white; font-size: 16px;" >Aceptar</div>
-                </button>
+    
                 
             </div>
+            <button  class="login-button" (click)="createClient()">                        
+              <div class="text" style="color: white; font-size: 16px;" >Aceptar</div>
+          </button>
           </div>
       </div>
   </div>
