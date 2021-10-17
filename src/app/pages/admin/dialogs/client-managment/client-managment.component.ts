@@ -10,7 +10,7 @@ import { TheatherManagmentComponent } from '../theather-managment/theather-manag
 export class ClientManagmentComponent implements OnInit {
   deletingUser: boolean = false;
   modifiyingUser: boolean = false;
-
+  get: boolean = false;
   users: any[] = [
     {
       Id_card: 'abc',
@@ -46,7 +46,7 @@ export class ClientManagmentComponent implements OnInit {
       Password: '1234',
     },
   ];
- 
+
   Id_card: string = '';
   Birthday: any = new Date(new Date().getTime() - 3888000000);
   Phone_Num: string = '';

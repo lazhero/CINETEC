@@ -31,27 +31,27 @@ export class AdminComponent implements OnInit {
   }
   openMovieManagment() {
     let dialogRef = this.dialog.open(MovieManagmentComponent, {
-      width: '350px',
+      width: '400px',
       data: {},
     });
   }
   openProjectionManagment() {
     let dialogRef = this.dialog.open(ProjectionsManagmentComponent, {
-      width: '350px',
+      width: '450px',
       data: {},
     });
   }
 
   openRoomManagment() {
     let dialogRef = this.dialog.open(RoomManagmentComponent, {
-      width: '350px',
+      width: '450px',
       data: {},
     });
   }
 
   openTheaterManagment() {
     let dialogRef = this.dialog.open(TheatherManagmentComponent, {
-      width: '350px',
+      width: '450px',
       data: {},
     });
   }

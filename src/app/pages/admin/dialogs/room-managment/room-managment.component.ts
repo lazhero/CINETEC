@@ -12,6 +12,7 @@ export class RoomManagmentComponent implements OnInit {
   addingRoom: boolean = false;
   deletingRoom: boolean = false;
   modifyingRoom: boolean = false;
+  get: boolean = false;
   theaters: any[] = [];
   Room_id: string = '';
   Theater_name: string = '';

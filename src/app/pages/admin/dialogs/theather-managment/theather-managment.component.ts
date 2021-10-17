@@ -13,6 +13,7 @@ export class TheatherManagmentComponent implements OnInit {
   creatingTheather: boolean = false;
   modifiyingTheather: boolean = false;
   deletingMovie: boolean = false;
+  get: boolean = false;
   theaters: any[] = [];
 
   constructor(
@@ -25,6 +26,7 @@ export class TheatherManagmentComponent implements OnInit {
   ngOnInit(): void {
     this.backed.get_request('Admin/Sucursales', null).subscribe((value) => {
       this.theaters = value;
+      console.log(value);
     });
   }
 

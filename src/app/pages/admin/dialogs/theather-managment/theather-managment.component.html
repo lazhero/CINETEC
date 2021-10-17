@@ -1,7 +1,7 @@
 <div class="mainView">
 
 
-    <div *ngIf="!creatingTheather && !modifiyingTheather&&!deletingMovie">
+    <div *ngIf="!creatingTheather && !modifiyingTheather&&!deletingMovie&&!get">
         <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
         <div class="menuButtons ">
 
@@ -24,7 +24,12 @@
                 <mat-icon class="icon" >remove_circle_outline</mat-icon>
                 <div class="text" > Eliminar sucursal </div>
             </div>
-
+            <div class="actButton menuButton" (click)="get=true">
+                <div class="buttonContent"> 
+                    <mat-icon class="icon" >search</mat-icon>
+                    <div class="text" >Visualizar Sucursales</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -122,5 +127,19 @@
             </div>
         </div>
     </div>
+    <!--GET   -->
+        <div class="mainView">
+        <!--Menu de edición de sucursales-->
+        <div *ngIf="get">
+            <div class="text" style="margin-bottom: 7px;">Visualización de Sucursales</div>
+            <div class="formX" >
+                <div class="cinemaCard" *ngFor="let theater of theaters">
+                    <div class="text" style="color: #3f3f3f;font-size: 20px;font-weight: 100;">{{theater.name}}</div>
+                    <div class="text" style="font-size: 14px;">Ubicación: {{theater.location}}</div>
+                </div>
 
+            </div>
+
+        </div>
+    </div>
 </div>

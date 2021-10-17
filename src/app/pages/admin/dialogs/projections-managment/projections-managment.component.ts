@@ -11,6 +11,9 @@ import { SwalService } from 'src/app/services/swalService';
 export class ProjectionsManagmentComponent implements OnInit {
   addingProjection: boolean = false;
   deletingProjection: boolean = false;
+  modifyingProjection: boolean = false;
+  get: boolean = false;
+
   theaters: any[] = [];
   rooms: any[] = [];
   movies: any[] = [];
@@ -31,14 +34,14 @@ export class ProjectionsManagmentComponent implements OnInit {
     '19:00',
     '20:00',
   ];
-  test = [new Date(), new Date()];
+  dates = [new Date(), new Date()];
   Id_projection: string = '';
   Room: string = '';
   Date: any = new Date(new Date().getTime() - 3888000000);
   initHour: string = '';
   finishHour: string = '';
   Movie: string = '';
-
+  projection: any;
   Room_id: string = '';
   Theater_name: string = '';
 
@@ -59,6 +62,7 @@ export class ProjectionsManagmentComponent implements OnInit {
   }
 
   selectProjections(event: any) {
+    this.projection = event;
     this.Id_projection = event.id;
   }
   selectMovie(event: any) {
@@ -97,8 +101,8 @@ export class ProjectionsManagmentComponent implements OnInit {
     const data = {
       id: 0,
       date: ' 2021-10-15T21:10:11.832Z ',
-      initialTime: this.test[0],
-      endTime: this.test[1],
+      initialTime: this.dates[0],
+      endTime: this.dates[1],
       movieOriginalName: this.Movie,
       roomNumber: this.Room_id,
       cinemaName: this.Theater_name,
@@ -142,5 +146,8 @@ export class ProjectionsManagmentComponent implements OnInit {
 
   close() {
     this.dialogRef.close();
+  }
+  selectDate(event: any) {
+    this.dates = event._selecteds;
   }
 }

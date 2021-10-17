@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { DomSanitizer } from '@angular/platform-browser';
 import { BackendService } from 'src/app/services/backend-service.service';
 import { SwalService } from 'src/app/services/swalService';
 import Swal from 'sweetalert2';
@@ -13,6 +14,7 @@ export class MovieManagmentComponent implements OnInit {
   addingMovie: boolean = false;
   deletingMovie: boolean = false;
   modifyingMovie: boolean = false;
+  get: boolean = false;
 
   movies: any[] = [];
   actorMovies: any = [];
@@ -49,11 +51,22 @@ export class MovieManagmentComponent implements OnInit {
   constructor(
     public swal: SwalService,
     public dialogRef: MatDialogRef<MovieManagmentComponent>,
-    public backend: BackendService
+    public backend: BackendService,
+    private sanitizer: DomSanitizer
   ) {}
   ngOnInit(): void {
-    this.backend.get_request('Admin/Movies', null).subscribe((result) => {
-      this.movies = result;
+    this.backend.get_request('Admin/Movies', null).subscribe((moviesArray) => {
+      moviesArray.forEach(
+        async (movie: { image: any; originalName: string }) => {
+          await this.getImage(movie.originalName).then((result: any) => {
+            movie.image = result;
+          });
+        }
+      );
+
+      this.movies = moviesArray;
+
+      console.log(this.movies);
     });
   }
 
@@ -248,5 +261,24 @@ export class MovieManagmentComponent implements OnInit {
 
   selectClassification(event: any) {
     this.clasificacion = event;
+  }
+
+  async getImage(movieName: string) {
+    return new Promise((resolve) => {
+      this.backend
+        .get_request('Images', { path: 'Images\\' + movieName + '.png' })
+        .subscribe((result) => {
+          resolve({
+            value: result,
+          });
+        });
+    });
+  }
+  fixImage(image: any) {
+    if (!image || !image.value) return;
+    const fiximage = this.sanitizer.bypassSecurityTrustResourceUrl(
+      `data:image/png;base64, ${image.value.fileContents}`
+    );
+    return fiximage;
   }
 }
