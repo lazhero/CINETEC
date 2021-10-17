@@ -84,10 +84,82 @@ export class EmployeeManagmentComponent implements OnInit {
       this.secondLastName        !== '' &&
       this.username              !== '' 
     ) {
-      this.swal.showSuccess(
-        'Empleado modificado',
-        'Empleado modificado con éxito'
+      let data = {
+        birthdate: this.birthdate,
+        cinemaName: this.cinemaName,
+        firstDateWorking: this.firstDateWorking,
+        firstName: this.firstName,
+        idCard: this.idCard,
+        lastName: this.lastName,
+        middleName: this.middleName,
+        password: this.password,
+        phoneNum: this.phoneNum,
+        role: this.role,
+        roleId: this.roleId,
+        secondLastName: this.secondLastName,
+        username:this.username          
+      }
+      this.backend.post_request("Admin/Employee",data)
+      .subscribe(responde=>{
+        this.swal.showSuccess(
+          'Empleado modificado',
+          'Empleado modificado con éxito'
+        );
+      })
+    } else {
+      this.swal.showError(
+        'Error al modificar al empleado',
+        'Los datos ingresados son insuficientes o el empleado no existe en nuestra base de datos'
       );
+    }
+  }
+
+  selectSucursal($event: any) {
+    this.cinemaName = $event;
+    console.log(this.cinemaName);
+
+    this.backend
+      .get_request('Admin/Sucursales', { cinema_name: this.cinemaName })
+      .subscribe((value) => {
+        this.cinemaName = value;
+      });
+  }
+
+  submitAdition() {
+    if (
+      this.birthdate             !== '' &&
+      this.cinemaName            !== '' &&
+      this.firstDateWorking      !== '' &&
+      this.firstName             !== '' &&
+      this.idCard                !== '' &&
+      this.lastName              !== '' &&
+      this.middleName            !== '' &&
+      this.password              !== '' &&
+      this.phoneNum              !== '' &&
+      this.secondLastName        !== '' &&
+      this.username              !== '' 
+    ) {
+      let data = {
+        birthdate: this.birthdate,
+        cinemaName: this.cinemaName,
+        firstDateWorking: this.firstDateWorking,
+        firstName: this.firstName,
+        idCard: this.idCard,
+        lastName: this.lastName,
+        middleName: this.middleName,
+        password: this.password,
+        phoneNum: this.phoneNum,
+        roleId:1,
+        secondLastName: this.secondLastName,
+        username:this.username          
+      }
+      this.backend.post_request("Admin/Employee",data)
+      .subscribe(responde=>{
+        this.swal.showSuccess(
+          'Empleado modificado',
+          'Empleado modificado con éxito'
+        );
+      })
     } else {
       this.swal.showError(
         'Error al modificar al empleado',
@@ -97,20 +169,18 @@ export class EmployeeManagmentComponent implements OnInit {
   }
 
   deleteUser() {
-    for (let i = 0; i < this.employees.length; i++) {
-      if (this.employees[i].idCard === this.idCard) {
-        this.employees.splice(i, 1);
-        this.swal.showSuccess(
-          'Empleado eliminado',
-          'Empleado eliminado con éxito'
-        );
-        return;
-      }
-    }
-    this.swal.showError(
-      'Error al eliminar empleado',
-      'El empleados no se encuentra en la base de datos'
-    );
+    
+    
+    this.backend.delete_request("Admin/Movies",
+                                {movie_org_name: this.idCard})
+        .subscribe(result=>{
+          this.swal.showSuccess(
+            'Película eliminada',
+            'Película eliminada con éxito'
+          );
+
+        })
+    
   }
   close() {
     this.dialogRef.close();

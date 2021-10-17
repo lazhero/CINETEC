@@ -131,20 +131,23 @@
     <div class="text" style="margin-bottom: 7px;">Creacion de empleados</div>
     <div class="formX" >
 
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="idCard"  (input)="idCard = $any( $event.target).value" placeholder="ID Card" >
+            </mat-form-field>
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="birthdate"  (input)="birthdate = $any( $event.target).value" placeholder="Fecha de nacimiento" >
             </mat-form-field>
 
-            <mat-form-field class="field">
-                <input matInput required type="text" [value]="cinemaName"  (input)="cinemaName = $any( $event.target).value" placeholder="Cine" >
+            <mat-form-field appearance="fill">
+                <mat-label>Cine</mat-label>
+                <mat-select (selectionChange)="selectSucursal($event.value)">
+                  <mat-option *ngFor="let employee of employees"  value="{{employee}}">{{employee.cinemaName}}</mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="firstDateWorking"  (input)="firstDateWorking = $any( $event.target).value" placeholder="Fecha de ingreso" >
-            </mat-form-field>
-
-            <mat-form-field class="field">
-                <input matInput required type="text" [value]="role"  (input)="role = $any( $event.target).value" placeholder="Rol" >
             </mat-form-field>
             
             <mat-form-field class="field">
@@ -160,7 +163,7 @@
             </mat-form-field>
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="lastName"  (input)="middleName = $any( $event.target).value" placeholder="Primer apellido" >
+                <input matInput required type="text" [value]="lastName"  (input)="lastName= $any( $event.target).value" placeholder="Primer apellido" >
             </mat-form-field>
 
             <mat-form-field class="field">
@@ -177,7 +180,7 @@
 
             <div class="buttonsContainer">
                 <div class="actButton acceptButton">
-                    <div class="text" (click)="submitModify()">Aceptar</div>
+                    <div class="text" (click)="submitAdition()">Aceptar</div>
                 </div>
                 <div class="actButton cancelButton">
                     <div class="text" (click)="close()">Cancelar</div>
