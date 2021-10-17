@@ -1,5 +1,8 @@
 package com.example.cinetec.network;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -55,6 +58,15 @@ public class NetworkCommunicator {
 
 
 
+    }
+    public static boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager cm = (ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) return false;
+        final NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        // if no network is available networkInfo will be null
+        // otherwise check if we are connected
+        return (networkInfo != null && networkInfo.isConnected());
     }
 
 

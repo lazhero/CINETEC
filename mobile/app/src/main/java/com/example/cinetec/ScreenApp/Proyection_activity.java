@@ -96,6 +96,7 @@ public class Proyection_activity extends AppCompatActivity {
 
     public void add_projection(Projection projection){
         String text=projection.getDate()+"  "+projection.getInitial_time()+"  "+projection.getRoom_Number();
+        Log.d("AGREGA PR",projection.toString());
         int buttonStyle = R.style.projection_button_style;
         MaterialButton button = new MaterialButton(new ContextThemeWrapper(this, buttonStyle), null, buttonStyle);
         button.setText(text);

@@ -179,7 +179,9 @@ public class Seat_activity extends AppCompatActivity {
         return px;
     }
     private void add_order(){
-        DB.Process_order(state.getUsername(),state.getProjection_id(),selected_seat);
+        state.setSeats(selected_seat);
+        Intent switchActivityIntent = new Intent(this, Select_tickets.class);
+        startActivity(switchActivityIntent);
        // DB.addOrder(state.getUsername(),state.getProjection_id());
        // int order=DB.getClientLastOrder();
        // for(int i=0;i<selected_seat.size();i++){

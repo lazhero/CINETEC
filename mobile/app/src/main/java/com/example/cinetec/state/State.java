@@ -1,13 +1,22 @@
 package com.example.cinetec.state;
 
+import java.util.ArrayList;
+
 public class State {
     private static State Instance;
     private String Cinema_name;
     private String Movie_original_name;
     private int Projection_id;
     private String username;
+    private ArrayList<Integer> seats;
 
+    public ArrayList<Integer> getSeats() {
+        return seats;
+    }
 
+    public void setSeats(ArrayList<Integer> seats) {
+        this.seats = seats;
+    }
 
     private State(){
 

@@ -32,6 +32,7 @@ public class Db_helper extends SQLiteOpenHelper {
     final int freeSeat=0;
     final int occupiedSeat=1;
     final int covidSeat=2;
+    private Context context;
     private static final int DATABASE_VERSION=1;
     private static final String DATABASE_NAME="CINETEC.db";
     private static final String Client_table="Create Table If not exists Client( \n" +
@@ -70,7 +71,10 @@ public class Db_helper extends SQLiteOpenHelper {
     private static String Order_table="Create Table If not exists Orden( \n" +
             "Client_username text,\n"+
             "Projection_id Integer,\n"+
-            "Orden_ID Integer Primary Key Autoincrement\n"+
+            "Orden_ID Integer Primary Key Autoincrement,\n"+
+            "Children Integer,\n"+
+            "Adult Integer,\n"+
+            "Elder Integer\n"+
             ")";
 
     private static String Reserved_seat="Create Table If not exists Reserved_seat( \n" +
@@ -86,6 +90,7 @@ public class Db_helper extends SQLiteOpenHelper {
     private static final String ClientReservation="http://25.92.13.1:38389/Client/Seats";
     public Db_helper(@Nullable Context context) {
         super(context, DATABASE_NAME, null,DATABASE_VERSION);
+        this.context=context;
     }
 
 
@@ -125,6 +130,7 @@ public class Db_helper extends SQLiteOpenHelper {
 
     }
     public void SyncProcess(){
+        if(! NetworkCommunicator.isNetworkAvailable(this.context))return;
         SQLiteDatabase DB=this.getWritableDatabase();
         JSONArray reservation=getUpdateInfo(DB);
 
@@ -145,6 +151,7 @@ public class Db_helper extends SQLiteOpenHelper {
             }
 
         }
+
         this.Reset(DB);
         ContentValues contentValues=new ContentValues();
         contentValues.put("Username","Luis");
@@ -263,17 +270,17 @@ public class Db_helper extends SQLiteOpenHelper {
         NetworkCommunicator.get(ProjectionsURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d("PROJECTIONS","Falle projecciones");
+               // Log.d("PROJECTIONS","Falle projecciones");
 
             }
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d("PROJECTIONS","Llegue a projections");
+               // Log.d("PROJECTIONS","Llegue a projections");
                 if(!response.isSuccessful())return;
                 try {
                     String request_body=response.body().source().readUtf8();
-                    Log.d("PROJECTIONS",request_body);
+                   // Log.d("PROJECTIONS",request_body);
                     JSONArray jsonArray=new JSONArray(request_body);
                     for(int i=0,size=jsonArray.length();i<size;i++){
                         JSONObject object=jsonArray.getJSONObject(i);
@@ -284,6 +291,7 @@ public class Db_helper extends SQLiteOpenHelper {
                         String date=object.getString("date");
                         int room_number=object.getInt("roomNumber");
                         int Columns=object.getInt("columns");
+                        Log.d("IMPORTANTE/Project",Integer.toString(Columns));
                         insertProjection(id,movie_name,cinema_name,room_number,date,initial_time,Columns);
 
                     }
@@ -431,11 +439,14 @@ public class Db_helper extends SQLiteOpenHelper {
     }
 
 
-    public boolean addOrder(String Client_user,int Projection_id){
+    public boolean addOrder(String Client_user,int Projection_id,int Children,int Adult,int Elder){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put("Client_username",Client_user);
         contentValues.put("Projection_id",Projection_id);
+        contentValues.put("Children",Children);
+        contentValues.put("Adult",Adult);
+        contentValues.put("Elder",Elder);
         long result=DB.insert("Orden",null,contentValues);
         DB.close();
         if(result==-1){
@@ -494,10 +505,10 @@ public class Db_helper extends SQLiteOpenHelper {
         return cinema_array;
     }
 
-    public void Process_order(String Username,int Projection_id,ArrayList<Integer> Seats){
+    public void Process_order(String Username,int Projection_id,ArrayList<Integer> Seats,int Children,int Adult,int Elder){
         int order=getNextOrderID();
-        addOrder(Username,Projection_id);
-        Log.d("lista asientos",Seats.toString());
+        addOrder(Username,Projection_id,Children, Adult,Elder);
+        //Log.d("lista asientos",Seats.toString());
         for(int i=0;i<Seats.size();i++){
             insertReservedSeat(Seats.get(i),order);
             changeSeatState(Projection_id,Seats.get(i),occupiedSeat);
@@ -529,8 +540,8 @@ public class Db_helper extends SQLiteOpenHelper {
         return movie_array;
     }
     public ArrayList<Projection> getProjection(String movie_name,String cinema_name){
-        Log.d("ENPROJECTION",movie_name);
-        Log.d("ENPROJECTION",cinema_name);
+        //("ENPROJECTION",movie_name);
+        //Log.d("ENPROJECTION",cinema_name);
         SQLiteDatabase DB=this.getReadableDatabase();
         Cursor cursor=DB.rawQuery("Select * from Projection Where Movie_original_name=? AND Cinema_name=? Order by date,Initial_time",new String[]{movie_name,cinema_name});
         if(cursor.getCount()<=0){
@@ -586,6 +597,9 @@ public class Db_helper extends SQLiteOpenHelper {
         while(!cursor.isLast()){
             JSONObject object=new JSONObject();
             int order=cursor.getInt(2);
+            int Children=cursor.getInt(3);
+            int Adult=cursor.getInt(4);
+            int Elder=cursor.getInt(5);
             String username=cursor.getString(0);
             int projection_id=cursor.getInt(1);
             try {
@@ -593,9 +607,9 @@ public class Db_helper extends SQLiteOpenHelper {
                 object.put("client_username",username);
                 JSONArray seat=new JSONArray(getOrderedSeats(DB,order));
                 object.put("seats",seat);
-                object.put("adult_tickets",0);
-                object.put("kid_ticket",0);
-                object.put("elder_ticket",0);
+                object.put("adult_tickets",Adult);
+                object.put("kid_ticket",Children);
+                object.put("elder_ticket",Elder);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -623,7 +637,7 @@ public class Db_helper extends SQLiteOpenHelper {
     }
 
     public ArrayList<Integer> getOrderedSeats(SQLiteDatabase DB,int order){
-        Log.d("ORDER_SEAT",Integer.toString(order));
+        //Log.d("ORDER_SEAT",Integer.toString(order));
         ArrayList<Integer> seats=new ArrayList<>();
         Cursor cursor=DB.rawQuery("Select * from Reserved_seat where Orden_ID=?",new String[]{Integer.toString(order)});
         if(cursor.getCount()<=0){
@@ -636,7 +650,7 @@ public class Db_helper extends SQLiteOpenHelper {
             cursor.moveToNext();
         }
         seats.add(cursor.getInt(0));
-        Log.d("ORDER_SEAT",Integer.toString(order));
+        //Log.d("ORDER_SEAT",Integer.toString(order));
         return seats;
 
     }

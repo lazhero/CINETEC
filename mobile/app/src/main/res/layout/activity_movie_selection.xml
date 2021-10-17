@@ -8,7 +8,7 @@
     tools:context=".ScreenApp.Movie_selection">
 
     <TextView
-        android:id="@+id/movie_selection_title"
+        android:id="@+id/ticket_selection_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/movie_selection_subtitle"
+        android:id="@+id/title_selection_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -29,7 +29,7 @@
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_selection_title" />
+        app:layout_constraintTop_toBottomOf="@+id/ticket_selection_title" />
 
     <ScrollView
         android:layout_width="361dp"
@@ -38,7 +38,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_selection_subtitle"
+        app:layout_constraintTop_toBottomOf="@+id/title_selection_subtitle"
         app:layout_constraintVertical_bias="0.269">
 
         <com.example.cinetec.customviews.Matrix_layout

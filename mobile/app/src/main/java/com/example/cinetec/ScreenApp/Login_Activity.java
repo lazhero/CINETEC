@@ -48,7 +48,7 @@ public class Login_Activity extends AppCompatActivity {
         String username=this.user.getText().toString();
         String password=this.password.getText().toString();
         boolean logCondition=DB.verifyClient(username,password);
-        if(logCondition){
+       if(logCondition){
             State state=State.getInstance();
             state.setUsername(username);
             Intent switchActivityIntent = new Intent(this, Cinema_select.class);

@@ -19,7 +19,7 @@
 
     <com.google.android.material.button.MaterialButton
 
-        android:id="@+id/branch_logo"
+        android:id="@+id/children_left_button"
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -71,4 +71,17 @@ public class Projection {
         Initial_time = initial_time;
         this.Columns=Columns;
     }
+
+    @Override
+    public String toString() {
+        return "Projection{" +
+                "Id=" + Id +
+                ", Cinema_name='" + Cinema_name + '\'' +
+                ", Room_Number=" + Room_Number +
+                ", Movie_original_name='" + Movie_original_name + '\'' +
+                ", Date='" + Date + '\'' +
+                ", Initial_time='" + Initial_time + '\'' +
+                ", Columns=" + Columns +
+                '}';
+    }
 }

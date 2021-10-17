@@ -1,14 +1,14 @@
 package com.example.cinetec.customviews;
 
 import android.content.Context;
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
@@ -21,16 +21,13 @@ import com.example.cinetec.network.NetworkCommunicator;
 import com.google.android.material.button.MaterialButton;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -41,9 +38,11 @@ import okhttp3.Response;
 public class MovieView extends LinearLayout {
 
     private AspectRatioImageView cover;
+    private static int index=0;
     private LinearLayout layout;
     private Movie movie;
     MaterialButton button;
+    private File imageFile;
     private final String movie_images_url="http://25.92.13.1:38389/Images";
     public MovieView(Context context) {
         super(context);
@@ -70,7 +69,7 @@ public class MovieView extends LinearLayout {
         View view=LayoutInflater.from(context).inflate(R.layout.view_movie,this);
         cover=(AspectRatioImageView) findViewById(R.id.cover);
         layout=(LinearLayout) findViewById(R.id.movie_image_layout);
-        button=(MaterialButton)findViewById(R.id.branch_logo);
+        button=(MaterialButton)findViewById(R.id.children_left_button);
         layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +84,7 @@ public class MovieView extends LinearLayout {
         if(movie.getImage()==null || movie.getImage()=="")return;
 
         Map<String,String> params=new HashMap<>();
-        Log.d("IMPORTANTE",movie.getImage());
+        //Log.d("IMPORTANTE",movie.getImage());
         params.put("path",movie.getImage());
 
         NetworkCommunicator.get(movie_images_url, params, new Callback() {
@@ -96,8 +95,6 @@ public class MovieView extends LinearLayout {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d("MOVIES","Llegue al on response");
-                Log.d("MOVIES",Boolean.toString(response.isSuccessful()));
                 if(!response.isSuccessful())return;
                 String fileContent=response.body().source().readUtf8();
                 Log.d("MOVIES",fileContent);
@@ -106,10 +103,15 @@ public class MovieView extends LinearLayout {
                     String stream=responseInfo.getString("fileContents");
                     if(stream=="" || stream==null)return;
                     Log.d("STREAM",stream);
-                    InputStream inputStream = new ByteArrayInputStream(Base64.decode(stream.getBytes(), Base64.DEFAULT));
-                    File imageFile=StreamUtil.stream2file(inputStream);
+                    imageFile=new File("test"+Integer.toString(index)+".png");
+                    index+=1;
+                    byte[] imageAsBytes = Base64.decode(stream.getBytes(), Base64.DEFAULT);
 
-                    Picasso.get().load(imageFile).into(cover);
+                    cover.setImageBitmap(BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length));
+                    //InputStream inputStream = new ByteArrayInputStream(Base64.decode(stream.getBytes(), Base64.DEFAULT));
+                    //File imageFile=StreamUtil.stream2file(inputStream);
+
+                    //Picasso.get().load(imageFile).into(cover);
 
                 }
                 catch(Exception exception){}
