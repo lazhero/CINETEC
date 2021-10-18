@@ -1,25 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Bases de datos\\CINETEC\\REST_API_SERVER\\REST_API_SERVER.csproj": {}
+    "D:\\Github Repositorios\\CINETEC\\REST_API_SERVER\\REST_API_SERVER.csproj": {}
   },
   "projects": {
-    "C:\\Bases de datos\\CINETEC\\REST_API_SERVER\\REST_API_SERVER.csproj": {
+    "D:\\Github Repositorios\\CINETEC\\REST_API_SERVER\\REST_API_SERVER.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Bases de datos\\CINETEC\\REST_API_SERVER\\REST_API_SERVER.csproj",
+        "projectUniqueName": "D:\\Github Repositorios\\CINETEC\\REST_API_SERVER\\REST_API_SERVER.csproj",
         "projectName": "REST_API_SERVER",
-        "projectPath": "C:\\Bases de datos\\CINETEC\\REST_API_SERVER\\REST_API_SERVER.csproj",
-        "packagesPath": "C:\\Users\\luisA\\.nuget\\packages\\",
-        "outputPath": "C:\\Bases de datos\\CINETEC\\REST_API_SERVER\\obj\\",
+        "projectPath": "D:\\Github Repositorios\\CINETEC\\REST_API_SERVER\\REST_API_SERVER.csproj",
+        "packagesPath": "C:\\Users\\Brian\\.nuget\\packages\\",
+        "outputPath": "D:\\Github Repositorios\\CINETEC\\REST_API_SERVER\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\luisA\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Brian\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -44,6 +43,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.Certificate": {
+              "target": "Package",
+              "version": "[5.0.10, )"
+            },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
               "version": "[5.0.10, )"
@@ -52,11 +55,15 @@
               "target": "Package",
               "version": "[5.0.10, )"
             },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.9, )"
+            },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.10, )"
+              "version": "[5.0.9, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -70,13 +77,25 @@
               "target": "Package",
               "version": "[5.0.10, )"
             },
+            "PdfSharp": {
+              "target": "Package",
+              "version": "[1.50.5147, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.2.2, )"
             },
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[5.0.2, )"
+            },
             "System.Linq.Dynamic.Core": {
               "target": "Package",
               "version": "[1.2.12, )"
+            },
+            "System.Text.Encoding.CodePages": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
@@ -97,7 +116,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }
