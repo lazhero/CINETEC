@@ -1,0 +1,17 @@
+<div class="main_div">
+    <div class="title text"> Seleccione la cantidad máxima de asientos</div>
+    
+    <mat-form-field class="field">
+        <input matInput required type="number" min="0" max="100" [value]="max_seats"  (input)="max_seats = $any( $event.target).value" placeholder="Aforo" >
+    </mat-form-field>
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton" (click)="submitModify()">
+            <div class="text" >Aceptar</div>
+        </div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
+        </div>
+    </div>
+
+</div>

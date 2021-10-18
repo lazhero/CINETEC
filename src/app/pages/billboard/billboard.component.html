@@ -1,0 +1,31 @@
+<div class="mainView">
+    
+    <div class="movies-background" style="background-color:#171a21;">
+        <div class="title" style="color: white;">
+            Cartelera
+        </div>
+
+        <div class="subTitle" style="color: white;">
+            Estrenos
+        </div>
+        <div class="movieDisplay">
+            
+            <div class="selectMovie" *ngFor="let movie of movies">
+               
+                <div class="movieRectangle" style="background-color:#292929;" (click)="movieSelected(movie)">
+ 
+                    <div class="movieImage" >
+                        <img class="imageSrc"   [src]="fixImage(movie.image)" alt="">
+                    </div>
+                    <div class="hourText" style="color:white ;font-size: 16px;">
+                        Horarios
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+</div>

@@ -1,0 +1,69 @@
+<div class="mainView">
+    <div class="register-block">
+          <div class="registerContent"> 
+            <h1 class="Register-Name">
+              Registro CineTec
+            </h1>
+            <div class='register-form' [formGroup]="form">
+                      <div class="formContainer">
+
+                        <div class="field">
+                            <div class="text" style="color: white; font-size: 16px;">Nombre</div>
+                            <input class="fieldInput "autocomplete="nope"   formControlName="name" placeholder=""   />
+                        </div>
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px;">Segundo Nombre</div>
+                          <input class="fieldInput" autocomplete="nope"  formControlName="middleName" placeholder=""   />
+                      </div>
+
+                        <div class="field">
+                            <div class="text" style="color: white; font-size: 16px;">Primer Apellido</div>
+                            <input class="fieldInput" autocomplete="nope"  formControlName="lastName" placeholder=""   />
+                        </div>
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px;">Segundo Apellido</div>
+                          <input class="fieldInput" autocomplete="nope"  formControlName="secondLastName" placeholder=""   />
+                      </div>
+
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px;">Nombre de Usuario</div>
+                          <input class="fieldInput"  autocomplete="nope"  formControlName="userName" placeholder=""   />
+                        </div>
+
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px;">Cédula</div>
+                          <input class="fieldInput" autocomplete="nope"  formControlName="userName" placeholder=""   />
+                        </div>
+                        
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px; "> Fecha</div>
+                          <input class="text" [owlDateTimeTrigger]="dt" autocomplete="nope" [owlDateTime]="dt"  style="color:white;border: none;background-color: #1f2127;" >
+                          <owl-date-time [pickerType]="'calendar'"    (afterPickerClosed)="selectDate(dt)"#dt ></owl-date-time>
+                        </div>
+
+
+
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px;">Contraseña</div>
+                            <input class="fieldInput" type="password"  autocomplete="nope"  formControlName="Password" placeholder=""   />
+                        </div>
+
+                        <div class="field">
+                          <div class="text" style="color: white; font-size: 16px;">Verifique su contraseña</div>
+                            <input class="fieldInput" type="password" autocomplete="new-password"   formControlName="passwordConfirmation" placeholder=""   />
+                        </div>
+
+               
+                      </div>
+            
+
+
+    
+                
+            </div>
+            <button  class="login-button" (click)="createClient()">                        
+              <div class="text" style="color: white; font-size: 16px;" >Aceptar</div>
+          </button>
+          </div>
+      </div>
+  </div>

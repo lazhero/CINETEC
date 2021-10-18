@@ -1,0 +1,244 @@
+.mainView {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  height: auto;
+  align-content: stretch;
+}
+.viewContainer {
+  width: 80%;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+}
+.infoContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.infoDisp {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.infoTxt {
+  color: white;
+  font-size: 12px;
+  margin: 5px 5px 5px 5px;
+}
+.projTex {
+  color: #333333;
+  font-size: 16px;
+  margin-left: 1em;
+  margin-top: 0.5em;
+}
+.infoCard {
+  margin-top: 23px;
+  margin-right: 10px;
+  background-color: #2b2e35;
+  border-radius: 4px;
+
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.imageSrc {
+  width: 220px;
+  height: 270px;
+}
+.proyectionsDisp {
+  margin-top: 26px;
+}
+.drag-scroll {
+  height: 50px;
+  width: 100px;
+}
+
+.img {
+  height: 50px;
+  width: 50px;
+}
+.centerDisp {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.proyectionScroll {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-content: center;
+
+  justify-content: center;
+  flex-wrap: nowrap;
+  margin-top: 3em;
+}
+
+.itemScroll {
+  position: relative;
+  width: auto;
+  max-width: 41vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  white-space: nowrap;
+  transition: all 0.2s;
+  transform: scale(0.98);
+  will-change: transform;
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: pointer;
+}
+
+.itemContainer {
+  display: inline-block;
+}
+.item {
+  height: 9vh;
+  width: 36vh;
+  margin-right: 1em;
+  border-radius: 6px;
+}
+.item:hover {
+  background: #cccccc;
+}
+.itemContent {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+}
+.scrollButton {
+  border-radius: 100%;
+  background-color: white;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Old versions of Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
+}
+
+.scrollButton:hover {
+  background-color: rgb(190, 190, 190);
+  cursor: pointer;
+}
+
+.chairsDisplayerContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 76vh;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+}
+.chairsDisplayer {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 70em;
+}
+
+.chair {
+  position: relative;
+  text-align: center;
+}
+.chairIcon {
+  size: 30px;
+  margin: 0 0.6em -0.2em 0.6em;
+}
+.chair:hover {
+  filter: invert(0.3);
+  cursor: pointer;
+}
+.chairText {
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  letter-spacing: 0.02em;
+  font-size: 12px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -90%);
+  user-select: none;
+}
+.screenIcon {
+  width: 100%;
+}
+.payButton {
+  width: 16em;
+  border-bottom: solid white 2px;
+}
+.payButton:hover {
+  background-color: #ffffff0a;
+  border: solid white 2px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.payButtonContainer {
+  display: flex;
+  flex-direction: row;
+}
+.background {
+  background-color: #1f232b;
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+.iconCounter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1.5vh;
+}
+.addlessButton {
+  border-radius: 100%;
+  height: 3vh;
+  margin-right: 1vh;
+  align-items: center;
+  width: 3vh;
+  background-color: white;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.addlessButton:hover {
+  transition: 0.3s;
+  background-color: rgb(216, 216, 216);
+  width: 3.5vh;
+  height: 3.5vh;
+}
+.projCard {
+  height: 7vh;
+}

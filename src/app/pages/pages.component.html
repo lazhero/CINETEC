@@ -1,0 +1,21 @@
+<div class="container">
+
+    <div class="navBar">
+        <div class="text" style="color: white; font-size: 25px; margin-left: 1vh; cursor: pointer;" (click)="home()">CineTec</div>
+        <div class="iconcontainer" [matMenuTriggerFor]="menu">
+            <div class="circle">
+                <mat-icon>perm_identity</mat-icon>
+            </div>
+            <div class="text" style="color: white;">{{currentUsername}}</div>
+        </div>
+    </div>
+<router-outlet></router-outlet>
+</div>
+
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item class="center" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        <div class="text" >Salir</div>
+    </button>
+  </mat-menu>
