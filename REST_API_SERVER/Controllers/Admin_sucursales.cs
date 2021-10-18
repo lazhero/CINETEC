@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,57 +11,54 @@ namespace REST_API_SERVER.Controllers
     [Route("Admin/Sucursales")]
     public class Admin_sucursales : Controller
     {
-        CineTEC_Context Db = new CineTEC_Context();
+    CineTEC_Context Db = new CineTEC_Context();
         [HttpGet]
-        public List<Cinema> Get(){
+        public ActionResult Get(){
             try{
-                var cinemas = Db.Cinemas.Include(c => c.Rooms).Include(c => c.Employees).ToList();
-                return cinemas;
+                var cinemas = Db.Cinemas.ToList();
+                return Ok(cinemas);
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPost]
-        public void Add([FromBody] Cinema new_cinema)
+        public ActionResult Add([FromBody] Cinema new_cinema)
         {
             try{
                 Db.Add(new_cinema);
+
                 Db.SaveChanges();
+                return Ok();
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
 
         [HttpPut]
-        public void Modify([FromBody] Cinema new_data)
+        public ActionResult Modify([FromBody] Cinema new_data)
         {
             try{
                 Db.Cinemas.Update(new_data);
+          
                 Db.SaveChanges();
+                return Ok();
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
         
         [HttpDelete]
-        public void Delete([FromBody] Cinema new_data)
+        public ActionResult Delete(string new_data)
         {
             try{
-                var cinema = Db.Cinemas.Where(suc => suc.Name == new_data.Name).Include(c => c.Employees).Include(c => c.Rooms).Single();
-                foreach(Employee emp in cinema.Employees)
-                {
-                    Db.Remove(emp);
-                }
-                foreach (Room room in cinema.Rooms)
-                {
-                    Db.Remove(room);
-                }
-                Db.Remove(cinema);
+                var cine = Db.Cinemas.Find(new_data);
+                Db.Remove(cine);
                 Db.SaveChanges();
+                return Ok();
             }
             catch (Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
     }

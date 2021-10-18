@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -29,9 +29,6 @@ namespace REST_API_SERVER.Database_Models
         public virtual DbSet<Movie> Movies { get; set; }
         public virtual DbSet<MovieClassification> MovieClassifications { get; set; }
         public virtual DbSet<Projection> Projections { get; set; }
-        public virtual DbSet<ProjectionClient> ProjectionClients { get; set; }
-        public virtual DbSet<ProjectionInvoice> ProjectionInvoices { get; set; }
-        public virtual DbSet<ProjectionRoom> ProjectionRooms { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<Seat> Seats { get; set; }
@@ -320,9 +317,11 @@ namespace REST_API_SERVER.Database_Models
                     .HasMaxLength(255)
                     .HasColumnName("description");
 
-                entity.Property(e => e.TicketNumber).HasColumnName("ticket_number");
+                entity.Property(e => e.NumAdultTicket).HasColumnName("num_adult_ticket");
 
-                entity.Property(e => e.Total).HasColumnName("total");
+                entity.Property(e => e.NumElderTicket).HasColumnName("num_elder_ticket");
+
+                entity.Property(e => e.NumKidTicket).HasColumnName("num_kid_ticket");
             });
 
             modelBuilder.Entity<Movie>(entity =>
@@ -356,7 +355,9 @@ namespace REST_API_SERVER.Database_Models
 
                 entity.Property(e => e.ElderPrice).HasColumnName("elder_price");
 
-                entity.Property(e => e.Image).HasColumnName("image");
+                entity.Property(e => e.Image)
+                    .HasMaxLength(260)
+                    .HasColumnName("image");
 
                 entity.Property(e => e.KidPrice).HasColumnName("kid_price");
 
@@ -406,106 +407,28 @@ namespace REST_API_SERVER.Database_Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
+                entity.Property(e => e.CinemaName)
+                    .HasMaxLength(32)
+                    .HasColumnName("cinema_name");
+
                 entity.Property(e => e.Date)
                     .HasColumnType("date")
                     .HasColumnName("date");
 
-                entity.Property(e => e.EndTime)
-                    .HasColumnType("time without time zone")
-                    .HasColumnName("end_time");
+                entity.Property(e => e.EndTime).HasColumnName("end_time");
 
-                entity.Property(e => e.InitialTime)
-                    .HasColumnType("time without time zone")
-                    .HasColumnName("initial_time");
+                entity.Property(e => e.InitialTime).HasColumnName("initial_time");
 
                 entity.Property(e => e.MovieOriginalName)
                     .HasMaxLength(31)
                     .HasColumnName("movie_original_name");
 
+                entity.Property(e => e.RoomNumber).HasColumnName("room_number");
+
                 entity.HasOne(d => d.MovieOriginalNameNavigation)
                     .WithMany(p => p.Projections)
                     .HasForeignKey(d => d.MovieOriginalName)
                     .HasConstraintName("projection_movie");
-            });
-
-            modelBuilder.Entity<ProjectionClient>(entity =>
-            {
-                entity.HasKey(e => new { e.ProjectionId, e.ClientIdCard, e.ClientUsername })
-                    .HasName("projection_client_pkey");
-
-                entity.ToTable("projection_client");
-
-                entity.Property(e => e.ProjectionId).HasColumnName("projection_id");
-
-                entity.Property(e => e.ClientIdCard).HasColumnName("client_id_card");
-
-                entity.Property(e => e.ClientUsername)
-                    .HasMaxLength(15)
-                    .HasColumnName("client_username");
-
-                entity.HasOne(d => d.Projection)
-                    .WithMany(p => p.ProjectionClients)
-                    .HasForeignKey(d => d.ProjectionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pc_projection");
-
-                entity.HasOne(d => d.Client)
-                    .WithMany(p => p.ProjectionClients)
-                    .HasForeignKey(d => new { d.ClientIdCard, d.ClientUsername })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pc_client");
-            });
-
-            modelBuilder.Entity<ProjectionInvoice>(entity =>
-            {
-                entity.HasKey(e => new { e.ProjectionId, e.InvoiceId })
-                    .HasName("projection_invoice_pkey");
-
-                entity.ToTable("projection_invoice");
-
-                entity.Property(e => e.ProjectionId).HasColumnName("projection_id");
-
-                entity.Property(e => e.InvoiceId).HasColumnName("invoice_id");
-
-                entity.HasOne(d => d.Invoice)
-                    .WithMany(p => p.ProjectionInvoices)
-                    .HasForeignKey(d => d.InvoiceId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pi_invoice");
-
-                entity.HasOne(d => d.Projection)
-                    .WithMany(p => p.ProjectionInvoices)
-                    .HasForeignKey(d => d.ProjectionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pi_projection");
-            });
-
-            modelBuilder.Entity<ProjectionRoom>(entity =>
-            {
-                entity.HasKey(e => new { e.ProjectionId, e.CinemaName, e.RoomId })
-                    .HasName("projection_room_pkey");
-
-                entity.ToTable("projection_room");
-
-                entity.Property(e => e.ProjectionId).HasColumnName("projection_id");
-
-                entity.Property(e => e.CinemaName)
-                    .HasMaxLength(32)
-                    .HasColumnName("cinema_name");
-
-                entity.Property(e => e.RoomId).HasColumnName("room_id");
-
-                entity.HasOne(d => d.Projection)
-                    .WithMany(p => p.ProjectionRooms)
-                    .HasForeignKey(d => d.ProjectionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pr_projection");
-
-                entity.HasOne(d => d.Room)
-                    .WithMany(p => p.ProjectionRooms)
-                    .HasForeignKey(d => new { d.CinemaName, d.RoomId })
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("pr_room_cinema");
             });
 
             modelBuilder.Entity<Role>(entity =>
@@ -555,6 +478,15 @@ namespace REST_API_SERVER.Database_Models
                 entity.Property(e => e.ProjectionId).HasColumnName("projection_id");
 
                 entity.Property(e => e.SeatNumber).HasColumnName("seat_number");
+
+                entity.Property(e => e.InvoiceId).HasColumnName("invoice_id");
+
+                entity.Property(e => e.State).HasColumnName("state");
+
+                entity.HasOne(d => d.Invoice)
+                    .WithMany(p => p.Seats)
+                    .HasForeignKey(d => d.InvoiceId)
+                    .HasConstraintName("seat_invoice");
 
                 entity.HasOne(d => d.Projection)
                     .WithMany(p => p.Seats)

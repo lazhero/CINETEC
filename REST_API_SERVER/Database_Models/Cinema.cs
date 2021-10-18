@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 #nullable disable
@@ -7,6 +7,7 @@ namespace REST_API_SERVER.Database_Models
 {
     public partial class Cinema
     {
+        
         public Cinema()
         {
             Employees = new HashSet<Employee>();

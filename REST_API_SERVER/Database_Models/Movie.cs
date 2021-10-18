@@ -16,7 +16,7 @@ namespace REST_API_SERVER.Database_Models
 
         public string OriginalName { get; set; }
         public string Name { get; set; }
-        public byte[] Image { get; set; }
+        public string Image { get; set; }
         public int? TimeLength { get; set; }
         public int? KidPrice { get; set; }
         public int? AdultPrice { get; set; }

@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using REST_API_SERVER.Database_Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using REST_API_SERVER.Database_Models;
+using Microsoft.EntityFrameworkCore;
+using REST_API_SERVER.Classes;
 
 namespace REST_API_SERVER.Controllers
 {
@@ -12,32 +13,38 @@ namespace REST_API_SERVER.Controllers
     public class Client_projection : Controller
     {
         CineTEC_Context Db = new CineTEC_Context();
-        
         [HttpGet]
-        public List<Projection> Get(string cine_name)
+        public ActionResult Get(string Cinema_name, string Movie_name)
         {
             try{
                 var projection = Db.Projections
+                                 .Include(p=>p.Seats)
                                  .Include(p => p.MovieOriginalNameNavigation)
-                                 .Include(p => p.ProjectionRooms)
-                                    .ThenInclude(p => p.CinemaName)
+                                 .Where(p=>p.MovieOriginalName == Movie_name && p.CinemaName == Cinema_name)
+                                 .Select(p=> new Projection{
+                                   Id = p.Id,
+                                   RoomNumber = p.RoomNumber,
+                                   InitialTime = p.InitialTime,
+                                   CinemaName = p.CinemaName,
+                                   Seats = p.Seats
+                                 })
                                  .ToList();
-
-                List<Projection> res = new List<Projection>();
-                foreach (Projection pro in projection)
+                List<Projection_Room> res = new();
+                foreach (Projection PR in projection)
                 {
-                    foreach (ProjectionRoom room in pro.ProjectionRooms)
-                    {
-                        if (room.CinemaName == cine_name)
-                        {
-                            res.Append(pro);
-                            break;
-                        }
-                    }
+                  var room = Db.Rooms.Find(PR.CinemaName, PR.RoomNumber);
+                  var temp = new Projection_Room();
+                  temp.CinemaName = PR.CinemaName;
+                  temp.Columns = room.Columns;
+                  temp.Rows = room.Rows;
+                  temp.Id = PR.Id;
+                  temp.InitialTime = PR.InitialTime;
+                  temp.RoomNumber = PR.RoomNumber;
+                  res.Add(temp);
                 }
-                return res;
+                return Ok(res);
             }catch(Exception e){
-                throw new ArgumentException(e.ToString());
+                return BadRequest(e.Message);
             }
         }
     }
