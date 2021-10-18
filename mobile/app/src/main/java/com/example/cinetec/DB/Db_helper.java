@@ -95,16 +95,30 @@ public class Db_helper extends SQLiteOpenHelper {
     }
 
 
-
+    /**
+     * Method called when the database its created
+     * @param DB the DB
+     */
     @Override
     public void onCreate(SQLiteDatabase DB) {
         DataBaseCreation(DB);
     }
 
+    /**
+     * Method called when the database version is updated
+     * @param DB
+     * @param i
+     * @param i1
+     */
     @Override
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
 
     }
+
+    /**
+     * Creates all the tables if they do not exist already
+     * @param DB the DB
+     */
     public void DataBaseCreation(@NonNull SQLiteDatabase DB){
         DB.execSQL(Client_table);
         DB.execSQL(Cinema_Table);
@@ -114,6 +128,11 @@ public class Db_helper extends SQLiteOpenHelper {
         DB.execSQL(Order_table);
         DB.execSQL(Reserved_seat);
     }
+
+    /**
+     * Delete all the tables
+     * @param DB
+     */
     public void DataBaseDrop(@NonNull SQLiteDatabase DB){
         DB.execSQL("Drop Table IF Exists Client");
         DB.execSQL("Drop Table IF Exists Cinema");
@@ -127,11 +146,16 @@ public class Db_helper extends SQLiteOpenHelper {
         DataBaseDrop(DB);
         DataBaseCreation(DB);
     }
+
     public void Update(SQLiteDatabase DB){
 
     }
+
+    /**
+     * Tries to update the sqlite database with the server database
+     */
     public void SyncProcess(){
-        if(! NetworkCommunicator.isNetworkAvailable(this.context))return;
+        if(! NetworkCommunicator.isNetworkAvailable(this.context))return;//verifies if there is internet connection
         SQLiteDatabase DB=this.getWritableDatabase();
         JSONArray reservation=getUpdateInfo(DB);
 
@@ -159,6 +183,7 @@ public class Db_helper extends SQLiteOpenHelper {
         contentValues.put("Password","1234");
         DB.insert("Client",null,contentValues);
         DB.close();
+        //tries to update the client table
         NetworkCommunicator.get(ClientsURl, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -187,7 +212,7 @@ public class Db_helper extends SQLiteOpenHelper {
 
             }
         });
-
+        //tries to sync the cinema table
         NetworkCommunicator.get(CinemasURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -217,7 +242,7 @@ public class Db_helper extends SQLiteOpenHelper {
         });
 
 
-
+        //Syncs the movies table
         NetworkCommunicator.get(MoviesURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -248,7 +273,7 @@ public class Db_helper extends SQLiteOpenHelper {
             }
         });
 
-
+        //Syncs the cinemas table
         NetworkCommunicator.get(CinemasURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -268,6 +293,7 @@ public class Db_helper extends SQLiteOpenHelper {
                 catch (Exception e){}
             }
         });
+        //syncs the projection table
         NetworkCommunicator.get(ProjectionsURL, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -302,7 +328,7 @@ public class Db_helper extends SQLiteOpenHelper {
                 catch (Exception e){}
             }
         });
-
+        // Sync the seat table
         NetworkCommunicator.get(SeatUrl, null, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -336,6 +362,14 @@ public class Db_helper extends SQLiteOpenHelper {
 
 
     }
+
+    /**
+     * change the state of a seat, with a integer
+     * @param Projection_id projection id
+     * @param Seat_number int seat number
+     * @param state int state  between 0 and 2, that will mean 0: free, 1:occupied, 2:covid
+     * @return true if it was added successfully
+     */
     public boolean changeSeatState(int Projection_id,int Seat_number,Integer state){
         String Projection_id_string=Integer.toString(Projection_id);
         String Seat_number_string=Integer.toString(Seat_number);
@@ -357,6 +391,13 @@ public class Db_helper extends SQLiteOpenHelper {
         return false;
 
     }
+
+    /**
+     * Insert a new client to the table
+     * @param username username
+     * @param password  string password
+     * @return true if the addition was successful
+     */
     public boolean insertClient(String username,String password){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -369,6 +410,12 @@ public class Db_helper extends SQLiteOpenHelper {
         }
         return true;
     }
+
+    /**
+     * Insert a new cinema given a cinema name
+     * @param Cinema_name
+     * @return
+     */
     public boolean insertCinema(String Cinema_name){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -380,6 +427,14 @@ public class Db_helper extends SQLiteOpenHelper {
         }
         return true;
     }
+
+    /**
+     * Insert a new movie
+     * @param Movie_original_name String movie original name
+     * @param Movie_name String moview name
+     * @param Movie_url String movie url
+     * @return
+     */
     public boolean insertMovie(String Movie_original_name,String Movie_name,String Movie_url){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -393,6 +448,18 @@ public class Db_helper extends SQLiteOpenHelper {
         }
         return true;
     }
+
+    /**
+     * Insert new Projection
+     * @param id  int projection id
+     * @param Movie_original_name String movie original name
+     * @param cinema_name   String cinema name
+     * @param Room_number   int room number
+     * @param date  String date
+     * @param initial_time  String time
+     * @param Columns int number of columns
+     * @return
+     */
     public boolean insertProjection(int id,String Movie_original_name,String cinema_name,int Room_number,String date,String initial_time,int Columns){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -410,6 +477,14 @@ public class Db_helper extends SQLiteOpenHelper {
         }
         return true;
     }
+
+    /**
+     * Insert a new seat
+     * @param Projection_id int projection id
+     * @param seat_number   int seat number
+     * @param state  int between 0 and 2, that will mean 0: free, 1:occupied, 2:covid
+     * @return
+     */
     public boolean insertSeat(int Projection_id,int seat_number,int state){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -425,7 +500,12 @@ public class Db_helper extends SQLiteOpenHelper {
     }
 
 
-
+    /**
+     * Insert a new Reserved Seat
+     * @param Seat_number int seat number
+     * @param Order_id int order id
+     * @return  true if was successfully added
+     */
     public boolean insertReservedSeat(int Seat_number,int Order_id){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -439,7 +519,15 @@ public class Db_helper extends SQLiteOpenHelper {
         return true;
     }
 
-
+    /**
+     * Adds a new order
+     * @param Client_user   String username
+     * @param Projection_id int projection_id
+     * @param Children  int number of children tickets
+     * @param Adult int number of adult tickets
+     * @param Elder int number of elder tickes
+     * @return true if was successfully added
+     */
     public boolean addOrder(String Client_user,int Projection_id,int Children,int Adult,int Elder){
         SQLiteDatabase DB=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
@@ -456,6 +544,10 @@ public class Db_helper extends SQLiteOpenHelper {
         return true;
     }
 
+    /**
+     * returns the last order
+     * @return
+     */
     public int getClientLastOrder(){
         SQLiteDatabase DB=this.getReadableDatabase();
         Cursor cursor=DB.rawQuery("Select * from Orden",null);
@@ -480,9 +572,19 @@ public class Db_helper extends SQLiteOpenHelper {
 
 
     }
+
+    /**
+     * Gets the next Order ID
+     * @return int the next order
+     */
     public int getNextOrderID(){
         return  getClientLastOrder()+1;
     }
+
+    /**
+     * get a ArrayList of the cinemas in the database
+     * @return ArrauList<Cinema>
+     */
     public ArrayList<Cinema> getCinemas(){
         SQLiteDatabase DB=this.getReadableDatabase();
         Cursor cursor=DB.rawQuery("Select * from Cinema",null);
@@ -506,6 +608,15 @@ public class Db_helper extends SQLiteOpenHelper {
         return cinema_array;
     }
 
+    /**
+     * Process a new order
+     * @param Username string username
+     * @param Projection_id int projection id
+     * @param Seats  ArrayList<integer> list of seats
+     * @param Children  int number of children tickets
+     * @param Adult int number of adult tickets
+     * @param Elder int number of elder tickets
+     */
     public void Process_order(String Username,int Projection_id,ArrayList<Integer> Seats,int Children,int Adult,int Elder){
         int order=getNextOrderID();
         addOrder(Username,Projection_id,Children, Adult,Elder);
@@ -518,6 +629,10 @@ public class Db_helper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * Gets all the available movies
+     * @return ArrayList<Movie> an array list of Movies
+     */
     public ArrayList<Movie> getMovies(){
         SQLiteDatabase DB=this.getReadableDatabase();
         Cursor cursor=DB.rawQuery("Select * from Movie",null);
@@ -540,6 +655,13 @@ public class Db_helper extends SQLiteOpenHelper {
         cursor.close();
         return movie_array;
     }
+
+    /**
+     * Gets a ArrayList<Projection> of all the projection of a movie in a cinema
+     * @param movie_name   String movie name
+     * @param cinema_name   string cinema name
+     * @return an array list of movies
+     */
     public ArrayList<Projection> getProjection(String movie_name,String cinema_name){
         //("ENPROJECTION",movie_name);
         //Log.d("ENPROJECTION",cinema_name);
@@ -564,6 +686,12 @@ public class Db_helper extends SQLiteOpenHelper {
         cursor.close();
         return projection_array;
     }
+
+    /**
+     *
+     * @param Projection_id Projection id
+     * @return An array list with all the seats in the given projection
+     */
     public ArrayList<Seat> getSeat(int Projection_id){
         SQLiteDatabase DB=this.getReadableDatabase();
         Cursor cursor=DB.rawQuery("Select * from Seat Where Projection_id=? Order by Number",new String[]{Integer.toString(Projection_id)});
@@ -586,6 +714,12 @@ public class Db_helper extends SQLiteOpenHelper {
         cursor.close();
         return seat_array;
     }
+
+    /**
+     *
+     * @param Projection_id int projection id
+     * @return the number of columns in the room the projection its placed
+     */
     public int getColumnsNumber(int Projection_id){
         SQLiteDatabase DB=this.getReadableDatabase();
         Cursor cursor=DB.rawQuery("Select * from Projection Where Id=?",new String[]{Integer.toString(Projection_id)});
@@ -603,6 +737,12 @@ public class Db_helper extends SQLiteOpenHelper {
         return columns;
 
     }
+
+    /**
+     * Gets the info used to send the server database, given in a json format
+     * @param DB    DB
+     * @return  JSONArray
+     */
     public JSONArray getUpdateInfo(SQLiteDatabase DB){
         Cursor cursor=DB.rawQuery("Select * from Orden",null);
         JSONArray body=new JSONArray();
@@ -654,6 +794,12 @@ public class Db_helper extends SQLiteOpenHelper {
         return body;
     }
 
+    /**
+     * Get a list of all the seats listed in an order
+     * @param DB
+     * @param order
+     * @return an array list of seats number
+     */
     public ArrayList<Integer> getOrderedSeats(SQLiteDatabase DB,int order){
         //Log.d("ORDER_SEAT",Integer.toString(order));
         ArrayList<Integer> seats=new ArrayList<>();
@@ -673,7 +819,12 @@ public class Db_helper extends SQLiteOpenHelper {
 
     }
 
-
+    /**
+     * verifies if a given client is in the database
+     * @param username String username
+     * @param password  String password
+     * @return  true if the user,password was found, else returns false
+     */
     public boolean verifyClient(String username,String password){
         SQLiteDatabase DB=this.getReadableDatabase();
         Cursor cursor=DB.rawQuery("Select * From Client where Username=? and Password=?",new String[]{username,password});

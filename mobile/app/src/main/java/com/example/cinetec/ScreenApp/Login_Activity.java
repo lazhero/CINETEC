@@ -21,6 +21,10 @@ public class Login_Activity extends AppCompatActivity {
     MaterialButton log;
     Db_helper DB;
 
+    /**
+     * Method called when its view its created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +48,10 @@ public class Login_Activity extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Login attemp, when login button its pressed
+     */
     public void LoginAttempt(){
         String username=this.user.getText().toString();
         String password=this.password.getText().toString();

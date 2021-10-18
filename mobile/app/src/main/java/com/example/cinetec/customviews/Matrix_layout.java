@@ -22,10 +22,18 @@ public class Matrix_layout extends LinearLayout {
     private int width;
     private int max_per_row=2;
 
+    /**
+     * get the max number of element per row
+     * @return int the number of element per row
+     */
     public int getMax_per_row() {
         return max_per_row;
     }
 
+    /**
+     * Set the max number items per row
+     * @param max_per_row
+     */
     public void setMax_per_row(int max_per_row) {
         this.max_per_row = max_per_row;
     }
@@ -35,11 +43,22 @@ public class Matrix_layout extends LinearLayout {
         build(context);
     }
 
+    /**
+     * Class constructor
+     * @param context android context
+     * @param attrs view attrs
+     */
     public Matrix_layout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         build(context);
     }
 
+    /**
+     * Class constructor
+     * @param context   android context
+     * @param attrs view attrs
+     * @param defStyleAttr  view styles
+     */
     public Matrix_layout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         build(context);
@@ -49,6 +68,11 @@ public class Matrix_layout extends LinearLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
         build(context);
     }
+
+    /**
+     * Builds the matriz layout in base one linear vertical layout and various linear horizontal layout
+     * @param context the current android context
+     */
     private void build(Context context){
         View view= LayoutInflater.from(context).inflate(R.layout.layout_matrix_container,this);
         rows=(LinearLayout) findViewById(R.id.matriz_rows);
@@ -69,6 +93,11 @@ public class Matrix_layout extends LinearLayout {
 
          */
     }
+
+    /**
+     * Add a view to the matriz layout, if the current row its full, it add a new row
+     * @param view
+     */
     public void add_view(View view){
         int number_of_child=current_row.getChildCount();
         if(number_of_child>=max_per_row){

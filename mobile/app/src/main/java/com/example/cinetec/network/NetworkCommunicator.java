@@ -27,7 +27,12 @@ import okhttp3.Response;
 public class NetworkCommunicator {
     private static OkHttpClient client=new OkHttpClient();
 
-
+    /**
+     * process a get request to the given url with the params,the callback given will be used in the function returning
+     * @param url   String url
+     * @param params    Map<String,String> params
+     * @param responseCallback  callback
+     */
     public static void get(String url, Map<String,String> params, Callback responseCallback) {
         client.proxy();
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
@@ -39,6 +44,14 @@ public class NetworkCommunicator {
         Request request = new Request.Builder().url(httpBuilder.build()).build();
         client.newCall(request).enqueue(responseCallback);
     }
+
+    /**
+     * put request
+     * @param url String url
+     * @param body  JSONObject body
+     * @return  a Response
+     * @throws IOException
+     */
     public static Response put(String url,JSONObject body) throws IOException {
         if(url==null || body==null)return null;
        // client.proxy();

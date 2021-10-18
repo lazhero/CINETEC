@@ -28,6 +28,11 @@ public class Movie_selection extends AppCompatActivity {
     private int horizontal_margin;
     Matrix_layout layout;
     private Timer timer;
+
+    /**
+     * Method called when the view its created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +60,9 @@ public class Movie_selection extends AppCompatActivity {
 
     }
 
+    /**
+     * Method called when the activity starts
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -62,6 +70,9 @@ public class Movie_selection extends AppCompatActivity {
 
     }
 
+    /**
+     * Method called when the activity comes to foreground
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -89,6 +100,9 @@ public class Movie_selection extends AppCompatActivity {
 
     }
 
+    /**
+     * Add movies to the activity, getting info from the background
+     */
     public void add_movies_example(){
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -118,6 +132,11 @@ public class Movie_selection extends AppCompatActivity {
 
     }
 
+    /**
+     * Converts from dp to px
+     * @param measure
+     * @return
+     */
     private int dp_px(int measure){
         Resources r = this.getResources();
         int px = (int) TypedValue.applyDimension(
@@ -127,6 +146,10 @@ public class Movie_selection extends AppCompatActivity {
         );
         return px;
     }
+
+    /**
+     * go to the projection activity
+     */
     public void go_to_projections(){
         timer.cancel();
         timer.purge();
@@ -134,6 +157,9 @@ public class Movie_selection extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
+    /**
+     * called when the back button its pressed
+     */
     @Override
     public void onBackPressed() {
         timer.cancel();

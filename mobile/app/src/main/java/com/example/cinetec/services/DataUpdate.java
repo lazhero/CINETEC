@@ -21,7 +21,10 @@ public class DataUpdate extends IntentService {
         DB=new Db_helper(this);
     }
 
-
+    /**
+     * waits some time a syncs the sqlite database with the server database
+     * @param intent
+     */
     @Override
     protected void onHandleIntent(Intent intent) {
         DB.SyncProcess();
@@ -41,6 +44,13 @@ public class DataUpdate extends IntentService {
        }
     }
 
+    /**
+     * Adds on Sticky to tell the system to get the service back, if it was stopped due to the lack of resources
+     * @param intent
+     * @param flags
+     * @param startId
+     * @return
+     */
     @Override
     public int onStartCommand(@Nullable Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);

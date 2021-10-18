@@ -42,6 +42,9 @@ public class Proyection_activity extends AppCompatActivity {
 
     }
 
+    /**
+     * Called when the activity comes back to the foregroudn
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -68,6 +71,9 @@ public class Proyection_activity extends AppCompatActivity {
         timer.schedule(doTask, 30000);
     }
 
+    /**
+     * Gets the projection from the database and add to the activity
+     */
     public void just_prove() {
         //Log.d("Cinema name",state.getCinema_name());
         //Log.d("Movie name",state.getMovie_original_name());
@@ -84,6 +90,10 @@ public class Proyection_activity extends AppCompatActivity {
 
 
     }
+
+    /**
+     * ADD the text "NON available " if there are not projections for the movie in the cinema
+     */
     public void non_available_projections(){
         TextView text=new TextView(this);
         text.setText("NO PROJECTIONS AVAILABLE");
@@ -94,8 +104,15 @@ public class Proyection_activity extends AppCompatActivity {
 
     }
 
+    /**
+     * add a projection to the layout
+     * @param projection
+     */
     public void add_projection(Projection projection){
-        String text=projection.getDate()+"  "+projection.getInitial_time()+"  "+projection.getRoom_Number();
+        String Date=projection.getDate().substring(0,10);
+        String time=projection.getInitial_time().substring(11,16);
+        String room="Room "+projection.getRoom_Number();
+        String text=Date+" "+time+ " "+room;
         Log.d("AGREGA PR",projection.toString());
         int buttonStyle = R.style.projection_button_style;
         MaterialButton button = new MaterialButton(new ContextThemeWrapper(this, buttonStyle), null, buttonStyle);
@@ -110,6 +127,10 @@ public class Proyection_activity extends AppCompatActivity {
         });
         linear.addView(button);
     }
+
+    /**
+     * Go to the seat activity
+     */
     public void go_to_seats(){
         timer.cancel();
         timer.purge();

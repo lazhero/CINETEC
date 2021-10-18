@@ -44,27 +44,56 @@ public class MovieView extends LinearLayout {
     MaterialButton button;
     private File imageFile;
     private final String movie_images_url="http://25.92.13.1:38389/Images";
+
+    /**
+     * Class constructor
+     * @param context android context
+     */
     public MovieView(Context context) {
         super(context);
         build(context);
     }
+
+    /**
+     * Class constructor
+     * @param context android context
+     * @param attrs android view attrs
+     */
 
     public MovieView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         build(context);
     }
 
+    /**
+     * Class constructor
+     * @param context android context
+     * @param attrs android view attrs
+     * @param defStyleAttr  android view styles
+     */
     public MovieView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         build(context);
     }
 
+    /**
+     * Class constructor
+     * @param context android context
+     * @param attrs android view attrs
+     * @param defStyleAttr  android view styles
+     * @param defStyleRes   android custom styles
+     */
     public MovieView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         build(context);
 
 
     }
+
+    /**
+     * Builds, get instances to the needed children in the layout
+     * @param context
+     */
     private void build(Context context){
         View view=LayoutInflater.from(context).inflate(R.layout.view_movie,this);
         cover=(AspectRatioImageView) findViewById(R.id.cover);
@@ -78,6 +107,11 @@ public class MovieView extends LinearLayout {
         });
 
     }
+
+    /**
+     * Given a movie, process it, tries to get the image if there is connection
+     * @param movie
+     */
     public void setMovie(Movie movie){
         this.movie=movie;
         setText(this.movie.getName());
@@ -126,14 +160,28 @@ public class MovieView extends LinearLayout {
 
 
     }
+
+    /**
+     * Set the movie image width, theres no height cause the image is an AspectRatioImage
+     * @param width
+     */
     public void set_cover_size(int width){
         cover.getLayoutParams().width=width;
 
     }
+
+    /**
+     * Set the movies text
+     * @param text the text
+     */
     public void setText(String text){
         button.setText(text);
     }
 
+    /**
+     * Function called when the view is clicked
+     * @param l clicklistener
+     */
     @Override
     public void setOnClickListener(@Nullable OnClickListener l) {
         super.setOnClickListener(l);

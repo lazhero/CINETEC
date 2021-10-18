@@ -25,6 +25,11 @@ public class Cinema_select extends AppCompatActivity {
     private LayoutInflater inflater;
     private LinearLayout BranchesList;
     private Timer timer;
+
+    /**
+     * its called when the view its created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,9 @@ public class Cinema_select extends AppCompatActivity {
 
     }
 
+    /**
+     * its called when the activity comes back to the foreground
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -62,7 +70,10 @@ public class Cinema_select extends AppCompatActivity {
         this.timer.schedule(doTask, 30000);
     }
 
-
+    /**
+     * Add a new cinema icon
+     * @param text String cinema name
+     */
     public void add_branch(String text){
         CinemaSelection cinema=new CinemaSelection(this);
         cinema.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +90,10 @@ public class Cinema_select extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Get the cinema from the backend, and draws it
+     */
     public void getCinema(){
         Db_helper helper=new Db_helper(this);
         ArrayList<Cinema> cinemas=helper.getCinemas();
@@ -91,6 +106,10 @@ public class Cinema_select extends AppCompatActivity {
         }
 
     }
+
+    /**
+     * Goes to the movies activity
+     */
     public void go_to_movies(){
         timer.cancel();
         timer.purge();
@@ -98,6 +117,9 @@ public class Cinema_select extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
+    /**
+     * Action called when the back its pressed
+     */
     @Override
     public void onBackPressed() {
         timer.cancel();

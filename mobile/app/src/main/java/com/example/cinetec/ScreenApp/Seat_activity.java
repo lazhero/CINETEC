@@ -33,6 +33,11 @@ public class Seat_activity extends AppCompatActivity {
     final int covidSeat=2;
     private Timer timer;
     private Db_helper DB;
+
+    /**
+     * Method called when the activity its created
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +76,10 @@ public class Seat_activity extends AppCompatActivity {
         justprove();
 
     }
+
+    /**
+     * Gets info from the database, and add the seats to the view
+     */
     public void justprove(){
         DB=new Db_helper(this);
         int seats_number=DB.getColumnsNumber(state.getProjection_id());
@@ -95,10 +104,19 @@ public class Seat_activity extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Seats the matrix layout number of columns
+     * @param rows
+     */
     public void set_matrix(int rows){
         layout.setMax_per_row(rows);
     }
 
+    /**
+     * Add a free seat, those that can be clicked and selected
+     * @param seatNumber
+     */
     public void add_free_seat(int seatNumber){
         MaterialButton button=create_seat();
         button.setIconTintResource(R.color.white);
@@ -112,12 +130,20 @@ public class Seat_activity extends AppCompatActivity {
         });
         layout.add_view(button);
     }
+
+    /**
+     * Add occupied seat, cant be clicked
+     */
     public void add_occupied_seat(){
         MaterialButton button=create_seat();
         button.setIconTintResource(R.color.gray);
         button.setEnabled(false);
         layout.add_view(button);
     }
+
+    /**
+     * Add restricted seat, cant be clicked
+     */
     public void add_restricted_seat(){
         MaterialButton button=create_seat();
         button.setIconTintResource(R.color.red);
@@ -140,6 +166,11 @@ public class Seat_activity extends AppCompatActivity {
 
      */
 
+    /**
+     * Selects the seat, highlight the seat
+     * @param button    Material button
+     * @param seat_number   seat number
+     */
     public void highlight(MaterialButton button,int seat_number){
         button.setIconTintResource(R.color.yellow);
         button.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +182,12 @@ public class Seat_activity extends AppCompatActivity {
         selected_seat.add(seat_number);
 
     }
+
+    /**
+     * The seat its unselected
+     * @param button
+     * @param seat_number
+     */
     public void off(MaterialButton button,int seat_number){
         button.setIconTintResource(R.color.white);
         button.setOnClickListener(new View.OnClickListener() {
@@ -162,6 +199,11 @@ public class Seat_activity extends AppCompatActivity {
         int index=selected_seat.indexOf(new Integer(seat_number));
         selected_seat.remove(index);
     }
+
+    /**
+     * Create a seat icon view
+     * @return
+     */
     private MaterialButton create_seat(){
         int buttonStyle = R.style.free_seat;
         MaterialButton button = new MaterialButton(new ContextThemeWrapper(this, buttonStyle), null, buttonStyle);
@@ -170,6 +212,11 @@ public class Seat_activity extends AppCompatActivity {
         return button;
     }
 
+    /**
+     * dp to px
+     * @param measure int measure dp
+     * @return int measure px
+     */
     private int dp_px(int measure){
         Resources r = this.getResources();
         int px = (int) TypedValue.applyDimension(
@@ -179,6 +226,10 @@ public class Seat_activity extends AppCompatActivity {
         );
         return px;
     }
+
+    /**
+     * Goes to the selection of tickets activity
+     */
     private void add_order(){
         state.setSeats(selected_seat);
         Intent switchActivityIntent = new Intent(this, Select_tickets.class);
@@ -196,6 +247,9 @@ public class Seat_activity extends AppCompatActivity {
         //DB.SyncProcess();
     }
 
+    /**
+     * on back pressed
+     */
     @Override
     public void onBackPressed() {
         timer.cancel();
