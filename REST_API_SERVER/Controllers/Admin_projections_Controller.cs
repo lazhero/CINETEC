@@ -66,11 +66,19 @@ namespace REST_API_SERVER.Controllers
       {
         int id = Db.Projections.Max(p=>p.Id)+1;
         proj.Id = id;
-        var room = Db.Rooms.Where(p => p.CinemaName == proj.CinemaName && p.Number == proj.RoomNumber).Single() ;
-        for(int i =0; i < (int)(room.Rows * room.Columns); i++)
+        var room = Db.Rooms.Where(p => p.CinemaName == proj.CinemaName && p.Number == proj.RoomNumber).Single();
+        decimal restric = Decimal.Divide((int)room.RestrictionPercent, 100);
+        int to_skip = (int)(((int)Math.Ceiling((double)(room.Columns * restric))) * room.Rows);
+        for (int i =0; i < (int)(room.Rows * room.Columns); i++)
         {
           Seat s = new Seat();
-          s.State = 0;
+          if (to_skip >= 0) {
+            s.State = 2;
+            to_skip--;
+          }
+          else {
+            s.State = 0;
+          }
           s.SeatNumber = (short)i;
           s.ProjectionId = proj.Id;
           Db.Seats.Add(s);

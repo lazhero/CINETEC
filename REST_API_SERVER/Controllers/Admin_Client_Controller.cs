@@ -49,10 +49,10 @@ namespace REST_API_SERVER.Controllers
         }
 
         [HttpDelete]
-        public ActionResult Delete([FromBody] Client client)
+        public ActionResult Delete( int id, string username)
         {
             try{
-                var cli = Db.Clients.Find(client.IdCard,client.Username);
+                var cli = Db.Clients.Find(id,username);
                 Db.Remove(cli);
                 Db.SaveChanges();
                 return Ok();

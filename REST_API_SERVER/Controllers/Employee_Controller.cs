@@ -16,7 +16,8 @@ namespace REST_API_SERVER.Controllers
     {
       try
       {
-        return Ok(Db.Employees.ToList());
+        var emps = Db.Employees.Include(e=>e.Role).ToList();
+        return Ok(emps);
       }
       catch (Exception e)
       {
@@ -52,11 +53,12 @@ namespace REST_API_SERVER.Controllers
       }
     }
     [HttpDelete]
-    public ActionResult Delete([FromBody] Employee new_emp)
+    public ActionResult Delete(int id, string username)
     {
       try
       {
-        Db.Employees.Remove(new_emp);
+        var emp = Db.Employees.Find(id,username);
+        Db.Employees.Remove(emp);
         Db.SaveChanges();
         return Ok();
       }

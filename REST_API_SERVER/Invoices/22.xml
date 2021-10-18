@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <FacturaElectronica>
   <Clave>56446548462546545648964XD1321351354</Clave>
-  <NumeroConsecutivo>21</NumeroConsecutivo>
-  <FechaEmision>17/12/2121 18:17:35</FechaEmision>
+  <NumeroConsecutivo>22</NumeroConsecutivo>
+  <FechaEmision>17/12/2221 18:58:15</FechaEmision>
   <Emisor>
     <Nombre>CineTEC Cinemas</Nombre>
     <Identificacion>
@@ -30,12 +30,12 @@
         <Tipo>0</Tipo>
         <Codigo>123412D-3413</Codigo>
       </Codigo>
-      <Cantidad>1</Cantidad>
+      <Cantidad>0</Cantidad>
       <UnidadMedida>Unid</UnidadMedida>
       <Detalle>Ticketes para adultos</Detalle>
       <PrecioUnitario>4000</PrecioUnitario>
-      <SubTotal>4000</SubTotal>
-      <MontoTotal>4000</MontoTotal>
+      <SubTotal>0</SubTotal>
+      <MontoTotal>0</MontoTotal>
     </LineaDetalle>
     <LineaDetalle>
       <NumeroLinea />
@@ -56,21 +56,21 @@
         <Tipo>0</Tipo>
         <Codigo>123412D-3415</Codigo>
       </Codigo>
-      <Cantidad>0</Cantidad>
+      <Cantidad>1</Cantidad>
       <UnidadMedida>Unid</UnidadMedida>
       <Detalle>ticketes para los adultos mayores</Detalle>
       <PrecioUnitario>3500</PrecioUnitario>
-      <SubTotal>0</SubTotal>
-      <MontoTotal>0</MontoTotal>
+      <SubTotal>3500</SubTotal>
+      <MontoTotal>3500</MontoTotal>
     </LineaDetalle>
   </DetalleServicio>
   <ResumenFactura>
     <CodigoMoneda>CRC</CodigoMoneda>
     <TipoCambio>1</TipoCambio>
-    <TotalServGravados>4000</TotalServGravados>
-    <TotalGravado>4000</TotalGravado>
-    <TotalVenta>4000</TotalVenta>
-    <TotalImpuesto>520</TotalImpuesto>
-    <TotalComprobante>4520</TotalComprobante>
+    <TotalServGravados>3500</TotalServGravados>
+    <TotalGravado>3500</TotalGravado>
+    <TotalVenta>3500</TotalVenta>
+    <TotalImpuesto>455</TotalImpuesto>
+    <TotalComprobante>3955</TotalComprobante>
   </ResumenFactura>
 </FacturaElectronica>

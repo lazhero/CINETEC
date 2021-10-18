@@ -26,15 +26,7 @@ namespace REST_API_SERVER.Controllers
                         return Ok(c);
                     }
                 }
-                var emps = Db.Employees.ToList();
-                foreach (Employee emp in emps)
-                {
-                    if (emp.Username == user_data.Username && emp.Password == user_data.Password)
-                    {
-                        return Ok(emp);
-                    }
-                }
-                return BadRequest("No se encontro el usuario");
+                return Ok();
             }catch(Exception e){
                 return BadRequest("Error en Login");
             }

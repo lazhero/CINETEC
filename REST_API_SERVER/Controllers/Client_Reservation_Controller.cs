@@ -20,18 +20,7 @@ namespace REST_API_SERVER.Controllers
         List<Seat> res = Db.Seats.Where(s => s.ProjectionId == projection_id).ToList();
         var PR = Db.Projections.Find(projection_id);
         var room = Db.Rooms.Where(r => r.CinemaName == PR.CinemaName && r.Number == PR.RoomNumber).Single();
-        decimal restric = Decimal.Divide((int)room.RestrictionPercent, 100);
-        int to_skip = (int)(((int)Math.Ceiling((double)(room.Columns * restric))) * room.Rows);
-        foreach (Seat s in res)
-        {
-          if (to_skip <= 0)
-          {
-            break;
-          }
-          s.State = 2;
-          Db.Seats.Update(s);
-          to_skip--;
-        }
+        
         return Ok(res);
       }
       catch (Exception e)

@@ -123,10 +123,10 @@ namespace REST_API_SERVER.Controllers{
         public ActionResult Delete(string movie_org_name)
         {
             try{
-                var mov = Db.Movies.Find(movie_org_name);
+                var mov = Db.Movies.Include(M=>M.MovieClassifications).Where(m=>m.OriginalName == movie_org_name).Single();
                 var act = Db.ActorMovies.Where(ac=>ac.MovieOriginalName == movie_org_name).ToList();
                 Db.ActorMovies.RemoveRange(act);
-                
+                Db.MovieClassifications.RemoveRange(mov.MovieClassifications);
                 Db.Movies.Remove(mov);
                 Db.SaveChanges();
                 return Ok();

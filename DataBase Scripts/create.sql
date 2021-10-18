@@ -52,7 +52,7 @@ CREATE TABLE PROJECTION(
     Initial_time timestamp,
     End_time timestamp,
     Movie_original_name varchar(31),
-    Room_number smallint,
+    Room_number smallint NOT NULL,
     Cinema_name varchar(32),
     PRIMARY KEY (Id)
 );

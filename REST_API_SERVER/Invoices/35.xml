@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <FacturaElectronica>
   <Clave>56446548462546545648964XD1321351354</Clave>
-  <NumeroConsecutivo>21</NumeroConsecutivo>
-  <FechaEmision>17/12/2121 18:17:35</FechaEmision>
+  <NumeroConsecutivo>35</NumeroConsecutivo>
+  <FechaEmision>17/13/2521 14:17:58</FechaEmision>
   <Emisor>
     <Nombre>CineTEC Cinemas</Nombre>
     <Identificacion>
@@ -14,11 +14,11 @@
   <Receptor>
     <Identificacion>
       <Type>1</Type>
-      <Numero>97526613</Numero>
+      <Numero>402470071</Numero>
     </Identificacion>
     <Telefono>
       <CodigoPais>506</CodigoPais>
-      <NumTelefono>0</NumTelefono>
+      <NumTelefono>22652222</NumTelefono>
     </Telefono>
   </Receptor>
   <CondicionVenta>1</CondicionVenta>
@@ -33,9 +33,9 @@
       <Cantidad>1</Cantidad>
       <UnidadMedida>Unid</UnidadMedida>
       <Detalle>Ticketes para adultos</Detalle>
-      <PrecioUnitario>4000</PrecioUnitario>
-      <SubTotal>4000</SubTotal>
-      <MontoTotal>4000</MontoTotal>
+      <PrecioUnitario>1111</PrecioUnitario>
+      <SubTotal>1111</SubTotal>
+      <MontoTotal>1111</MontoTotal>
     </LineaDetalle>
     <LineaDetalle>
       <NumeroLinea />
@@ -43,12 +43,12 @@
         <Tipo>0</Tipo>
         <Codigo>123412D-3414</Codigo>
       </Codigo>
-      <Cantidad>0</Cantidad>
+      <Cantidad>1</Cantidad>
       <UnidadMedida>Unid</UnidadMedida>
       <Detalle>ticketes para los infantes</Detalle>
-      <PrecioUnitario>1200</PrecioUnitario>
-      <SubTotal>0</SubTotal>
-      <MontoTotal>0</MontoTotal>
+      <PrecioUnitario>11</PrecioUnitario>
+      <SubTotal>11</SubTotal>
+      <MontoTotal>11</MontoTotal>
     </LineaDetalle>
     <LineaDetalle>
       <NumeroLinea>3</NumeroLinea>
@@ -59,7 +59,7 @@
       <Cantidad>0</Cantidad>
       <UnidadMedida>Unid</UnidadMedida>
       <Detalle>ticketes para los adultos mayores</Detalle>
-      <PrecioUnitario>3500</PrecioUnitario>
+      <PrecioUnitario>111</PrecioUnitario>
       <SubTotal>0</SubTotal>
       <MontoTotal>0</MontoTotal>
     </LineaDetalle>
@@ -67,10 +67,10 @@
   <ResumenFactura>
     <CodigoMoneda>CRC</CodigoMoneda>
     <TipoCambio>1</TipoCambio>
-    <TotalServGravados>4000</TotalServGravados>
-    <TotalGravado>4000</TotalGravado>
-    <TotalVenta>4000</TotalVenta>
-    <TotalImpuesto>520</TotalImpuesto>
-    <TotalComprobante>4520</TotalComprobante>
+    <TotalServGravados>1122</TotalServGravados>
+    <TotalGravado>1122</TotalGravado>
+    <TotalVenta>1122</TotalVenta>
+    <TotalImpuesto>145,86</TotalImpuesto>
+    <TotalComprobante>1267,8600000000001</TotalComprobante>
   </ResumenFactura>
 </FacturaElectronica>
