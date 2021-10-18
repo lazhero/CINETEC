@@ -3,6 +3,7 @@ package com.example.cinetec.services;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -30,8 +31,10 @@ public class DataUpdate extends IntentService {
         DB.SyncProcess();
        while(true){
            if(TimeLeft<=0){
+               Log.d("Sincronizacion iniciada","sync");
                DB.SyncProcess();
                TimeLeft=TIME;
+
            }
            else{
                try{

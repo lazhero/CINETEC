@@ -96,7 +96,7 @@ public class Movie_selection extends AppCompatActivity {
                 });
             }
         };
-        timer.schedule(doTask, 60000);
+        timer.schedule(doTask, 120000);
 
     }
 
@@ -165,5 +165,6 @@ public class Movie_selection extends AppCompatActivity {
         timer.cancel();
         timer.purge();
         super.onBackPressed();
+        finish();
     }
 }

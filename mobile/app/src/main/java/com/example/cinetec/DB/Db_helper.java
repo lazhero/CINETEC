@@ -155,25 +155,27 @@ public class Db_helper extends SQLiteOpenHelper {
      * Tries to update the sqlite database with the server database
      */
     public void SyncProcess(){
-        if(! NetworkCommunicator.isNetworkAvailable(this.context))return;//verifies if there is internet connection
+        if(! NetworkCommunicator.isNetworkAvailable(this.context)){
+            Log.d("No internet","");
+            return;//verifies if there is internet connection
+        }
+        Log.d("Se inicio el sync","EN DB helper");
         SQLiteDatabase DB=this.getWritableDatabase();
         JSONArray reservation=getUpdateInfo(DB);
 
         for(int i=0;i<reservation.length();i++){
+
             try{
                 Log.d("asdfasjjjjjj",reservation.getJSONObject(i).toString());
-                Response response=NetworkCommunicator.put(ClientReservation,reservation.getJSONObject(i));
-                if(response==null){
-                    Log.d("FALLO","Request Fallida");
-                }
-                else{
-                    Log.d("EXITO","Enviada");
-                }
+
+                NetworkCommunicator.put(ClientReservation,reservation.getJSONObject(i));
             }
             catch (Exception e){
                 e.printStackTrace();
                 //Log.d("EXCEPCION",e.getMessage());
             }
+
+
 
         }
 

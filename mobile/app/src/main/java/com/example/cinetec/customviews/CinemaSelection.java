@@ -84,4 +84,5 @@ public class CinemaSelection extends LinearLayout {
         super.setOnClickListener(l);
         layout.setOnClickListener(l);
     }
+
 }

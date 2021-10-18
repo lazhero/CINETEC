@@ -124,6 +124,8 @@ public class Cinema_select extends AppCompatActivity {
     public void onBackPressed() {
         timer.cancel();
         timer.purge();
+
         super.onBackPressed();
+        finish();
     }
 }

@@ -255,5 +255,6 @@ public class Seat_activity extends AppCompatActivity {
         timer.cancel();
         timer.purge();
         super.onBackPressed();
+        finish();
     }
 }

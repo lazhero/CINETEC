@@ -144,5 +144,6 @@ public class Proyection_activity extends AppCompatActivity {
         timer.cancel();
         timer.purge();
         super.onBackPressed();
+        finish();
     }
 }

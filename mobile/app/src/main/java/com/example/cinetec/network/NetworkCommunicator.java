@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Map;
 
+import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Headers;
@@ -34,7 +35,7 @@ public class NetworkCommunicator {
      * @param responseCallback  callback
      */
     public static void get(String url, Map<String,String> params, Callback responseCallback) {
-        client.proxy();
+      //  client.proxy();
         HttpUrl.Builder httpBuilder = HttpUrl.parse(url).newBuilder();
         if (params != null) {
             for(Map.Entry<String, String> param : params.entrySet()) {
@@ -52,8 +53,8 @@ public class NetworkCommunicator {
      * @return  a Response
      * @throws IOException
      */
-    public static Response put(String url,JSONObject body) throws IOException {
-        if(url==null || body==null)return null;
+    public static void put(String url,JSONObject body) throws IOException {
+        if(url==null || body==null)return;
        // client.proxy();
         RequestBody requestBody = RequestBody.create( body.toString(),
                 MediaType.parse("application/json"));
@@ -63,9 +64,19 @@ public class NetworkCommunicator {
                 .addHeader("Content-Type", "application/json")
                 .build();
 
-            Response response=client.newCall(request).execute();
+            //Response response=client.newCall(request).execute();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
 
-            return response;
+                }
+
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    Log.d("PUT","EXIto");
+                }
+            });
+            ///return null;
 
 
 

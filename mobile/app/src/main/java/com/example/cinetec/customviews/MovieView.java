@@ -118,9 +118,8 @@ public class MovieView extends LinearLayout {
         if(movie.getImage()==null || movie.getImage()=="")return;
 
         Map<String,String> params=new HashMap<>();
-        //Log.d("IMPORTANTE",movie.getImage());
+        ////Log.d("IMPORTANTE",movie.getImage());
         params.put("path",movie.getImage());
-
         NetworkCommunicator.get(movie_images_url, params, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
