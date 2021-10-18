@@ -63,7 +63,7 @@ export class BillboardComponent implements OnInit {
             .concat(this.movies)
             .concat(this.movies);
         }
-        console.log(this.movies);
+        //console.log(this.movies);
       });
   }
   movieSelected(movie: any): void {

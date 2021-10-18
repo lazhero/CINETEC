@@ -34,7 +34,7 @@ export class ClientManagmentComponent implements OnInit {
   ngOnInit(): void {
     let clients: any[] = [];
     this.backend.get_request('Admin/Client', null).subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       clients = result;
       clients.forEach((client) => {
         this.users.push(client);
@@ -42,7 +42,7 @@ export class ClientManagmentComponent implements OnInit {
     });
   }
   selectUser(event: any) {
-    console.log(event);
+    //console.log(event);
 
     this.birthdate = event.birthdate;
     this.firstName = event.firstName;
@@ -141,6 +141,6 @@ export class ClientManagmentComponent implements OnInit {
   }
   selectDate(event: any) {
     this.birthdate = event._selected;
-    console.log(this.birthdate);
+    //console.log(this.birthdate);
   }
 }

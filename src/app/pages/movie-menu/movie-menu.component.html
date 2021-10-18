@@ -6,24 +6,28 @@
 
                 <div class="infoDisp">
                     <div class="infoCard">
-                        <div class="text infoTxt">Duración: {{movie.duration}} m
+                        <div class="text infoTxt">Duración: {{movie.timeLength}} minutos
                         </div>
                     </div>
                     <div class="infoCard">
-                        <div class="text infoTxt">Precio niños: {{movie.kidPrice}}
+                        <div class="text infoTxt">Precio niños: ₡{{movie.kidPrice}}
                         </div>
                     </div>
                     <div class="infoCard">
-                        <div class="text infoTxt">Precio adultos: {{movie.adultPrice}}
+                        <div class="text infoTxt">Precio adultos: ₡{{movie.adultPrice}}
                         </div>
                     </div>
 
                     <div class="infoCard">
-                        <div class="text infoTxt">Precio adulto mayor: {{movie.elderPrice}}
+                        <div class="text infoTxt">Precio adulto mayor: ₡{{movie.elderPrice}}
                         </div>
                     </div>
                     <div class="infoCard">
                         <div class="text infoTxt">Nombre original: {{movie.originalName}}
+                        </div>
+                    </div>
+                    <div class="infoCard">
+                        <div class="text infoTxt">Director: {{movie.directorFirstName}} {{movie.directorMiddleName}} {{movie.directorLastName}} {{movie.directorSecondLastName}}
                         </div>
                     </div>
                 </div>
@@ -37,22 +41,43 @@
                     proyección</div>
                 <div class="centerDisp">
                     <div class="proyectionScroll">
+
                         <div *ngIf="projections.length>1" class="scrollButton" (click)="moveLeft()">
                             <mat-icon style="color: #333333;">arrow_back</mat-icon>
                         </div>
+
+                        
                         <div #panel class="itemScroll">
                             <div class="itemContainer" *ngFor="let projection of projections">
 
                                 <div *ngIf="!projection.selected" class="item" (click)="selectProjection(projection)"
                                     style="background: rgb(255, 255, 255);">
-                                    <div class="text projTex">
-                                        {{projection.room}} {{projection.hour}}
+                                    <div class="projCard">
+                                        <div style="    display: flex;align-items: flex-start;justify-content: space-between;" >
+                                            <div class="text projTex">
+                                               Sala: {{projection.room}}
+                                            </div>
+                                        </div>
+                                        <div class="hLine" style="border-bottom: #656565 solid 2px; "></div>
+                                        <div class="text projTex">
+                                           Día: {{projection.hour| date:"yy-mm-dd" }} Hora:  {{projection.hour| date:"HH:mm" }}
+                                        </div>
                                     </div>
+
+                                    
                                 </div>
                                 <div *ngIf="projection.selected" class="item" (click)="unselectAllProjections()"
                                     style="background: #fcff7b;">
-                                    <div class="text projTex">
-                                        {{projection.room}} {{projection.hour}}
+                                    <div class="projCard">
+                                        <div style="    display: flex;align-items: flex-start;justify-content: space-between;" >
+                                            <div class="text projTex">
+                                               Sala: {{projection.room}}
+                                            </div>
+                                        </div>
+                                        <div class="hLine" style="border-bottom: #656565 solid 2px; "></div>
+                                        <div class="text projTex">
+                                            Día: {{projection.hour| date:"yy-mm-dd" }} Hora:  {{projection.hour| date:"HH:mm" }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

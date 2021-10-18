@@ -38,7 +38,7 @@ export class EmployeeManagmentComponent implements OnInit {
   ngOnInit(): void {
     let employeesList: any[] = [];
     this.backend.get_request('Admin/Employee', null).subscribe((result) => {
-      console.log(result);
+      //console.log(result);
       employeesList = result;
       employeesList.forEach((employee) => {
         this.employees.push(employee);
@@ -59,7 +59,7 @@ export class EmployeeManagmentComponent implements OnInit {
     this.roleId = event.roleId;
     this.secondLastName = event.secondLastName;
     this.username = event.username;
-    console.log(event);
+    //console.log(event);
   }
   submitModify() {
     if (
@@ -88,7 +88,7 @@ export class EmployeeManagmentComponent implements OnInit {
         secondLastName: this.secondLastName,
         username: this.username,
       };
-      console.log(data);
+      //console.log(data);
 
       this.backend.put_request('Admin/Employee', data).subscribe((responde) => {
         this.swal.showSuccess(
@@ -136,7 +136,7 @@ export class EmployeeManagmentComponent implements OnInit {
         secondLastName: this.secondLastName,
         username: this.username,
       };
-      console.log(data);
+      //console.log(data);
 
       this.backend
         .post_request('Admin/Employee', data)
@@ -156,7 +156,7 @@ export class EmployeeManagmentComponent implements OnInit {
       username: this.username,
       id: this.idCard,
     };
-    console.log(data);
+    //console.log(data);
 
     this.backend.delete_request('Admin/Employee', data).subscribe((result) => {
       this.swal.showSuccess(

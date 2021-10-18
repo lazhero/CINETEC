@@ -5,12 +5,14 @@ import { movieService } from 'src/app/services/movieService';
 import { SwalService } from 'src/app/services/swalService';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-movie-menu',
   templateUrl: './movie-menu.component.html',
   styleUrls: ['./movie-menu.component.css'],
 })
 export class MovieMenuComponent implements OnInit {
+  @ViewChild('panel', { read: ElementRef }) public panel: any;
   constructor(
     public snackmat: MatSnackBar,
     public backend: BackendService,
@@ -33,21 +35,7 @@ export class MovieMenuComponent implements OnInit {
 
   movie: any;
 
-  @ViewChild('panel', { read: ElementRef }) public panel: any;
-  randomIntFromInterval(min: number, max: number) {
-    // min and max included
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  getRandomBool() {
-    var numb = this.randomIntFromInterval(0, 100);
-
-    return numb % 2 === 0;
-  }
-
   ngOnInit(): void {
-    const user = JSON.parse(localStorage.getItem('user') as string);
-
     const urlParams = new URLSearchParams(window.location.search);
     //Obtiene la pelicula del localStorage
     this.movie = this.movieService.getCurrentMovie();
@@ -74,6 +62,7 @@ export class MovieMenuComponent implements OnInit {
           });
         }
       );
+      console.log(this.projections);
     });
   }
 
@@ -99,6 +88,11 @@ export class MovieMenuComponent implements OnInit {
     }
     return true;
   }
+
+  /**
+   * DO THE CALL TO THE DB FOR TICKET BUYING
+   * @returns
+   */
   buyTicket(): void {
     if (!this.validate()) return;
     const user: string = JSON.parse(
@@ -165,18 +159,24 @@ export class MovieMenuComponent implements OnInit {
           kid_tickets: this.childCount,
           elder_tickets: this.olderCount,
         };
-        console.log(data);
-
+        const x = Swal.fire({
+          imageUrl: 'assets/sloading.gif',
+          allowOutsideClick: false,
+          showCloseButton: false,
+          showConfirmButton: false,
+          html: "<div class='text' style='color: white'>Cargando</div>",
+          heightAuto: true,
+        });
         if (result.isConfirmed) {
           this.backend
             .put_request('Client/Seats', data)
             .subscribe((invoiceId) => {
-              console.log(invoiceId);
+              //console.log(invoiceId);
 
               this.backend
                 .get_request('Invoice', { Invoice_id: invoiceId })
                 .subscribe((file) => {
-                  console.log(file);
+                  //console.log(file);
 
                   const linkSource =
                     'data:application/pdf;base64,' + file.fileContents;
@@ -186,7 +186,7 @@ export class MovieMenuComponent implements OnInit {
                   downloadLink.href = linkSource;
                   downloadLink.download = fileName;
                   downloadLink.click();
-
+                  Swal.close();
                   this.swal.showSuccess(
                     'Tiquete comprado',
                     'Descargando tu tiquete y tu factura,  ¡Nos vemos!'
@@ -212,7 +212,7 @@ export class MovieMenuComponent implements OnInit {
   }
 
   selectProjection(projection: any) {
-    console.log(projection);
+    //console.log(projection);
 
     this.unselectAllProjections();
     projection.selected = true;
@@ -223,7 +223,7 @@ export class MovieMenuComponent implements OnInit {
         projection_id: this.currentProjection.projectionId,
       })
       .subscribe((asientos) => {
-        console.log(asientos);
+        //console.log(asientos);
 
         asientos = asientos.sort((n1: any, n2: any) => {
           if (n1.seatNumber > n2.seatNumber) {

@@ -9,48 +9,48 @@
 
                         <div class="field">
                             <div class="text" style="color: white; font-size: 16px;">Nombre</div>
-                            <input class="fieldInput"   formControlName="name" placeholder=""   />
+                            <input class="fieldInput "autocomplete="nope"   formControlName="name" placeholder=""   />
                         </div>
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px;">Segundo Nombre</div>
-                          <input class="fieldInput"   formControlName="middleName" placeholder=""   />
+                          <input class="fieldInput" autocomplete="nope"  formControlName="middleName" placeholder=""   />
                       </div>
 
                         <div class="field">
                             <div class="text" style="color: white; font-size: 16px;">Primer Apellido</div>
-                            <input class="fieldInput"   formControlName="lastName" placeholder=""   />
+                            <input class="fieldInput" autocomplete="nope"  formControlName="lastName" placeholder=""   />
                         </div>
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px;">Segundo Apellido</div>
-                          <input class="fieldInput"   formControlName="secondLastName" placeholder=""   />
+                          <input class="fieldInput" autocomplete="nope"  formControlName="secondLastName" placeholder=""   />
                       </div>
 
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px;">Nombre de Usuario</div>
-                          <input class="fieldInput"   formControlName="userName" placeholder=""   />
+                          <input class="fieldInput"  autocomplete="nope"  formControlName="userName" placeholder=""   />
                         </div>
 
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px;">Cédula</div>
-                          <input class="fieldInput"   formControlName="userName" placeholder=""   />
+                          <input class="fieldInput" autocomplete="nope"  formControlName="userName" placeholder=""   />
                         </div>
                         
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px; "> Fecha</div>
-                          <input class="text" [owlDateTimeTrigger]="dt"  [owlDateTime]="dt"  style="color:white;border: none;background-color: #1f2127;" >
-                          <owl-date-time [pickerType]="'calendar'"   (afterPickerClosed)="selectDate(dt)"#dt ></owl-date-time>
+                          <input class="text" [owlDateTimeTrigger]="dt" autocomplete="nope" [owlDateTime]="dt"  style="color:white;border: none;background-color: #1f2127;" >
+                          <owl-date-time [pickerType]="'calendar'"    (afterPickerClosed)="selectDate(dt)"#dt ></owl-date-time>
                         </div>
 
 
 
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px;">Contraseña</div>
-                            <input class="fieldInput"   formControlName="Password" placeholder=""   />
+                            <input class="fieldInput" type="password"  autocomplete="nope"  formControlName="Password" placeholder=""   />
                         </div>
 
                         <div class="field">
                           <div class="text" style="color: white; font-size: 16px;">Verifique su contraseña</div>
-                            <input class="fieldInput"   formControlName="passwordConfirmation" placeholder=""   />
+                            <input class="fieldInput" type="password" autocomplete="new-password"   formControlName="passwordConfirmation" placeholder=""   />
                         </div>
 
                

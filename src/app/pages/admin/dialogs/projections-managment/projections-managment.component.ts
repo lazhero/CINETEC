@@ -79,7 +79,7 @@ export class ProjectionsManagmentComponent implements OnInit {
       this.backend
         .get_request('Client/Projection', data)
         .subscribe((projections) => {
-          console.log(projections);
+          //console.log(projections);
 
           this.projections = projections;
         });
@@ -88,7 +88,7 @@ export class ProjectionsManagmentComponent implements OnInit {
 
   selectRoom(event: any) {
     this.Room_id = event.number;
-    console.log(event);
+    //console.log(event);
   }
   selectSucursal($event: any) {
     this.Theater_name = $event;
@@ -126,7 +126,7 @@ export class ProjectionsManagmentComponent implements OnInit {
         initialTime: this.dates[0],
         endTime: this.dates[1],
       };
-      console.log(data);
+      //console.log(data);
 
       this.backend.put_request('Admin/Projections', data).subscribe((value) => {
         this.swal.showSuccess(
@@ -146,7 +146,7 @@ export class ProjectionsManagmentComponent implements OnInit {
     this.backend
       .delete_request('Admin/Projections', { proj: this.Id_projection })
       .subscribe((value) => {
-        console.log(value);
+        //console.log(value);
         this.swal.showSuccess(
           'Proyección eliminada',
           'Proyección eliminada con éxito'

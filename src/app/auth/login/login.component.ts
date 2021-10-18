@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     };
 
     this.backend.post_request('Login', info).subscribe((user) => {
-      console.log(user);
+      //console.log(user);
 
       if (user === null || user == undefined || user == '') {
         this.swal.showError(

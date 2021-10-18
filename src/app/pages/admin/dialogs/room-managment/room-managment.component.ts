@@ -39,12 +39,12 @@ export class RoomManagmentComponent implements OnInit {
   }
   selectSucursal($event: any) {
     this.Theater_name = $event;
-    console.log(this.Theater_name);
+    //console.log(this.Theater_name);
 
     this.backend
       .get_request('Admin/Sucursales/Room', { cinema_name: this.Theater_name })
       .subscribe((value) => {
-        console.log(value);
+        //console.log(value);
 
         this.rooms = value;
       });
@@ -57,12 +57,12 @@ export class RoomManagmentComponent implements OnInit {
       columns: this.Column_number,
       restrictionPercent: 0,
     };
-    console.log(data);
+    //console.log(data);
 
     this.backend
       .post_request('Admin/Sucursales/Room', data)
       .subscribe((value) => {
-        console.log(value);
+        //console.log(value);
         this.swal.showSuccess('Proceso exitoso', 'Sala creada con éxito');
       });
   }
@@ -88,7 +88,7 @@ export class RoomManagmentComponent implements OnInit {
       cinema_name: this.Theater_name,
       room_number: this.Room_id,
     };
-    console.log(data);
+    //console.log(data);
     this.backend
       .delete_request('Admin/Sucursales/Room', data)
       .subscribe((value) => {

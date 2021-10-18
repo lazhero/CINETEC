@@ -31,7 +31,7 @@ export class Covid19ManagmentComponent implements OnInit {
           .subscribe((rooms) => {
             rooms.forEach((room: any) => {
               room.restrictionPercent = this.max_seats;
-              console.log(room);
+              //console.log(room);
 
               this.backend
                 .put_request('Admin/Sucursales/Room', room)

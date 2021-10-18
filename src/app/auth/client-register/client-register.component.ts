@@ -67,7 +67,7 @@ export class ClientRegisterComponent implements OnInit {
           'Error',
           'Ya existe un usuario con la misma identificación'
         );
-        console.log(error);
+        //console.log(error);
       }
     );
   }

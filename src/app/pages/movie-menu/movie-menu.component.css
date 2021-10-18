@@ -34,11 +34,8 @@
   margin: 5px 5px 5px 5px;
 }
 .projTex {
-  overflow: hidden;
-  width: 57%;
   color: #333333;
   font-size: 16px;
-  position: absolute;
   margin-left: 1em;
   margin-top: 0.5em;
 }
@@ -108,8 +105,8 @@
   display: inline-block;
 }
 .item {
-  height: 30px;
-  width: 102px;
+  height: 9vh;
+  width: 36vh;
   margin-right: 1em;
   border-radius: 6px;
 }
@@ -242,4 +239,7 @@
   background-color: rgb(216, 216, 216);
   width: 3.5vh;
   height: 3.5vh;
+}
+.projCard {
+  height: 7vh;
 }

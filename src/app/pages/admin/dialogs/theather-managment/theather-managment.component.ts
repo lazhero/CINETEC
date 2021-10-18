@@ -26,7 +26,7 @@ export class TheatherManagmentComponent implements OnInit {
   ngOnInit(): void {
     this.backed.get_request('Admin/Sucursales', null).subscribe((value) => {
       this.theaters = value;
-      console.log(value);
+      //console.log(value);
     });
   }
 
@@ -79,7 +79,7 @@ export class TheatherManagmentComponent implements OnInit {
       rooms: [],
     };
     this.backed.put_request('Admin/Sucursales', data).subscribe((value) => {
-      console.log(value);
+      //console.log(value);
     });
   }
 
@@ -87,7 +87,7 @@ export class TheatherManagmentComponent implements OnInit {
     const data = {
       new_data: this.sucursal,
     };
-    console.log(data);
+    //console.log(data);
     this.backed.delete_request('Admin/Sucursales', data).subscribe((value) => {
       this.swal.showSuccess('Acción ejecutada', 'Sucursal eliminada con éxito');
     });

@@ -66,12 +66,12 @@ export class MovieManagmentComponent implements OnInit {
 
       this.movies = moviesArray;
 
-      console.log(this.movies);
+      //console.log(this.movies);
     });
   }
 
   selectMovie(event: any) {
-    console.log(event);
+    //console.log(event);
 
     this.originalName = event.originalName;
     this.name = event.name;
@@ -127,7 +127,7 @@ export class MovieManagmentComponent implements OnInit {
           timeLength: this.timeLength,
         },
       };
-      console.log(data);
+      //console.log(data);
 
       const x = Swal.fire({
         imageUrl: 'assets/sloading.gif',
@@ -138,7 +138,7 @@ export class MovieManagmentComponent implements OnInit {
         heightAuto: true,
       });
       this.backend.post_request('Admin/Movies', data).subscribe((response) => {
-        console.log(response);
+        //console.log(response);
         Swal.close();
         this.swal.showSuccess(
           'Película agregada',
@@ -255,7 +255,7 @@ export class MovieManagmentComponent implements OnInit {
     };
 
     reader.onerror = function (error) {
-      console.log('Error: ', error);
+      //console.log('Error: ', error);
     };
   }
 
