@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PagesRoutingModule } from './pages-routing.module';
+import { AdminRoutingModule } from './admin-routing.module';
+import { AdminComponent } from './admin/admin/admin.component';
 
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { MatIconModule } from '@angular/material/icon';
@@ -16,23 +17,26 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 
-import { BillboardComponent } from './billboard/billboard.component';
-import { MovieMenuComponent } from './movie-menu/movie-menu.component';
-import { MovieTheatersBoardsComponent } from './movie-theaters-boards/movie-theaters-boards.component';
-import { PagesComponent } from './pages.component';
-import { EmployeeManagmentComponent } from '../admin/admin/dialogs/employee-managment/employee-managment.component';
+import { TheatherManagmentComponent } from '../admin/admin/dialogs/theather-managment/theather-managment.component';
+import { RoomManagmentComponent } from '../admin/admin/dialogs/room-managment/room-managment.component';
+import { MovieManagmentComponent } from '../admin/admin/dialogs/movie-managment/movie-managment.component';
+import { Covid19ManagmentComponent } from '../admin/admin/dialogs/covid19-managment/covid19-managment.component';
+import { ClientManagmentComponent } from '../admin/admin/dialogs/client-managment/client-managment.component';
+import { ProjectionsManagmentComponent } from '../admin/admin/dialogs/projections-managment/projections-managment.component';
 
 @NgModule({
   declarations: [
-    PagesComponent,
-    BillboardComponent,
-    MovieMenuComponent,
-    MovieTheatersBoardsComponent,
-
-    PagesComponent,
-    EmployeeManagmentComponent,
+    AdminComponent,
+    TheatherManagmentComponent,
+    RoomManagmentComponent,
+    MovieManagmentComponent,
+    Covid19ManagmentComponent,
+    ClientManagmentComponent,
+    ProjectionsManagmentComponent,
   ],
   imports: [
+    CommonModule,
+    AdminRoutingModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     MatDatepickerModule,
@@ -48,8 +52,6 @@ import { EmployeeManagmentComponent } from '../admin/admin/dialogs/employee-mana
     MatDialogModule,
     CommonModule,
     DragScrollModule,
-    PagesRoutingModule,
   ],
-  providers: [MatDatepickerModule],
 })
-export class PagesModule {}
+export class AdminModule {}

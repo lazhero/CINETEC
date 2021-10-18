@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router, RouterLink } from '@angular/router';
 import { ClientManagmentComponent } from '../dialogs/client-managment/client-managment.component';
 import { Covid19ManagmentComponent } from '../dialogs/covid19-managment/covid19-managment.component';
 import { EmployeeManagmentComponent } from '../dialogs/employee-managment/employee-managment.component';
@@ -14,7 +15,7 @@ import { TheatherManagmentComponent } from '../dialogs/theather-managment/theath
   styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {}
 
@@ -62,5 +63,9 @@ export class AdminComponent implements OnInit {
       width: '450px',
       data: {},
     });
+  }
+  logout() {
+    this.router.navigateByUrl('auth');
+    localStorage.removeItem('admin');
   }
 }

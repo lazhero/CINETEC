@@ -113,7 +113,7 @@ export class ClientManagmentComponent implements OnInit {
         username: this.username,
       };
       this.backend.post_request('Admin/Client', data).subscribe((responde) => {
-        this.swal.showSuccess('Empleado Creado', 'Empleado Creado con éxito');
+        this.swal.showSuccess('Usuario Creado', 'Usuario Creado con éxito');
       });
     } else {
       this.swal.showError(

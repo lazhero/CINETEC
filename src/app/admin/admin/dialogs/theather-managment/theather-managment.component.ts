@@ -79,7 +79,7 @@ export class TheatherManagmentComponent implements OnInit {
       rooms: [],
     };
     this.backed.put_request('Admin/Sucursales', data).subscribe((value) => {
-      //console.log(value);
+      this.swal.showSuccess('Éxito', 'Se ha modificado correctamente');
     });
   }
 

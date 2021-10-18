@@ -1,26 +1,26 @@
 
-<div *ngIf="!deletingUser && !modifiyingUser&& !addingUser &&!get">
+<div *ngIf="!deletingEmployee && !modifiyingEmployee && !addingEmployee &&!get">
     <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
     <div class="menuButtons ">
 
-        <div class="actButton menuButton" (click)="modifiyingUser=true">
+        <div class="actButton menuButton" (click)="modifiyingEmployee=true">
             <mat-icon class="icon" >edit</mat-icon>
 
-            <div class="text" > Modificar usuario</div>
+            <div class="text" > Modificar empleado</div>
         </div>
-        <div class="actButton menuButton" (click)="deletingUser=true">
+        <div class="actButton menuButton" (click)="deletingEmployee=true">
 
             <div class="buttonContent"> 
                 <mat-icon class="icon" >remove_circle_outline</mat-icon>
-                <div class="text" >Borrar usuario</div>
+                <div class="text" >Borrar empleado</div>
             </div>
         </div>
 
-        <div class="actButton menuButton" (click)="addingUser=true">
+        <div class="actButton menuButton" (click)="addingEmployee=true">
 
             <div class="buttonContent"> 
                 <mat-icon class="icon" >add_circle_outline</mat-icon>
-                <div class="text" >Agregar Cliente</div>
+                <div class="text" >Agregar empleado</div>
             </div>
         </div>
 
@@ -28,23 +28,23 @@
 
             <div class="buttonContent"> 
                 <mat-icon class="icon" >search</mat-icon>
-                <div class="text" >Visualizar Clientes</div>
+                <div class="text" >Visualizar Empleados</div>
             </div>
         </div>
 
     </div>
 </div>
 
-<!--Menu de edición de sucursales-->
-<div *ngIf="modifiyingUser">
-    <div class="text" style="margin-bottom: 7px;">Modificación de Usuarios</div>
+<!--Modificar-->
+<div *ngIf="modifiyingEmployee">
+    <div class="text" style="margin-bottom: 7px;">Modificación de Empleados</div>
     <div class="formX" >
 
 
         <mat-form-field appearance="fill">
-            <mat-label>Seleccionar usuario</mat-label>
+            <mat-label>Seleccionar empleado</mat-label>
             <mat-select (selectionChange)="selectUser($event.value)">
-                <mat-option *ngFor="let user of users"  [value]="user">{{user.idCard}}</mat-option>
+                <mat-option *ngFor="let employee of employees"  [value]="employee">{{employee.idCard}}</mat-option>
             </mat-select>
         </mat-form-field>
 
@@ -53,6 +53,17 @@
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="birthdate"  (input)="birthdate = $any( $event.target).value" placeholder="Fecha de nacimiento" >
             </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="cinemaName"  (input)="cinemaName = $any( $event.target).value" placeholder="Cine" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="firstDateWorking"  (input)="firstDateWorking = $any( $event.target).value" placeholder="Fecha de ingreso" >
+            </mat-form-field>
+
+        
+            
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="phoneNum"  (input)="phoneNum = $any( $event.target).value" placeholder="Número de teléfono" >
             </mat-form-field>
@@ -81,28 +92,30 @@
                 <input matInput required type="password" [value]="password"  (input)="password = $any( $event.target).value" placeholder="Contraseña" >
             </mat-form-field>
         </div>
+
+        <div class="buttonsContainer">
+            <div class="actButton acceptButton" (click)="submitModify()">
+                <div class="text" >Aceptar</div>
+            </div>
+            <div class="actButton cancelButton" (click)="close()">
+                <div class="text" >Cancelar</div>
+            </div>
+        </div>
     </div>
 
 
-    <div class="buttonsContainer">
-        <div class="actButton acceptButton">
-            <div class="text" (click)="submitModify()">Aceptar</div>
-        </div>
-        <div class="actButton cancelButton">
-            <div class="text" (click)="close()">Cancelar</div>
-        </div>
-    </div>
+    
 </div>
-
-<div *ngIf="deletingUser">
-    <div class="text" style="margin-bottom: 7px;">Eliminación de usuarios</div>
+<!--Borrar-->
+<div class="delView" *ngIf="deletingEmployee">
+    <div class="text" style="margin-bottom: 7px;">Eliminación de empleados</div>
     <div class="formX" >
 
 
         <mat-form-field appearance="fill">
-            <mat-label>Seleccionar usuario</mat-label>
+            <mat-label>Seleccionar empleado</mat-label>
             <mat-select (selectionChange)="selectUser($event.value)">
-                <mat-option *ngFor="let user of users"  [value]="user">{{user.idCard}}</mat-option>
+                <mat-option *ngFor="let employee of employees"  [value]="employee">{{employee.idCard}}</mat-option>
             </mat-select>
             </mat-form-field>
 
@@ -110,28 +123,38 @@
 
 
     <div class="buttonsContainer">
-        <div class="actButton acceptButton">
-            <div class="text" (click)="deleteUser()">Eliminar usuario</div>
+        <div class="actButton acceptButton" (click)="deleteUser()">
+            <div class="text" >Eliminar usuario</div>
         </div>
-        <div class="actButton cancelButton">
-            <div class="text" (click)="close()">Cancelar</div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
         </div>
     </div>
 </div>
 
 <!--Agregar-->
-<div *ngIf="addingUser">
-    <div class="text" style="margin-bottom: 7px;">Creacion de Cliente</div>
+<div *ngIf="addingEmployee">
+    <div class="text" style="margin-bottom: 7px;">Creacion de empleados</div>
     <div class="formX" >
 
 
             <mat-form-field class="field">
-                <input matInput required type="text" [value]="idCard"  (input)="idCard = $any( $event.target).value" placeholder="Cédula" >
+                <input matInput required type="text" [value]="idCard"  (input)="idCard = $any( $event.target).value" placeholder="ID Card" >
             </mat-form-field>
-   
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="birthdate"  (input)="birthdate = $any( $event.target).value" placeholder="Fecha de nacimiento" >
+            </mat-form-field>
 
+            <mat-form-field appearance="fill">
+                <mat-label>Cine</mat-label>
+                <mat-select (selectionChange)="selectSucursal($event.value)">
+                  <mat-option *ngFor="let employee of employees"  value="{{employee.cinemaName}}">{{employee.cinemaName}}</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="firstDateWorking"  (input)="firstDateWorking = $any( $event.target).value" placeholder="Fecha de ingreso" >
+            </mat-form-field>
             
             <mat-form-field class="field">
                 <input matInput required type="text" [value]="phoneNum"  (input)="phoneNum = $any( $event.target).value" placeholder="Número de teléfono" >
@@ -161,39 +184,38 @@
                 <input matInput required type="password" [value]="password"  (input)="password = $any( $event.target).value" placeholder="Contraseña" >
             </mat-form-field>
 
-            <input [owlDateTimeTrigger]="dt"  [owlDateTime]="dt" >
-            <owl-date-time [pickerType]="'calendar'"   (afterPickerClosed)="selectDate(dt)"#dt ></owl-date-time>
-
             <div class="buttonsContainer">
-                <div class="actButton acceptButton">
-                    <div class="text" (click)="submitAdition()">Aceptar</div>
+                <div class="actButton acceptButton" (click)="submitAdition()">
+                    <div class="text" >Aceptar</div>
                 </div>
-                <div class="actButton cancelButton">
-                    <div class="text" (click)="close()">Cancelar</div>
+                <div class="actButton cancelButton" (click)="close()"> 
+                    <div class="text" >Cancelar</div>
                 </div>
             </div>
         </div>
 
 </div>
 
-
-<!--GET-->
-
+<!--Get-->
 <div class="getView" *ngIf="get">
+
+
+
 
     <div class="text" style="margin-bottom: 7px;">Visualización de empleados</div>
 
-    <div class="employeeCard" *ngFor="let client of users"> 
+    <div class="employeeCard" *ngFor="let employee of employees"> 
         <div class="verticarlContainer">
             <mat-icon class="iconContainer">person</mat-icon>
-            <div class="text infotxt" >{{client.firstName}} {{client.middleName}} {{ client.lastName}} {{client.secondLastName}}</div>
+            <div class="text infotxt" >{{employee.firstName}} {{employee.middleName}} {{ employee.lastName}} {{employee.secondLastName}}</div>
         </div>
 
         <div class="employeeInfo">
-            <div class="text infotxt">Cédula: {{client.idCard}}</div>
-            <div class="text infotxt">Nacimiento: {{client.birthdate}}</div>
-            <div class="text infotxt">Número de teléfono: {{client.phoneNum}}</div>
-            <div class="text infotxt">Usuario: {{client.username}}</div>
+            <div class="text infotxt">Sucursal: {{employee.cinemaName}}</div>
+            <div class="text infotxt">Nacimiento: {{employee.birthdate}}</div>
+            <div class="text infotxt">Número de teléfono: {{employee.phoneNum}}</div>
+            <div class="text infotxt">Fecha de ingreso a CineTec{{employee.firstDateWorking}}</div>
+            <div class="text infotxt">Usuario: {{employee.username}}</div>
         </div>
 
 

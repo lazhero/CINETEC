@@ -14,8 +14,8 @@
 
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item class="center">
+    <button mat-menu-item class="center" (click)="logout()">
         <mat-icon>logout</mat-icon>
-        <div class="text" (click)="logout()">Salir</div>
+        <div class="text" >Salir</div>
     </button>
   </mat-menu>

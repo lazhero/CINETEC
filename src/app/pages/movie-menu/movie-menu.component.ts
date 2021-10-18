@@ -164,7 +164,7 @@ export class MovieMenuComponent implements OnInit {
           allowOutsideClick: false,
           showCloseButton: false,
           showConfirmButton: false,
-          html: "<div class='text' style='color: white'>Cargando</div>",
+          html: "<div class='text' style='color: #2b2e35'>Cargando</div>",
           heightAuto: true,
         });
         if (result.isConfirmed) {

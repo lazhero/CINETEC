@@ -35,3 +35,8 @@
   margin-bottom: 6px;
   user-select: none;
 }
+.icon {
+  cursor: pointer;
+  color: white;
+  font-size: 5vh;
+}

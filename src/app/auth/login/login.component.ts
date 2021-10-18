@@ -36,12 +36,19 @@ export class LoginComponent implements OnInit {
     this.backend.post_request('Login', info).subscribe((user) => {
       //console.log(user);
 
-      if (user === null || user == undefined || user == '') {
-        this.swal.showError(
-          'Oops',
-          'El usuario no se encuentra en la base de datos '
-        );
-        return;
+      if (user === null || user === undefined) {
+        this.backend.post_request('Admin/Login', info).subscribe((admin) => {
+          if (admin === null || admin === undefined) {
+            this.swal.showError(
+              'Oops',
+              'El usuario no se encuentra en la base de datos '
+            );
+            return;
+          } else {
+            localStorage.setItem('admin', 'true');
+            this.router.navigateByUrl('admin');
+          }
+        });
       } else {
         localStorage.setItem('user', JSON.stringify(user));
         this.router.navigateByUrl('pages');

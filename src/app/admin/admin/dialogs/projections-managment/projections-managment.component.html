@@ -106,11 +106,11 @@
 
 
     <div class="buttonsContainer">
-        <div class="actButton acceptButton">
-            <div class="text" (click)="deleteProjection()">Eliminar proyeccion</div>
+        <div class="actButton acceptButton" (click)="deleteProjection()">
+            <div class="text" >Eliminar proyeccion</div>
         </div>
-        <div class="actButton cancelButton">
-            <div class="text" (click)="close()">Cancelar</div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
         </div>
     </div>
 </div>
@@ -160,11 +160,11 @@
 
 
     <div class="buttonsContainer">
-        <div class="actButton acceptButton">
-            <div class="text" (click)="submitModify()">Modificar proyeccion</div>
+        <div class="actButton acceptButton" (click)="submitModify()">
+            <div class="text" >Modificar proyeccion</div>
         </div>
-        <div class="actButton cancelButton">
-            <div class="text" (click)="close()">Cancelar</div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
         </div>
     </div>
 </div>
@@ -189,20 +189,13 @@
             </mat-select>
         </mat-form-field>
 
-            <mat-form-field appearance="fill">
-                <mat-label>Seleccionar proyección</mat-label>
-                <mat-select (selectionChange)="selectProjections($event.value)">
-                    <mat-option *ngFor="let projection of projections"  [value]="projection">{{projection.id}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <input [owlDateTimeTrigger]="dt"  [owlDateTime]="dt"[selectMode]="'range'" placeholder="Fecha Inicial">
-            <owl-date-time  (afterPickerClosed)="selectDate(dt)"  #dt ></owl-date-time>
-        <div class="mainView" *ngIf="projection!=undefined">
-    
-         
-
-
+        <div class="projectionCard" *ngFor="let projection of projections">
+            <div class="text">Número :{{projection.id}} </div>
+            
         </div>
+
+
+
 
 
 

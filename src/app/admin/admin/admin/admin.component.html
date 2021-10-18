@@ -1,6 +1,11 @@
 <div class="mainView">
-    <img src="../../../../assets/adminLogo.svg" alt="" class="adminLogo">
+    <div style="    display: flex;
+    align-content: center;
+    align-items: center;">
+        <img src="../../../../assets/adminLogo.svg" alt="" class="adminLogo">
 
+        <mat-icon class="icon" (click)="logout()">logout</mat-icon>
+    </div>
     <div class="optionsContainer">
 
         <div class="optionButton" (click)="openClientManagment()">
