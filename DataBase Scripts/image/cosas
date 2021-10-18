@@ -1,0 +1,6 @@
+from io import *
+with BytesIO() as output:
+    from PIL import Image
+    with Image.open("naruto.png") as img:
+        img.convert('RGB').save(output, 'BMP')                
+    data = output.getvalue()[14:]

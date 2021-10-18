@@ -1,0 +1,44 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using REST_API_SERVER.Database_Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace REST_API_SERVER.Controllers
+{
+    [ApiController]
+    [Route("Client/Projection")]
+    public class Client_projection : Controller
+    {
+        CineTEC_Context Db = new CineTEC_Context();
+        
+        [HttpGet]
+        public List<Projection> Get(string cine_name)
+        {
+            try{
+                var projection = Db.Projections
+                                 .Include(p => p.MovieOriginalNameNavigation)
+                                 .Include(p => p.ProjectionRooms)
+                                    .ThenInclude(p => p.CinemaName)
+                                 .ToList();
+
+                List<Projection> res = new List<Projection>();
+                foreach (Projection pro in projection)
+                {
+                    foreach (ProjectionRoom room in pro.ProjectionRooms)
+                    {
+                        if (room.CinemaName == cine_name)
+                        {
+                            res.Append(pro);
+                            break;
+                        }
+                    }
+                }
+                return res;
+            }catch(Exception e){
+                throw new ArgumentException(e.ToString());
+            }
+        }
+    }
+}
