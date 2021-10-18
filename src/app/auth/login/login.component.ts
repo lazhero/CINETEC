@@ -22,23 +22,37 @@ export class LoginComponent implements OnInit {
   }
   form: FormGroup;
   ngOnInit(): void {}
-
+  devlogin() {
+    this.form.value.Address = 'Luisito354';
+    this.form.value.Password = 'satanas1234';
+    this.login();
+  }
   login() {
     const info = {
       username: this.form.value.Address,
       password: this.form.value.Password,
     };
 
-    this.backend.post_request('Login', info).subscribe((result) => {
-      if (result === null && result == undefined && result == '') {
-        this.swal.showError(
-          'Oops',
-          'El usuario no se encuentra en la base de datos '
-        );
-        return;
-      }
+    this.backend.post_request('Login', info).subscribe((user) => {
+      //console.log(user);
 
-      this.router.navigateByUrl('pages');
+      if (user === null || user === undefined) {
+        this.backend.post_request('Admin/Login', info).subscribe((admin) => {
+          if (admin === null || admin === undefined) {
+            this.swal.showError(
+              'Oops',
+              'El usuario no se encuentra en la base de datos '
+            );
+            return;
+          } else {
+            localStorage.setItem('admin', 'true');
+            this.router.navigateByUrl('admin');
+          }
+        });
+      } else {
+        localStorage.setItem('user', JSON.stringify(user));
+        this.router.navigateByUrl('pages');
+      }
     });
   }
   register() {

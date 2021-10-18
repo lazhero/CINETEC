@@ -37,6 +37,7 @@ namespace REST_API_SERVER.Database_Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+                //optionsBuilder.UseNpgsql("Host=25.92.13.1;Port=6200;Database=cinetec;Username=admin;Password=1234");
                 optionsBuilder.UseNpgsql("Host=localhost;Port=6200;Database=cinetec;Username=admin;Password=1234");
             }
         }

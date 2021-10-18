@@ -4,6 +4,7 @@
   flex-wrap: nowrap;
   justify-content: center;
   align-items: stretch;
+  height: auto;
   align-content: stretch;
 }
 .viewContainer {
@@ -31,6 +32,12 @@
   color: white;
   font-size: 12px;
   margin: 5px 5px 5px 5px;
+}
+.projTex {
+  color: #333333;
+  font-size: 16px;
+  margin-left: 1em;
+  margin-top: 0.5em;
 }
 .infoCard {
   margin-top: 23px;
@@ -64,7 +71,7 @@
 }
 .centerDisp {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
@@ -81,13 +88,15 @@
 
 .itemScroll {
   position: relative;
-  width: 30em;
+  width: auto;
+  max-width: 41vh;
   overflow-x: hidden;
   overflow-y: hidden;
   white-space: nowrap;
   transition: all 0.2s;
   transform: scale(0.98);
   will-change: transform;
+  -webkit-user-select: none;
   user-select: none;
   cursor: pointer;
 }
@@ -96,8 +105,8 @@
   display: inline-block;
 }
 .item {
-  height: 30px;
-  width: 102px;
+  height: 9vh;
+  width: 36vh;
   margin-right: 1em;
   border-radius: 6px;
 }
@@ -140,6 +149,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
+  width: 76vh;
   justify-content: center;
   align-items: stretch;
   align-content: stretch;
@@ -153,15 +163,14 @@
   flex-wrap: wrap;
   width: 70em;
 }
-.chairContainer {
-}
+
 .chair {
   position: relative;
   text-align: center;
 }
 .chairIcon {
   size: 30px;
-  margin: 0 0.5em 1em 0.5em;
+  margin: 0 0.6em -0.2em 0.6em;
 }
 .chair:hover {
   filter: invert(0.3);
@@ -195,4 +204,41 @@
 .payButtonContainer {
   display: flex;
   flex-direction: row;
+}
+.background {
+  background-color: #1f232b;
+  height: 100%;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+}
+.iconCounter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1.5vh;
+}
+.addlessButton {
+  border-radius: 100%;
+  height: 3vh;
+  margin-right: 1vh;
+  align-items: center;
+  width: 3vh;
+  background-color: white;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.addlessButton:hover {
+  transition: 0.3s;
+  background-color: rgb(216, 216, 216);
+  width: 3.5vh;
+  height: 3.5vh;
+}
+.projCard {
+  height: 7vh;
 }

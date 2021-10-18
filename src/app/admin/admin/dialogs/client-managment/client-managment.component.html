@@ -1,0 +1,204 @@
+
+<div *ngIf="!deletingUser && !modifiyingUser&& !addingUser &&!get">
+    <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
+    <div class="menuButtons ">
+
+        <div class="actButton menuButton" (click)="modifiyingUser=true">
+            <mat-icon class="icon" >edit</mat-icon>
+
+            <div class="text" > Modificar usuario</div>
+        </div>
+        <div class="actButton menuButton" (click)="deletingUser=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >remove_circle_outline</mat-icon>
+                <div class="text" >Borrar usuario</div>
+            </div>
+        </div>
+
+        <div class="actButton menuButton" (click)="addingUser=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >add_circle_outline</mat-icon>
+                <div class="text" >Agregar Cliente</div>
+            </div>
+        </div>
+
+        <div class="actButton menuButton" (click)="get=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >search</mat-icon>
+                <div class="text" >Visualizar Clientes</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--Menu de edición de sucursales-->
+<div *ngIf="modifiyingUser">
+    <div class="text" style="margin-bottom: 7px;">Modificación de Usuarios</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar usuario</mat-label>
+            <mat-select (selectionChange)="selectUser($event.value)">
+                <mat-option *ngFor="let user of users"  [value]="user">{{user.idCard}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="idCard!=''">
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="birthdate"  (input)="birthdate = $any( $event.target).value" placeholder="Fecha de nacimiento" >
+            </mat-form-field>
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="phoneNum"  (input)="phoneNum = $any( $event.target).value" placeholder="Número de teléfono" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="firstName"  (input)="firstName = $any( $event.target).value" placeholder="Primer nombre" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="middleName"  (input)="middleName = $any( $event.target).value" placeholder="Segundo nombre" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="lastName"  (input)="middleName = $any( $event.target).value" placeholder="Primer apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="secondLastName"  (input)="secondLastName = $any( $event.target).value" placeholder="Segundo apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="username"  (input)="username = $any( $event.target).value" placeholder="Nombre de usuario" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="password" [value]="password"  (input)="password = $any( $event.target).value" placeholder="Contraseña" >
+            </mat-form-field>
+        </div>
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton"  (click)="submitModify()">
+            <div class="text">Aceptar</div>
+        </div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="deletingUser">
+    <div class="text" style="margin-bottom: 7px;">Eliminación de usuarios</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar usuario</mat-label>
+            <mat-select (selectionChange)="selectUser($event.value)">
+                <mat-option *ngFor="let user of users"  [value]="user">{{user.idCard}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton" (click)="deleteUser()">
+            <div class="text" >Eliminar usuario</div>
+        </div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<!--Agregar-->
+<div *ngIf="addingUser">
+    <div class="text" style="margin-bottom: 7px;">Creacion de Cliente</div>
+    <div class="formX" >
+
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="idCard"  (input)="idCard = $any( $event.target).value" placeholder="Cédula" >
+            </mat-form-field>
+   
+
+
+
+            
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="phoneNum"  (input)="phoneNum = $any( $event.target).value" placeholder="Número de teléfono" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="firstName"  (input)="firstName = $any( $event.target).value" placeholder="Primer nombre" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="middleName"  (input)="middleName = $any( $event.target).value" placeholder="Segundo nombre" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="lastName"  (input)="lastName= $any( $event.target).value" placeholder="Primer apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="secondLastName"  (input)="secondLastName = $any( $event.target).value" placeholder="Segundo apellido" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="username"  (input)="username = $any( $event.target).value" placeholder="Nombre de usuario" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="password" [value]="password"  (input)="password = $any( $event.target).value" placeholder="Contraseña" >
+            </mat-form-field>
+
+            
+
+            <div class="buttonsContainer">
+                <div class="actButton acceptButton" (click)="submitAdition()">
+                    <div class="text" >Aceptar</div>
+                </div>
+                <div class="actButton cancelButton" (click)="close()">
+                    <div class="text" >Cancelar</div>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+
+<!--GET-->
+
+<div class="getView" *ngIf="get">
+
+    <div class="text" style="margin-bottom: 7px;">Visualización de empleados</div>
+
+    <div class="employeeCard" *ngFor="let client of users"> 
+        <div class="verticarlContainer">
+            <mat-icon class="iconContainer">person</mat-icon>
+            <div class="text infotxt" >{{client.firstName}} {{client.middleName}} {{ client.lastName}} {{client.secondLastName}}</div>
+        </div>
+
+        <div class="employeeInfo">
+            <div class="text infotxt">Cédula: {{client.idCard}}</div>
+            <div class="text infotxt">Nacimiento: {{client.birthdate}}</div>
+            <div class="text infotxt">Número de teléfono: {{client.phoneNum}}</div>
+            <div class="text infotxt">Usuario: {{client.username}}</div>
+        </div>
+
+
+    </div>
+
+
+
+
+</div>

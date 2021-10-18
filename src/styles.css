@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 :root {
   --darkBackgroundColor: #1b1e26;
   --hoverColor: #7e7e7e;
@@ -39,34 +40,4 @@ body {
   background-color: #242933;
   margin-top: 10%;
   position: absolute;
-}
-
-.mat-focused .mat-form-field-label {
-  /*change color of label*/
-  color: white !important;
-}
-
-.mat-form-field-ripple {
-  /*change color of underline when focused*/
-  background-color: white !important;
-}
-
-.mat-form-field-label {
-  /*change color of label*/
-  color: white !important;
-  font-family: Poppins !important;
-  font-style: normal !important;
-  font-weight: bold !important;
-  letter-spacing: 0.02em !important;
-}
-
-mat-datepicker-toggle {
-  color: white !important;
-}
-
-.mat-form-field-underline {
-  display: none;
-}
-.mat-input-element {
-  color: white !important;
 }

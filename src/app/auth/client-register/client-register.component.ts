@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend-service.service';
 import { SwalService } from 'src/app/services/swalService';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-
 @Component({
   selector: 'app-client-register',
   templateUrl: './client-register.component.html',
@@ -21,7 +20,9 @@ export class ClientRegisterComponent implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       name: '',
+      middleName: '',
       lastName: '',
+      secondLastName: '',
       userName: '',
       Password: '',
       Address: '',
@@ -33,23 +34,32 @@ export class ClientRegisterComponent implements OnInit {
   }
   ngOnInit(): void {}
 
+  getRandomInt(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
+
   createClient(): void {
-    const data = {
-      idCard: 13331,
+    const rand = this.getRandomInt(0, 100000000);
+
+    let data = {
+      idCard: rand,
       phoneNum: 0,
-      firstName: 'TEST',
-      middleName: 'TEST',
-      lastName: 'TEST',
-      secondLastName: 'TEST',
-      username: '1333e2',
-      password: 'TEST',
-      birthdate: '2021-10-07T18:46:31.254Z',
+      firstName: this.form.value.name,
+      middleName: this.form.value.middleName,
+      lastName: this.form.value.lastName,
+      secondLastName: this.form.value.secondLastName,
+      username: this.form.value.userName,
+      password: this.form.value.Password,
+      birthdate: new Date(this.form.value.birthDate),
       clientInvoices: [],
       projectionClients: [],
     };
+
     this.backend.post_request('Admin/Client', data).subscribe(
-      (data) => {
+      (value) => {
         this.swal.showSuccess('Bienvenido', 'Usuario registrado con éxito');
+
+        localStorage.setItem('user', JSON.stringify(data));
         this.router.navigateByUrl('pages');
       },
       (error) => {
@@ -57,8 +67,12 @@ export class ClientRegisterComponent implements OnInit {
           'Error',
           'Ya existe un usuario con la misma identificación'
         );
-        console.log(error);
+        //console.log(error);
       }
     );
+  }
+
+  selectDate(event: any) {
+    this.form.value.birthDate = event._selected;
   }
 }

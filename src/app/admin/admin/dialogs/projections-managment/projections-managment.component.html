@@ -1,0 +1,206 @@
+<div *ngIf="!deletingProjection && !addingProjection && !modifyingProjection && !get">
+    <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
+    <div class="menuButtons ">
+
+        <div class="actButton menuButton" (click)="addingProjection=true">
+            <mat-icon class="icon" >add_circle_outline</mat-icon>
+
+            <div class="text" > Agregar proyección</div>
+        </div>
+        <div class="actButton menuButton" (click)="deletingProjection=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >remove_circle_outline</mat-icon>
+                <div class="text" >Borrar proyección</div>
+            </div>
+        </div>
+        <div class="actButton menuButton" (click)="modifyingProjection=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >edit</mat-icon>
+                <div class="text" >Modificar proyección</div>
+            </div>
+        </div>
+
+        <div class="actButton menuButton" (click)="get=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >search</mat-icon>
+                <div class="text" >Visualizar proyecciones</div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<!--AGREGAR-->
+<div *ngIf="addingProjection">
+    <div class="text" style="margin-bottom: 7px;">Agregar proyección</div>
+    <div class="formX" >
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar sala</mat-label>
+            <mat-select (selectionChange)="selectRoom($event.value)">
+                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.number}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar película</mat-label>
+            <mat-select (selectionChange)="selectMovie($event.value)">
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <input [owlDateTimeTrigger]="dt"  [owlDateTime]="dt" [selectMode]="'range'">
+        <owl-date-time  (afterPickerClosed)="selectDate(dt)"  #dt ></owl-date-time>
+         
+     
+    </div>
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton" (click)="create()">
+            <div class="text" >Aceptar</div>
+        </div>
+        <div class="actButton cancelButton"  (click)="close()">
+            <div class="text">Cancelar</div>
+        </div>
+    </div>
+</div>
+<!--BORRAR-->
+<div *ngIf="deletingProjection">
+    <div class="text" style="margin-bottom: 7px;">Eliminación de Proyecciones</div>
+    <div class="formX" >
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar película</mat-label>
+            <mat-select (selectionChange)="selectMovie($event.value)">
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
+            </mat-select>
+            </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar proyección</mat-label>
+            <mat-select (selectionChange)="selectProjections($event.value)">
+                <mat-option *ngFor="let projection of projections"  [value]="projection">{{projection.id}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton" (click)="deleteProjection()">
+            <div class="text" >Eliminar proyeccion</div>
+        </div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<!--MODIFICAR-->
+<div  class="mainView" *ngIf="modifyingProjection">
+    <div class="text" style="margin-bottom: 7px;">Eliminación de Proyecciones</div>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar película</mat-label>
+            <mat-select (selectionChange)="selectMovie($event.value)">
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Seleccionar proyección</mat-label>
+                <mat-select (selectionChange)="selectProjections($event.value)">
+                    <mat-option *ngFor="let projection of projections"  [value]="projection">{{projection.id}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+   
+        <div class="mainView" *ngIf="projection!=undefined">
+            <div class="text">Intérvalo de tiempo</div>
+            <input [owlDateTimeTrigger]="dt"   [owlDateTime]="dt"[selectMode]="'range'" placeholder="Fecha Inicial">
+            <owl-date-time  (afterPickerClosed)="selectDate(dt)"  #dt ></owl-date-time>
+
+
+            <mat-form-field appearance="fill">
+                <mat-label>Sala</mat-label>
+                <mat-select (selectionChange)="selectRoom($event.value)">
+                    <mat-option *ngFor="let room of rooms"  [value]="room">{{room.number}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton" (click)="submitModify()">
+            <div class="text" >Modificar proyeccion</div>
+        </div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
+        </div>
+    </div>
+</div>
+<!--GET-->
+
+<div *ngIf="get">
+    <div class="text" style="margin-bottom: 7px;">Visualización de Proyecciones</div>
+    <div class="formX" >
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar película</mat-label>
+            <mat-select (selectionChange)="selectMovie($event.value)">
+                <mat-option *ngFor="let movie of movies"  [value]="movie">{{movie.originalName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="projectionCard" *ngFor="let projection of projections">
+            <div class="text">Número :{{projection.id}} </div>
+            
+        </div>
+
+
+
+
+
+
+    </div>
+
+
+
+</div>

@@ -1,0 +1,42 @@
+.mainView {
+  margin-left: 2%;
+}
+.optionsContainer {
+  margin-top: 6%;
+  margin-left: 6%;
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+}
+.optionButton {
+  width: 43%;
+  border-radius: 4px;
+  margin-left: 60px;
+  margin-bottom: 60px;
+}
+.optionButton:hover {
+  background-color: var(--hoverColor);
+  cursor: pointer;
+}
+.titleTextOverride {
+  font-size: 22px;
+  color: white;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-bottom: 6px;
+  user-select: none;
+}
+.descriptionText {
+  font-size: 12px;
+  color: white;
+  font-weight: 100;
+  margin-top: 12px;
+  margin-left: 15px;
+  margin-bottom: 6px;
+  user-select: none;
+}
+.icon {
+  cursor: pointer;
+  color: white;
+  font-size: 5vh;
+}

@@ -1,0 +1,168 @@
+<div *ngIf="!deletingRoom && !modifyingRoom && !addingRoom && !get">
+    <div class="title text"> Seleccione el tipo de procedimiento que quiere realizar</div>
+    <div class="menuButtons ">
+
+        <div class="actButton menuButton" (click)="modifyingRoom=true">
+            <mat-icon class="icon" >edit</mat-icon>
+
+            <div class="text" > Editar sala</div>
+        </div>
+        <div class="actButton menuButton" (click)="deletingRoom=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >remove_circle_outline</mat-icon>
+                <div class="text" style="align-items: center;">Eliminar sala</div>
+            </div>
+        </div>
+        <div class="actButton menuButton" (click)="addingRoom=true">
+
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >add_circle_outline</mat-icon>
+                <div class="text" >Agregar sala</div>
+            </div>
+        </div>
+
+        <div class="actButton menuButton" (click)="get=true">
+            <div class="buttonContent"> 
+                <mat-icon class="icon" >search</mat-icon>
+                <div class="text" >Visualizar Salas</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--MODIFICAR-->
+<div *ngIf="modifyingRoom">
+    <div class="text" style="margin-bottom: 7px;">Edicion de sala</div>
+    <div class="formX" >
+
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar sala</mat-label>
+            <mat-select (selectionChange)="selectRoom($event.value)">
+                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.number}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="Room_id!=''">
+        
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Row_number"  (input)="Row_number = $any( $event.target).value" placeholder="Duracion" >
+            </mat-form-field>
+
+            <mat-form-field class="field">
+                <input matInput required type="text" [value]="Column_number"  (input)="Column_number = $any( $event.target).value" placeholder="Protagonistas" >
+            </mat-form-field>
+
+    
+        </div>
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton" (click)="submitModify()">
+            <div class="text" >Aceptar</div>
+        </div>
+        <div class="actButton cancelButton"  (click)="close()">
+            <div class="text">Cancelar</div>
+        </div>
+    </div>
+</div>
+<!--AGREGAR-->
+<div *ngIf="addingRoom">
+    <div class="text" style="margin-bottom: 7px;">Agregar sala</div>
+    <div class="formX" >
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Room_id"  (input)="Room_id = $any( $event.target).value" placeholder="ID de la sala" >
+        </mat-form-field>
+
+        
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Row_number"  (input)="Row_number = $any( $event.target).value" placeholder="Filas" >
+        </mat-form-field>
+
+        <mat-form-field class="field">
+            <input matInput required type="text" [value]="Column_number"  (input)="Column_number = $any( $event.target).value" placeholder="Columnas" >
+        </mat-form-field>
+
+
+    
+    </div>
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton" (click)="create()">
+            <div class="text" >Aceptar</div>
+        </div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
+        </div>
+    </div>
+</div>
+
+
+<!--BORRAR-->
+<div *ngIf="deletingRoom">
+    <div class="text" style="margin-bottom: 7px;">Eliminar sala</div>
+    <div class="formX" >
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Seleccionar sala</mat-label>
+            <mat-select (selectionChange)="selectRoom($event.value)">
+                <mat-option *ngFor="let room of rooms"  [value]="room">{{room.number}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </div>
+
+
+    <div class="buttonsContainer">
+        <div class="actButton acceptButton" (click)="deleteRoom()">
+            <div class="text" >Eliminar</div>
+        </div>
+        <div class="actButton cancelButton" (click)="close()">
+            <div class="text" >Cancelar</div>
+        </div>
+    </div>
+</div>
+
+<!--GET-->
+
+<div *ngIf="get" class="mainView">
+
+        <mat-form-field appearance="fill">
+            <mat-label>Cine</mat-label>
+            <mat-select (selectionChange)="selectSucursal($event.value)">
+              <mat-option *ngFor="let theater of theaters"  value="{{theater.name}}">{{theater.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div *ngFor="let room of rooms" class="roomCard">
+            <div class="text" style="font-weight: 100;" >Sala No: {{room.number}}  No Asientos: {{room.columns*room.rows}}</div>
+        </div>
+
+
+
+</div>
