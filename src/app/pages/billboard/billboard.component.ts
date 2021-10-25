@@ -46,7 +46,7 @@ export class BillboardComponent implements OnInit {
       .subscribe((moviesArray) => {
         moviesArray.forEach(
           async (movie: { image: any; originalName: string }) => {
-            await this.getImage(movie.originalName).then((result: any) => {
+            await this.getImage(movie.image).then((result: any) => {
               movie.image = result;
             });
             Swal.close();
@@ -81,10 +81,10 @@ export class BillboardComponent implements OnInit {
     return fiximage;
   }
 
-  async getImage(movieName: string) {
+  async getImage(movImage: string) {
     return new Promise((resolve) => {
       this.backend
-        .get_request('Images', { path: 'Images\\' + movieName + '.png' })
+        .get_request('Images', { path: movImage })
         .subscribe((result) => {
           resolve({
             value: result,
